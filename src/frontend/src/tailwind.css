@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Warm Palette (D-01) === */
+  --color-sand: #F5E6D3;
+  --color-sand-light: #FAF0E6;
+  --color-sand-dark: #E8D5C4;
+  --color-coral: #FF6B6B;
+  --color-coral-dark: #E55A5A;
+  --color-coral-light: #FF8A8A;
+  --color-ocean: #4ECDC4;
+  --color-ocean-dark: #3DBDB4;
+  --color-ocean-light: #6FE0D8;
+
+  /* === Semantic Colors === */
+  --color-warm-bg: #FFFAF5;
+  --color-warm-surface: #FFF8F0;
+  --color-warm-text: #2D2016;
+  --color-warm-text-muted: #6B5B4E;
+  --color-warm-border: #E8D5C4;
+  --color-warm-gray: #E8DDD3;
+  --color-warm-amber: #F59E0B;
+  --color-warm-amber-light: #FEF3C7;
+
+  /* === Tier Colors (D-05) === */
+  --color-tier-gold: #F0A020;
+  --color-tier-silver: #B5A89A;
+  --color-tier-bronze: #CD7F32;
+
+  /* === Map Day-Route Colors (Phase 10) === */
+  --color-day-1: #3B82F6;
+  --color-day-2: #10B981;
+  --color-day-3: #F59E0B;
+
+  /* === Data Source Colors (D-06) === */
+  --color-source-curated: #F0A020;
+  --color-source-amap: #6BA3D6;
+  --color-source-ai: #8B5CF6;
+
+  /* === Card Design Tokens (D-02) === */
+  --radius-card: 16px;
+  --shadow-card: 0 2px 12px rgba(45, 32, 22, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(45, 32, 22, 0.15);
+
+  /* === Transitions === */
+  --transition-smooth: all 0.2s ease;
+
+}

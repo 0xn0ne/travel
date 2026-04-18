@@ -1,0 +1,13 @@
+{
+  "name": "杭州",
+  "name_en": "hangzhou",
+  "center": {"lat": 30.2741, "lng": 120.1551},
+  "bounds": {
+    "northeast": {"lat": 30.45, "lng": 120.55},
+    "southwest": {"lat": 30.15, "lng": 120.0}
+  },
+  "supported_interests": ["文艺", "自然", "拍照", "漫步", "茶", "情侣", "朋友", "历史建筑", "寺庙", "湖景", "品尝", "慵懒", "小众艺术"],
+  "amap_city_code": "0571",
+  "tier_a_count": 15,
+  "poi_data_file": "data/pois/hangzhou.json"
+}

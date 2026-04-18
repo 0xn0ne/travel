@@ -1,0 +1,2443 @@
+{
+  "pois": [
+    {
+      "amap_id": "B0I0A001",
+      "name": "武康大楼",
+      "tier": 1,
+      "category": "历史建筑",
+      "latitude": 31.2064,
+      "longitude": 121.4403,
+      "address": "上海市徐汇区淮海中路1850号",
+      "taste_tags": [
+        "文艺",
+        "复古",
+        "拍照",
+        "漫步",
+        "情侣"
+      ],
+      "highlight_note": "上海最标志性的历史建筑之一。转角的法式风格配上梧桐树街道，拍照绝佳。建议上午去人少，下午阳光洒在红砖墙上有另一种味道。一楼有%Arabica可以买杯咖啡边走边喝。",
+      "permanent_features": [
+        "法式建筑风格",
+        "梧桐树街道",
+        "转角设计",
+        "网红打卡"
+      ],
+      "opening_hours": "全天（外观）",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A002",
+      "name": "思南公馆",
+      "tier": 1,
+      "category": "历史建筑",
+      "latitude": 31.2181,
+      "longitude": 121.4731,
+      "address": "上海市黄浦区思南路51号",
+      "taste_tags": [
+        "文艺",
+        "复古",
+        "漫步",
+        "情侣",
+        "历史建筑"
+      ],
+      "highlight_note": "市中心唯一保存完整的老洋房街区。法国梧桐掩映下的红砖房，安静又有格调。内有网红书店和咖啡馆，适合放空一个下午。",
+      "permanent_features": [
+        "保存完好的老洋房群",
+        "法国梧桐街道",
+        "思南书店",
+        "历史保护区"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A003",
+      "name": "愚园路街区",
+      "tier": 1,
+      "category": "历史街区",
+      "latitude": 31.2215,
+      "longitude": 121.4318,
+      "address": "上海市长宁区愚园路",
+      "taste_tags": [
+        "文艺",
+        "漫步",
+        "拍照",
+        "咖啡",
+        "小众艺术"
+      ],
+      "highlight_note": "上海最文艺的梧桐路之一。两旁老公寓和小店交错，很适合慢慢逛。路上有Ribone Cafe等宝藏咖啡馆，还有几家古着店。",
+      "permanent_features": [
+        "梧桐树街道",
+        "老公寓",
+        "精品小店",
+        "咖啡馆"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A004",
+      "name": "安福路",
+      "tier": 1,
+      "category": "文艺街区",
+      "latitude": 31.2075,
+      "longitude": 121.4373,
+      "address": "上海市徐汇区安福路",
+      "taste_tags": [
+        "文艺",
+        "漫步",
+        "咖啡",
+        "小众艺术",
+        "朋友"
+      ],
+      "highlight_note": "上海文艺青年聚集地。沿街小店各有性格，BM女孩经常出没。Sunflour的太阳花面包是标配，路尽头是话剧中心。",
+      "permanent_features": [
+        "梧桐树街道",
+        "BM女装店",
+        "Sunflour",
+        "话剧艺术中心"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A005",
+      "name": "外滩源",
+      "tier": 1,
+      "category": "历史建筑",
+      "latitude": 31.2405,
+      "longitude": 121.4902,
+      "address": "上海市黄浦区圆明园路",
+      "taste_tags": [
+        "历史建筑",
+        "拍照",
+        "漫步",
+        "文艺",
+        "复古"
+      ],
+      "highlight_note": "外滩最原汁原味的历史建筑群。半岛酒店背后的老建筑群，红砖墙和铸铁路灯特别适合拍照。旁边就是苏州河步道。",
+      "permanent_features": [
+        "历史建筑群",
+        "红砖外墙",
+        "铸铁路灯",
+        "苏州河步道"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A006",
+      "name": "1933老场坊",
+      "tier": 1,
+      "category": "创意园区",
+      "latitude": 31.2548,
+      "longitude": 121.4893,
+      "address": "上海市虹口区溧阳路611号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "复古",
+        "文艺",
+        "朋友"
+      ],
+      "highlight_note": "曾经的远东最大宰牲场，现在是最酷的创意园。混凝土旋转楼梯出片率极高。周六有复古市集，里面有不少买手店和咖啡馆。",
+      "permanent_features": [
+        "Art Deco建筑",
+        "旋转楼梯",
+        "创意市集",
+        "买手店"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A007",
+      "name": "田子坊",
+      "tier": 1,
+      "category": "老街区",
+      "latitude": 31.2098,
+      "longitude": 121.4678,
+      "address": "上海市黄浦区泰康路210弄",
+      "taste_tags": [
+        "本地老店",
+        "小众艺术",
+        "拍照",
+        "漫步",
+        "朋友"
+      ],
+      "highlight_note": "老弄堂里的文艺小商品市场。迷宫一样的小巷藏着各种独立工作室和咖啡馆。晚霞时分最好看，人多但不商业。",
+      "permanent_features": [
+        "老弄堂建筑",
+        "独立工作室",
+        "小商品摊位",
+        "咖啡馆"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A008",
+      "name": "M50创意园",
+      "tier": 1,
+      "category": "创意园区",
+      "latitude": 31.2494,
+      "longitude": 121.437,
+      "address": "上海市普陀区莫干山路50号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "文艺",
+        "漫步",
+        "朋友"
+      ],
+      "highlight_note": "上海最老牌的艺术家聚集地。旧厂房改造的画廊和工作室保留着工业风。沿苏州河岸可以骑车，人少景美。",
+      "permanent_features": [
+        "艺术家工作室群",
+        "工业风建筑",
+        "苏州河岸",
+        "画廊"
+      ],
+      "opening_hours": "10:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A009",
+      "name": "上海当代艺术博物馆",
+      "tier": 1,
+      "category": "博物馆",
+      "latitude": 31.2081,
+      "longitude": 121.496,
+      "address": "上海市黄浦区花园港路200号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "学习",
+        "文艺",
+        "朋友"
+      ],
+      "highlight_note": "中国第一家公立当代艺术博物馆。建筑本身是废弃发电厂改造的，非常有力量感。经常有大展，而且免费。顶楼能看到黄浦江。",
+      "permanent_features": [
+        "工业改造建筑",
+        "电力大烟囱",
+        "黄浦江景",
+        "免费入场"
+      ],
+      "opening_hours": "11:00-19:00（周一闭馆）",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A010",
+      "name": "西岸美术馆",
+      "tier": 1,
+      "category": "博物馆",
+      "latitude": 31.178,
+      "longitude": 121.454,
+      "address": "上海市徐汇区龙腾大道2600号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "学习",
+        "文艺",
+        "情侣"
+      ],
+      "highlight_note": "徐汇滨江的艺术新地标。建筑是纯粹的几何白色，和对岸老城区形成强烈对比。艺术书店和江景咖啡厅值得专程来。",
+      "permanent_features": [
+        "几何白色建筑",
+        "滨江江景",
+        "艺术书店",
+        "蓬皮杜合作"
+      ],
+      "opening_hours": "10:00-17:00（周一闭馆）",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A011",
+      "name": "龙华寺",
+      "tier": 1,
+      "category": "历史建筑",
+      "latitude": 31.1837,
+      "longitude": 121.4467,
+      "address": "上海市徐汇区龙华路2787号",
+      "taste_tags": [
+        "历史建筑",
+        "学习",
+        "漫步",
+        "安静",
+        "家庭"
+      ],
+      "highlight_note": "上海历史最悠久的寺庙。秋天的银杏树和素面是招牌。春节期间有上海最热闹的庙会。寺内茶馆可以喝禅茶。",
+      "permanent_features": [
+        "千年古刹",
+        "银杏树",
+        "龙华塔",
+        "素面馆"
+      ],
+      "opening_hours": "07:00-17:00",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0A012",
+      "name": "多伦路文化名人街",
+      "tier": 1,
+      "category": "历史街区",
+      "latitude": 31.264,
+      "longitude": 121.477,
+      "address": "上海市虹口区多伦路",
+      "taste_tags": [
+        "历史建筑",
+        "文艺",
+        "漫步",
+        "复古",
+        "学习"
+      ],
+      "highlight_note": "民国文化名人聚居地，鲁迅曾住附近。街上老建筑保存完好，有不少小型私人博物馆。安静的小马路，很适合漫步。",
+      "permanent_features": [
+        "民国建筑",
+        "左联纪念馆",
+        "老电影咖啡馆",
+        "名人故居"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B001",
+      "name": "%Arabica武康庭店",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2062,
+      "longitude": 121.4398,
+      "address": "上海市徐汇区武康路378号武康庭1楼",
+      "taste_tags": [
+        "咖啡",
+        "拍照",
+        "文艺",
+        "情侣",
+        "下午茶"
+      ],
+      "highlight_note": "上海最美Arabica分店。绿色仙人掌墙是标志性打卡点。咖啡品质稳定，逛街累了来一杯正好。",
+      "permanent_features": [
+        "仙人掌墙",
+        "武康庭内",
+        "咖啡"
+      ],
+      "opening_hours": "08:00-20:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B002",
+      "name": "Manner Coffee(安福路店)",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2073,
+      "longitude": 121.4375,
+      "address": "上海市徐汇区安福路201-1号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "朋友",
+        "放空"
+      ],
+      "highlight_note": "上海本土精品咖啡扛把子。拿铁只要15元，品质却不输任何连锁。自带杯再减5元，环保又实惠。",
+      "permanent_features": [
+        "精品咖啡",
+        "价格实惠",
+        "自带领减5元"
+      ],
+      "opening_hours": "07:30-18:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B003",
+      "name": "Metal Hands咖啡(延庆路店)",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.21,
+      "longitude": 121.435,
+      "address": "上海市静安区延庆路18号",
+      "taste_tags": [
+        "咖啡",
+        "文艺",
+        "安静",
+        "独行",
+        "复古"
+      ],
+      "highlight_note": "藏在老洋房里的咖啡馆。拉花是招牌，手冲也不错。老式收音机和古董家具营造出独特的怀旧氛围。",
+      "permanent_features": [
+        "老洋房内",
+        "拉花咖啡",
+        "复古收音机"
+      ],
+      "opening_hours": "09:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B004",
+      "name": "Seesaw Coffee(静安寺店)",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.225,
+      "longitude": 121.445,
+      "address": "上海市静安区愚园路68号晶品中心LG1",
+      "taste_tags": [
+        "咖啡",
+        "文艺",
+        "朋友",
+        "商务",
+        "下午茶"
+      ],
+      "highlight_note": "上海精品咖啡先驱。云南单品豆是特色，和常规意式豆不同。空间设计感强，适合坐一下午工作。",
+      "permanent_features": [
+        "云南单品豆",
+        "设计感空间",
+        "商谈友好"
+      ],
+      "opening_hours": "08:00-21:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B005",
+      "name": "黄浦江游览(十六铺码头)",
+      "tier": 2,
+      "category": "游览",
+      "latitude": 31.232,
+      "longitude": 121.491,
+      "address": "上海市黄浦区中山东二路481号十六铺码头",
+      "taste_tags": [
+        "拍照",
+        "浪漫",
+        "情侣",
+        "朋友",
+        "夜生活"
+      ],
+      "highlight_note": "从水上角度看陆家嘴四件套，比在岸边拍照更震撼。建议选日落航班，天色变化层次最丰富。甲板上风大，冬季带外套。",
+      "permanent_features": [
+        "水上观景",
+        "四件套",
+        "日落航班"
+      ],
+      "opening_hours": "10:00-21:30",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B006",
+      "name": "复兴公园",
+      "tier": 2,
+      "category": "公园",
+      "latitude": 31.227,
+      "longitude": 121.465,
+      "address": "上海市黄浦区雁荡路109号",
+      "taste_tags": [
+        "漫步",
+        "安静",
+        "放空",
+        "朋友",
+        "家庭"
+      ],
+      "highlight_note": "上海最市中心的法式公园。早上有阿姨们跳舞，中午有白领来放空。晚上灯光很浪漫，是周边居民的后花园。",
+      "permanent_features": [
+        "法式园林",
+        "音乐喷泉",
+        "中心城区"
+      ],
+      "opening_hours": "06:00-21:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B007",
+      "name": "上海博物馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.2305,
+      "longitude": 121.475,
+      "address": "上海市黄浦区人民大道201号",
+      "taste_tags": [
+        "学习",
+        "历史建筑",
+        "朋友",
+        "家庭",
+        "拍照"
+      ],
+      "highlight_note": "国家级博物馆，青铜器和书画是镇馆之宝。免费但需要预约，周末很快约满。建议先在官方App预约时段。",
+      "permanent_features": [
+        "青铜器",
+        "书画收藏",
+        "免费",
+        "提前预约"
+      ],
+      "opening_hours": "09:00-17:00（周一闭馆）",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B008",
+      "name": "钟书阁(静安寺店)",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.2245,
+      "longitude": 121.448,
+      "address": "上海市静安区南京西路1788号国际中心3楼",
+      "taste_tags": [
+        "学习",
+        "文艺",
+        "朋友",
+        "独行",
+        "拍照"
+      ],
+      "highlight_note": "上海最美书店之一。镜面天花板让空间视觉上放大两倍。选书品味很好，有专门的上海文献区。适合买本书坐一下午。",
+      "permanent_features": [
+        "镜面天花板",
+        "选书品味",
+        "上海文献区"
+      ],
+      "opening_hours": "10:00-21:30",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B009",
+      "name": "茑屋书店(上生新所店)",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.215,
+      "longitude": 121.435,
+      "address": "上海市长宁区延安西路1262号上生新所5号楼",
+      "taste_tags": [
+        "学习",
+        "文艺",
+        "拍照",
+        "朋友",
+        "下午茶"
+      ],
+      "highlight_note": "日本茑屋的中国首店。哥伦比亚泳池改建的建筑本身就是景点。二楼有个精酿酒吧，逛完可以喝一杯。",
+      "permanent_features": [
+        "历史保护建筑",
+        "泳池改造",
+        "茑屋选品"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B010",
+      "name": "TX淮海",
+      "tier": 2,
+      "category": "购物",
+      "latitude": 31.2245,
+      "longitude": 121.4725,
+      "address": "上海市黄浦区淮海中路523号",
+      "taste_tags": [
+        "拍照",
+        "朋友",
+        "购物",
+        "文艺",
+        "夜生活"
+      ],
+      "highlight_note": "年轻潮流地标。经常换品牌快闪活动，是上海最容易偶遇博主的地方。B1的美食广场选择很多。",
+      "permanent_features": [
+        "潮流品牌",
+        "快闪活动",
+        "年轻群体"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B011",
+      "name": "大学路市集",
+      "tier": 2,
+      "category": "市集",
+      "latitude": 31.25,
+      "longitude": 121.552,
+      "address": "上海市杨浦区大学路",
+      "taste_tags": [
+        "朋友",
+        "购物",
+        "拍照",
+        "小众艺术",
+        "漫步"
+      ],
+      "highlight_note": "杨浦最热闹的文艺街道。周六日有文创市集，平日也有各种小店。旁边有伟成咖啡和DOE咖啡，适合串起来逛。",
+      "permanent_features": [
+        "文创市集",
+        "潮流小店",
+        "同济大学附近"
+      ],
+      "opening_hours": "全天开放（市集周末为主）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B012",
+      "name": "七宝老街",
+      "tier": 2,
+      "category": "老街",
+      "latitude": 31.153,
+      "longitude": 121.357,
+      "address": "上海市闵行区七宝镇富强街",
+      "taste_tags": [
+        "本地老店",
+        "品尝",
+        "漫步",
+        "朋友",
+        "家庭"
+      ],
+      "highlight_note": "上海周边最完整的水乡老街。汤圆、糕团、海棠糕都是现做的。人不像朱家角那么多，烟火气更足。",
+      "permanent_features": [
+        "水乡老街",
+        "现做小吃",
+        "人流较少"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.2,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B013",
+      "name": "新天地",
+      "tier": 2,
+      "category": "商圈",
+      "latitude": 31.227,
+      "longitude": 121.474,
+      "address": "上海市黄浦区太仓路181弄",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "夜生活",
+        "拍照",
+        "情侣"
+      ],
+      "highlight_note": "石库门改造的时尚地标。白天是高端购物，晚上酒吧餐厅热闹起来。南里的设计店和北里的夜店形成有趣对比。",
+      "permanent_features": [
+        "石库门建筑",
+        "高端商业",
+        "酒吧区"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B014",
+      "name": "衡山·和集",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.205,
+      "longitude": 121.438,
+      "address": "上海市徐汇区衡山路890号",
+      "taste_tags": [
+        "学习",
+        "文艺",
+        "安静",
+        "独行",
+        "拍照"
+      ],
+      "highlight_note": "藏在衡山路梧桐树后的书店。三层小楼每层都是不同主题，影音空间有黑胶唱片。杂志博物馆是这个书店的独特亮点。",
+      "permanent_features": [
+        "梧桐树路",
+        "杂志博物馆",
+        "黑胶唱片"
+      ],
+      "opening_hours": "10:00-21:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B015",
+      "name": "M50创意园(苏州河岸)",
+      "tier": 2,
+      "category": "创意园区",
+      "latitude": 31.25,
+      "longitude": 121.435,
+      "address": "上海市普陀区莫干山路50号",
+      "taste_tags": [
+        "漫步",
+        "拍照",
+        "小众艺术",
+        "文艺",
+        "朋友"
+      ],
+      "highlight_note": "M50沿苏州河一侧人少景美，是本地摄影师私藏的拍照点。河边的废弃码头改成了观景平台，傍晚看日落很舒服。",
+      "permanent_features": [
+        "苏州河景",
+        "工业风",
+        "摄影师私藏"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B016",
+      "name": "老吉士上海菜(新天地店)",
+      "tier": 2,
+      "category": "本帮菜",
+      "latitude": 31.2265,
+      "longitude": 121.474,
+      "address": "上海市黄浦区太仓路58号新天地广场3楼",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "情侣",
+        "本地老店"
+      ],
+      "highlight_note": "改良本帮菜代表。红烧肉是招牌，浓油赤酱但不腻人。环境是老上海风格，请客有面子。需提前订位。",
+      "permanent_features": [
+        "红烧肉",
+        "老上海风格",
+        "提前订位"
+      ],
+      "opening_hours": "11:00-14:00, 17:00-21:30",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B017",
+      "name": "荣新馆(遵义路店)",
+      "tier": 2,
+      "category": "日料",
+      "latitude": 31.218,
+      "longitude": 121.397,
+      "address": "上海市长宁区遵义路100号南丰城4楼",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "商务",
+        "家庭"
+      ],
+      "highlight_note": "上海日料自助性价比之王。三文鱼刺身和海胆是必吃，食材新鲜度超出预期。午市套餐更划算，适合附近上班的白领。",
+      "permanent_features": [
+        "日料自助",
+        "三文鱼",
+        "海胆"
+      ],
+      "opening_hours": "11:30-14:00, 17:30-21:30",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B018",
+      "name": "地球美食书店",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.225,
+      "longitude": 121.474,
+      "address": "上海市黄浦区淮海中路776号地下1层",
+      "taste_tags": [
+        "学习",
+        "文艺",
+        "安静",
+        "独行",
+        "下午茶"
+      ],
+      "highlight_note": "上海最小的书店之一，只卖和食物有关的书。店内有手冲咖啡，可以边喝边翻食谱。老板会主动和客人聊食物话题。",
+      "permanent_features": [
+        "专业美食书店",
+        "手冲咖啡",
+        "老板健谈"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B019",
+      "name": "法国公园(鲁迅公园)",
+      "tier": 2,
+      "category": "公园",
+      "latitude": 31.262,
+      "longitude": 121.479,
+      "address": "上海市虹口区四川北路2288号",
+      "taste_tags": [
+        "漫步",
+        "安静",
+        "朋友",
+        "家庭",
+        "放空"
+      ],
+      "highlight_note": "虹口最老的公园之一，有法式园林痕迹。内有鲁迅纪念馆和梅园。早上有晨练的大爷大妈，很有上海烟火气。",
+      "permanent_features": [
+        "法式园林",
+        "鲁迅纪念馆",
+        "梅园"
+      ],
+      "opening_hours": "05:00-21:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B020",
+      "name": "上生新所",
+      "tier": 2,
+      "category": "创意园区",
+      "latitude": 31.2145,
+      "longitude": 121.435,
+      "address": "上海市长宁区延安西路1262号",
+      "taste_tags": [
+        "拍照",
+        "朋友",
+        "文艺",
+        "漫步",
+        "小众艺术"
+      ],
+      "highlight_note": "哥伦比亚乡村俱乐部改造的历史建筑群。泳池是老上海网红打卡地，现在成为茑屋书店等品牌的载体。很适合拍复古风格照片。",
+      "permanent_features": [
+        "历史保护泳池",
+        "茑屋书店",
+        "哥伦比亚风格"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B021",
+      "name": "Long Time No Read久视",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.2075,
+      "longitude": 121.44,
+      "address": "上海市徐汇区武康路51号",
+      "taste_tags": [
+        "学习",
+        "文艺",
+        "安静",
+        "独行",
+        "拍照"
+      ],
+      "highlight_note": "藏在老弄堂里的独立书店。老板选书品味独特，有很多台版书。店内有咖啡，座位不多，适合一个人静静看书。",
+      "permanent_features": [
+        "独立书店",
+        "台版书",
+        "弄堂深处"
+      ],
+      "opening_hours": "12:00-20:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B022",
+      "name": "Azabuya麻布茶房",
+      "tier": 2,
+      "category": "日式甜品",
+      "latitude": 31.2068,
+      "longitude": 121.439,
+      "address": "上海市徐汇区武康路378号1楼",
+      "taste_tags": [
+        "甜品",
+        "朋友",
+        "情侣",
+        "下午茶",
+        "拍照"
+      ],
+      "highlight_note": "日本老板开的抹茶甜品店。抹茶冰淇淋浓郁，抹茶千层蛋糕是招牌。坐在门口梧桐树下吃甜品，很有腔调。",
+      "permanent_features": [
+        "日本老板",
+        "抹茶系列",
+        "梧桐树"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B023",
+      "name": "Bake Shack(襄阳北路店)",
+      "tier": 2,
+      "category": "面包店",
+      "latitude": 31.212,
+      "longitude": 121.465,
+      "address": "上海市徐汇区襄阳北路101号",
+      "taste_tags": [
+        "甜品",
+        "朋友",
+        "拍照",
+        "轻食",
+        "放空"
+      ],
+      "highlight_note": "上海最难买的面包之一，每次排队至少30分钟起。招牌是各种创意贝果和可颂。建议开门就去，否则热门款秒没。",
+      "permanent_features": [
+        "创意贝果",
+        "排队",
+        "可颂"
+      ],
+      "opening_hours": "08:00-19:00（卖完即止）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B024",
+      "name": "Mao Shop茂茂米铺",
+      "tier": 2,
+      "category": "独立零售",
+      "latitude": 31.222,
+      "longitude": 121.436,
+      "address": "上海市长宁区愚园路1065号",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "文艺",
+        "漫步"
+      ],
+      "highlight_note": "愚园路网红店主推的本土设计品牌。衣服和配饰都很有个性，价格也不算贵。店员会主动帮忙搭配。",
+      "permanent_features": [
+        "本土设计",
+        "店员搭配",
+        "个性服装"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B025",
+      "name": "古羊路日料街",
+      "tier": 2,
+      "category": "日料",
+      "latitude": 31.214,
+      "longitude": 121.433,
+      "address": "上海市长宁区古羊路",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "夜生活",
+        "商务"
+      ],
+      "highlight_note": "上海老牌日料一条街，很多日本客人。居酒屋氛围正宗，烤串和清酒是绝配。晚上九点后是高峰期。",
+      "permanent_features": [
+        "日式居酒屋",
+        "烤串",
+        "清酒"
+      ],
+      "opening_hours": "18:00-02:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B026",
+      "name": "Fairmont Peace Hotel九国餐厅",
+      "tier": 2,
+      "category": "西餐",
+      "latitude": 31.235,
+      "longitude": 121.487,
+      "address": "上海市黄浦区南京东路20号和平饭店9楼",
+      "taste_tags": [
+        "品尝",
+        "情侣",
+        "朋友",
+        "历史建筑",
+        "拍照"
+      ],
+      "highlight_note": "和平饭店的九楼西餐厅，能看到外滩全景。老上海爵士乐队现场演奏是招牌，仿佛穿越回1930年代。下午茶套餐性价比更高。",
+      "permanent_features": [
+        "外滩全景",
+        "老上海爵士",
+        "历史酒店"
+      ],
+      "opening_hours": "11:30-14:30, 17:30-21:30",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B027",
+      "name": "无印良品酒店(上海)",
+      "tier": 2,
+      "category": "生活方式",
+      "latitude": 31.2405,
+      "longitude": 121.4745,
+      "address": "上海市黄浦区南京西路863号",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "文艺",
+        "漫步"
+      ],
+      "highlight_note": "全球唯一MUJI酒店楼下就是旗舰店加餐厅。性冷淡风格，商品齐全。餐厅的早餐套餐很实惠，住不住都可以来吃。",
+      "permanent_features": [
+        "MUJI风格",
+        "旗舰店",
+        "早餐实惠"
+      ],
+      "opening_hours": "10:00-21:30",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B028",
+      "name": "上海邮政博物馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.248,
+      "longitude": 121.491,
+      "address": "上海市虹口区天潼路395号",
+      "taste_tags": [
+        "学习",
+        "历史建筑",
+        "朋友",
+        "拍照",
+        "家庭"
+      ],
+      "highlight_note": "原上海邮政总局大楼，1924年建成的折衷主义建筑。旋转楼梯和穹顶壁画是看点。可以寄明信片，邮戳是专属的邮政博物馆章。",
+      "permanent_features": [
+        "折衷主义建筑",
+        "旋转楼梯",
+        "明信片",
+        "专属邮戳"
+      ],
+      "opening_hours": "09:00-17:00（周三、四、六、日）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B029",
+      "name": "苏州河步道(外滩源-外白渡桥)",
+      "tier": 2,
+      "category": "漫步",
+      "latitude": 31.243,
+      "longitude": 121.492,
+      "address": "上海市黄浦区苏州河畔",
+      "taste_tags": [
+        "漫步",
+        "拍照",
+        "安静",
+        "朋友",
+        "夜生活"
+      ],
+      "highlight_note": "苏州河沿岸步道最近全线贯通，是上海最舒服的徒步路线之一。夜色下的河面和两岸灯光，很有老上海风情。",
+      "permanent_features": [
+        "河岸步道",
+        "灯光夜景",
+        "全线贯通"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B030",
+      "name": "浦东美术馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.24,
+      "longitude": 121.5,
+      "address": "上海市浦东新区陆家嘴环路127号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "学习",
+        "朋友",
+        "情侣"
+      ],
+      "highlight_note": "紧邻外滩，设计师让建筑本身就是艺术品。镜厅是网红打卡点，能看到黄浦江和对岸外滩。票价包含所有展览，性价比极高。",
+      "permanent_features": [
+        "镜厅",
+        "外滩对景",
+        "票价含展"
+      ],
+      "opening_hours": "10:00-21:00（周一闭馆）",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B031",
+      "name": "百联曲阳购物中心(社区感)",
+      "tier": 2,
+      "category": "商圈",
+      "latitude": 31.272,
+      "longitude": 121.483,
+      "address": "上海市虹口区曲阳路800号",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "家庭",
+        "朋友",
+        "漫步"
+      ],
+      "highlight_note": "不是网红地，但周边居民最爱。保留了老牌百货的亲切感，品牌接地气。B1的美食广场是虹镇老街的味道。",
+      "permanent_features": [
+        "社区商业",
+        "老上海",
+        "美食广场"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.2,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B032",
+      "name": "上海音乐厅",
+      "tier": 2,
+      "category": "演出",
+      "latitude": 31.23,
+      "longitude": 121.472,
+      "address": "上海市黄浦区延安东路523号",
+      "taste_tags": [
+        "学习",
+        "朋友",
+        "情侣",
+        "拍照",
+        "浪漫"
+      ],
+      "highlight_note": "中国最古老的音乐厅之一，1930年法租界建筑。音响效果出色，演出票价从免费公益场到几百元都有。建筑本身就是艺术品。",
+      "permanent_features": [
+        "历史保护建筑",
+        "优秀音响",
+        "公益场"
+      ],
+      "opening_hours": "演出时间开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B033",
+      "name": "Prée(新天地店)",
+      "tier": 2,
+      "category": "冰淇淋",
+      "latitude": 31.2268,
+      "longitude": 121.4735,
+      "address": "上海市黄浦区新天地北里1楼",
+      "taste_tags": [
+        "甜品",
+        "朋友",
+        "情侣",
+        "拍照",
+        "下午茶"
+      ],
+      "highlight_note": "上海gelato天花板。季节限定的中国口味是特色（桂花、抹茶、芝麻）。环境简约，适合打卡拍照。",
+      "permanent_features": [
+        "Gelato",
+        "季节限定",
+        "打卡"
+      ],
+      "opening_hours": "12:00-21:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B034",
+      "name": "黑石M+园区",
+      "tier": 2,
+      "category": "创意园区",
+      "latitude": 31.19,
+      "longitude": 121.445,
+      "address": "上海市徐汇区黑石M+音乐主题园区",
+      "taste_tags": [
+        "拍照",
+        "文艺",
+        "漫步",
+        "朋友",
+        "小众艺术"
+      ],
+      "highlight_note": "原上海交响乐团仓库改造的音乐主题园区。保留了老建筑的裸露红砖和工业管道，适合拍颓废工业风照片。",
+      "permanent_features": [
+        "工业风",
+        "红砖",
+        "音乐主题"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B035",
+      "name": "WABI COFFEE",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.208,
+      "longitude": 121.434,
+      "address": "上海市长宁区昭化路279号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "放空",
+        "文艺"
+      ],
+      "highlight_note": "藏在老厂房里的咖啡馆。Wabi-sabi侘寂风格，座位很少但很安静。手冲咖啡专业，会给客人闻干香。",
+      "permanent_features": [
+        "侘寂风格",
+        "手冲专业",
+        "老厂房"
+      ],
+      "opening_hours": "10:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B036",
+      "name": "上海城市规划展示馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.232,
+      "longitude": 121.478,
+      "address": "上海市黄浦区人民大道100号",
+      "taste_tags": [
+        "学习",
+        "拍照",
+        "朋友",
+        "家庭",
+        "历史建筑"
+      ],
+      "highlight_note": "人民公园地下，展示了上海城市发展历程。沙盘很震撼，可以看到2035规划全貌。定期有免费讲解。",
+      "permanent_features": [
+        "城市沙盘",
+        "2035规划",
+        "人民公园"
+      ],
+      "opening_hours": "09:00-17:00（周一闭馆）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B037",
+      "name": "上海图书馆东馆",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.216,
+      "longitude": 121.54,
+      "address": "上海市浦东新区合欢路300号",
+      "taste_tags": [
+        "学习",
+        "安静",
+        "独行",
+        "朋友",
+        "拍照"
+      ],
+      "highlight_note": "2022年新开的超大型图书馆。建筑本身就是艺术品，中庭的旋转楼梯很出片。阅读区座位充足，免费wifi好，是工作学习的好地方。",
+      "permanent_features": [
+        "旋转楼梯",
+        "超大型",
+        "免费wifi"
+      ],
+      "opening_hours": "09:00-20:30（周一闭馆）",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B038",
+      "name": "上海戏剧学院(华山路校区)",
+      "tier": 2,
+      "category": "文化",
+      "latitude": 31.222,
+      "longitude": 121.437,
+      "address": "上海市静安区华山路630号",
+      "taste_tags": [
+        "拍照",
+        "学习",
+        "文艺",
+        "朋友",
+        "漫步"
+      ],
+      "highlight_note": "校园里的老建筑很有民国味道，梧桐树成荫。端升楼是优秀历史建筑，校园咖啡厅对公众开放，可以感受学生氛围。",
+      "permanent_features": [
+        "民国建筑",
+        "梧桐树",
+        "校园咖啡厅"
+      ],
+      "opening_hours": "咖啡厅对公众开放",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B039",
+      "name": "1930停车市集",
+      "tier": 2,
+      "category": "市集",
+      "latitude": 31.255,
+      "longitude": 121.4885,
+      "address": "上海市虹口区1930停车场上方",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "小众艺术",
+        "夜生活"
+      ],
+      "highlight_note": "在老厂房屋顶举办的快闪市集，主打独立设计和手工。每月不同主题，是上海买手和文艺青年的聚集地。",
+      "permanent_features": [
+        "屋顶市集",
+        "独立设计",
+        "快闪"
+      ],
+      "opening_hours": "不定期（关注公众号）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B040",
+      "name": "DOE Coffee(愚园路店)",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.222,
+      "longitude": 121.433,
+      "address": "上海市长宁区愚园路1088弄48号",
+      "taste_tags": [
+        "咖啡",
+        "朋友",
+        "拍照",
+        "文艺",
+        "夜生活"
+      ],
+      "highlight_note": "DOE是上海本土街头品牌，咖啡只是副业。店里集合了国内外街头品牌，很像迷你潮流博物馆。咖啡特调名字都很有意思。",
+      "permanent_features": [
+        "街头文化",
+        "潮流集合",
+        "特调咖啡"
+      ],
+      "opening_hours": "10:00-21:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B041",
+      "name": "Heythorn美式餐吧",
+      "tier": 2,
+      "category": "美式餐吧",
+      "latitude": 31.2065,
+      "longitude": 121.44,
+      "address": "上海市徐汇区武康路99号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "夜生活",
+        "拍照",
+        "热闹"
+      ],
+      "highlight_note": "上海最老牌的美式餐吧之一。周末早午餐是招牌，班戴戴松饼和炸鱼薯条份量十足。露台位很舒服，晚上有球赛转播。",
+      "permanent_features": [
+        "老牌美式",
+        "早午餐",
+        "露台"
+      ],
+      "opening_hours": "09:00-次日01:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B042",
+      "name": "鲁迅纪念馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.263,
+      "longitude": 121.48,
+      "address": "上海市虹口区甜爱路280号鲁迅公园内",
+      "taste_tags": [
+        "学习",
+        "历史建筑",
+        "朋友",
+        "家庭",
+        "漫步"
+      ],
+      "highlight_note": "在鲁迅公园内，展示了鲁迅在上海的生活轨迹。手稿和藏书是镇馆之宝。纪念馆外的鲁迅墓可以顺便参观。",
+      "permanent_features": [
+        "鲁迅手稿",
+        "鲁迅墓",
+        "鲁迅公园"
+      ],
+      "opening_hours": "09:00-17:00（周一闭馆）",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B043",
+      "name": "上海自然博物馆",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.218,
+      "longitude": 121.451,
+      "address": "上海市静安区北京西路510号（静安雕塑公园内）",
+      "taste_tags": [
+        "学习",
+        "朋友",
+        "家庭",
+        "拍照",
+        "深度体验"
+      ],
+      "highlight_note": "亚洲最大自然博物馆之一。地下是矿石标本区，地上是演化展示。恐龙化石和巨型蓝鲸标本是孩子们的最爱。",
+      "permanent_features": [
+        "恐龙化石",
+        "蓝鲸标本",
+        "矿石"
+      ],
+      "opening_hours": "09:00-17:15（周一闭馆）",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B044",
+      "name": "苏小柳点心",
+      "tier": 2,
+      "category": "本帮点心",
+      "latitude": 31.209,
+      "longitude": 121.436,
+      "address": "上海市徐汇区武康路日喀则路交叉口",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "轻食",
+        "放空"
+      ],
+      "highlight_note": "主打江南点心的小店。蟹粉小笼和鲜肉小笼是招牌，皮薄汤多。环境干净，价格实惠，适合一个人吃简餐。",
+      "permanent_features": [
+        "蟹粉小笼",
+        "干净简餐",
+        "一个人友好"
+      ],
+      "opening_hours": "07:00-20:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B045",
+      "name": "上海邮政博物馆河边",
+      "tier": 2,
+      "category": "漫步",
+      "latitude": 31.249,
+      "longitude": 121.4905,
+      "address": "上海市虹口区天潼路苏州河畔",
+      "taste_tags": [
+        "漫步",
+        "拍照",
+        "安静",
+        "朋友",
+        "夜生活"
+      ],
+      "highlight_note": "苏州河北岸的步道，能拍到邮政博物馆的完整倒影。晚上亮灯后更美，是本地摄影师的私藏机位。",
+      "permanent_features": [
+        "倒影",
+        "夜景",
+        "摄影师机位"
+      ],
+      "opening_hours": "全天",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B046",
+      "name": "La Barra西班牙餐吧",
+      "tier": 2,
+      "category": "西餐",
+      "latitude": 31.2075,
+      "longitude": 121.439,
+      "address": "上海市徐汇区武康路378号2楼",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "夜生活",
+        "情侣",
+        "热闹"
+      ],
+      "highlight_note": "藏在2楼的西班牙小酒馆。Tapas正宗，火腿和桑格利亚酒是招牌。座位不多氛围好，适合约会或者和朋友小聚。",
+      "permanent_features": [
+        "Tapas",
+        "火腿",
+        "小酒馆"
+      ],
+      "opening_hours": "17:00-23:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B047",
+      "name": "Poppy餐吧",
+      "tier": 2,
+      "category": "西餐",
+      "latitude": 31.2095,
+      "longitude": 121.4365,
+      "address": "上海市长宁区幸福路上一家温馨小馆",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "安静",
+        "下午茶"
+      ],
+      "highlight_note": "藏在弄堂深处的家庭式西餐吧。老板是外国人，做的西餐很地道但不花哨。意大利面和提拉米苏是常客必点。",
+      "permanent_features": [
+        "家庭式",
+        "老板外国人",
+        "意面"
+      ],
+      "opening_hours": "11:30-14:30, 17:30-21:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B048",
+      "name": "上海大剧院",
+      "tier": 2,
+      "category": "演出",
+      "latitude": 31.231,
+      "longitude": 121.476,
+      "address": "上海市黄浦区人民大道300号",
+      "taste_tags": [
+        "学习",
+        "朋友",
+        "情侣",
+        "拍照",
+        "浪漫"
+      ],
+      "highlight_note": "上海市中心的地标剧院。建筑线条现代，玻璃穹顶在阳光下很美。芭蕾和交响乐演出居多，票价相对亲民。",
+      "permanent_features": [
+        "玻璃穹顶",
+        "芭蕾",
+        "交响乐"
+      ],
+      "opening_hours": "演出时间开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B049",
+      "name": "Mao Livehouse",
+      "tier": 2,
+      "category": "演出",
+      "latitude": 31.223,
+      "longitude": 121.433,
+      "address": "上海市长宁区愚园路1398号地下一层",
+      "taste_tags": [
+        "朋友",
+        "夜生活",
+        "热闹",
+        "拍照",
+        "小众艺术"
+      ],
+      "highlight_note": "上海本土最活跃的Livehouse之一。乐队演出为主，摇滚、电子、民谣都有。场地不大，和艺人距离很近，沉浸感强。",
+      "permanent_features": [
+        "本土Livehouse",
+        "乐队演出",
+        "地下一层"
+      ],
+      "opening_hours": "演出日开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B050",
+      "name": "洪记日夜",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2085,
+      "longitude": 121.437,
+      "address": "上海市徐汇区五原路92号",
+      "taste_tags": [
+        "咖啡",
+        "朋友",
+        "拍照",
+        "文艺",
+        "放空"
+      ],
+      "highlight_note": "五原路上的小咖啡馆，门口有一棵大梧桐树。白天卖咖啡，晚上变成小酒馆。咖啡特调名字都很有意思。",
+      "permanent_features": [
+        "大梧桐树",
+        "日与夜转换",
+        "特调"
+      ],
+      "opening_hours": "10:00-23:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B051",
+      "name": "上海老街citywalk",
+      "tier": 2,
+      "category": "漫步",
+      "latitude": 31.218,
+      "longitude": 121.48,
+      "address": "上海市黄浦区方浜中路（近豫园）",
+      "taste_tags": [
+        "漫步",
+        "拍照",
+        "朋友",
+        "历史建筑",
+        "本地老店"
+      ],
+      "highlight_note": "豫园旁边的老街，没有城隍庙那么商业化。保留了大量老上海里弄生活场景，是真正的citywalk路线。",
+      "permanent_features": [
+        "老里弄",
+        "非商业化",
+        "真实生活"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B052",
+      "name": "Baker&Spice",
+      "tier": 2,
+      "category": "面包店",
+      "latitude": 31.205,
+      "longitude": 121.4385,
+      "address": "上海市徐汇区安福路201号",
+      "taste_tags": [
+        "甜品",
+        "朋友",
+        "情侣",
+        "下午茶",
+        "拍照"
+      ],
+      "highlight_note": "安福路网红餐饮之一。欧式面包和蛋糕都很地道，开心果泡芙是爆款。露台位看街景很舒服。",
+      "permanent_features": [
+        "欧式面包",
+        "开心果泡芙",
+        "安福路"
+      ],
+      "opening_hours": "08:00-20:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B053",
+      "name": "LE TERO",
+      "tier": 2,
+      "category": "法式餐吧",
+      "latitude": 31.21,
+      "longitude": 121.435,
+      "address": "上海市长宁区幸福路42号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "浪漫",
+        "安静"
+      ],
+      "highlight_note": "法国老板开的法式小酒馆。惠灵顿牛排是招牌，需要提前预订。酒单以法国酒为主，侍酒师很专业。",
+      "permanent_features": [
+        "惠灵顿牛排",
+        "法国老板",
+        "专业侍酒"
+      ],
+      "opening_hours": "18:00-22:00（周二至周日）",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B054",
+      "name": "Simple Drinks",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2185,
+      "longitude": 121.432,
+      "address": "上海市长宁区愚园路986号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "学习",
+        "放空"
+      ],
+      "highlight_note": "愚园路上安静的小咖啡馆。咖啡师很专业，会认真介绍每款豆子。座位有插座，适合一个人工作或者发呆。",
+      "permanent_features": [
+        "手冲专业",
+        "有插座",
+        "安静"
+      ],
+      "opening_hours": "08:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B055",
+      "name": "鼎王(淮海路店)",
+      "tier": 2,
+      "category": "台湾火锅",
+      "latitude": 31.222,
+      "longitude": 121.47,
+      "address": "上海市黄浦区淮海中路939号巴黎春天5楼",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "热闹",
+        "夜生活"
+      ],
+      "highlight_note": "台湾连锁麻辣锅上海分店。鸭血豆腐无限续是招牌，锅底浓郁。适合多人聚餐，性价比高。",
+      "permanent_features": [
+        "麻辣锅",
+        "鸭血豆腐无限续",
+        "多人聚餐"
+      ],
+      "opening_hours": "11:30-22:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B056",
+      "name": "上海话剧艺术中心",
+      "tier": 2,
+      "category": "演出",
+      "latitude": 31.2075,
+      "longitude": 121.4365,
+      "address": "上海市徐汇区安福路288号",
+      "taste_tags": [
+        "学习",
+        "朋友",
+        "情侣",
+        "拍照",
+        "文艺"
+      ],
+      "highlight_note": "上海最专业的话剧演出场所之一。制作精良的本子为主，票价从80元起。周五晚场是黄金时段，经常一票难求。",
+      "permanent_features": [
+        "专业话剧",
+        "80元起",
+        "安福路"
+      ],
+      "opening_hours": "演出时间开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B057",
+      "name": "Panorama品尼",
+      "tier": 2,
+      "category": "西餐",
+      "latitude": 31.24,
+      "longitude": 121.478,
+      "address": "上海市黄浦区南京东路299号宏伊广场55楼",
+      "taste_tags": [
+        "品尝",
+        "情侣",
+        "朋友",
+        "拍照",
+        "浪漫"
+      ],
+      "highlight_note": "55楼俯瞰外滩全景，比和平饭店视角更开阔。下午茶套餐200+，性价比超过绝大多数外滩餐厅。窗边位需要提前预订。",
+      "permanent_features": [
+        "外滩全景",
+        "55楼",
+        "下午茶"
+      ],
+      "opening_hours": "14:00-22:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B058",
+      "name": "Sh来电",
+      "tier": 2,
+      "category": "餐吧",
+      "latitude": 31.215,
+      "longitude": 121.433,
+      "address": "上海市长宁区幸福路42号",
+      "taste_tags": [
+        "朋友",
+        "夜生活",
+        "热闹",
+        "拍照",
+        "小众艺术"
+      ],
+      "highlight_note": "精酿啤酒和电子音乐的结合。经常举办精酿厂牌活动，啤酒选品很有眼光。氛围年轻活泼，是上海精酿圈的核心据点。",
+      "permanent_features": [
+        "精酿啤酒",
+        "电子音乐",
+        "活动丰富"
+      ],
+      "opening_hours": "18:00-02:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B059",
+      "name": "上海邮政博物馆文创店",
+      "tier": 2,
+      "category": "购物",
+      "latitude": 31.2485,
+      "longitude": 121.491,
+      "address": "上海市虹口区天潼路395号",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "学习",
+        "历史建筑"
+      ],
+      "highlight_note": "博物馆一楼文创店，不用门票也能进。有上海元素的设计周边，明信片和冰箱贴最有特色。",
+      "permanent_features": [
+        "上海元素",
+        "明信片",
+        "冰箱贴"
+      ],
+      "opening_hours": "09:00-17:00（周三、四、六、日）",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B060",
+      "name": "Mao Creations",
+      "tier": 2,
+      "category": "生活方式",
+      "latitude": 31.208,
+      "longitude": 121.437,
+      "address": "上海市徐汇区武康路393号甲",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "文艺",
+        "小众艺术"
+      ],
+      "highlight_note": "设计师品牌集合店。衣服和配饰都很有个性，不撞款。店员会根据客人风格给搭配建议，很贴心。",
+      "permanent_features": [
+        "设计师品牌",
+        "不撞款",
+        "搭配建议"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B061",
+      "name": "Green City绿居",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.223,
+      "longitude": 121.434,
+      "address": "上海市长宁区愚园路1048号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "学习",
+        "放空"
+      ],
+      "highlight_note": "绿植店和咖啡结合的空间，满眼绿色很治愈。咖啡无功无过，但环境让人想多坐一会儿。自带盆栽来可以免费喝咖啡。",
+      "permanent_features": [
+        "绿植",
+        "治愈系",
+        "买花喝咖啡"
+      ],
+      "opening_hours": "10:00-19:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B062",
+      "name": "SPE媒体图书馆",
+      "tier": 2,
+      "category": "书店",
+      "latitude": 31.216,
+      "longitude": 121.433,
+      "address": "上海市长宁区昭化路媒体园内",
+      "taste_tags": [
+        "学习",
+        "安静",
+        "独行",
+        "小众艺术",
+        "拍照"
+      ],
+      "highlight_note": "上海电影制片厂旧址改造的创意园里的专业电影图书馆。收藏了大量电影海报和老杂志。安静得像另一个世界。",
+      "permanent_features": [
+        "电影图书馆",
+        "老杂志",
+        "安静"
+      ],
+      "opening_hours": "预约制",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B063",
+      "name": "阿拉丁神灯",
+      "tier": 2,
+      "category": "本帮菜",
+      "latitude": 31.209,
+      "longitude": 121.466,
+      "address": "上海市徐汇区永康路68号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "热闹",
+        "本地老店"
+      ],
+      "highlight_note": "老牌本帮菜馆，本地人聚餐常去。菜量大、口味正，红烧肉和油爆虾是招牌。环境一般但性价比极高。",
+      "permanent_features": [
+        "本帮菜",
+        "菜量大",
+        "性价比"
+      ],
+      "opening_hours": "11:00-14:00, 17:00-21:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B064",
+      "name": "NATA了",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.206,
+      "longitude": 121.438,
+      "address": "上海市徐汇区五原路76号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "文艺",
+        "学习"
+      ],
+      "highlight_note": "五原路上安静的小咖啡馆。老板是台湾人，拉花很精致。咖啡和背景音乐品味都不错，适合一个人静静待着。",
+      "permanent_features": [
+        "台湾老板",
+        "拉花",
+        "安静"
+      ],
+      "opening_hours": "09:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B065",
+      "name": "星巴克烘焙工坊",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.225,
+      "longitude": 121.475,
+      "address": "上海市静安区南京西路789号",
+      "taste_tags": [
+        "咖啡",
+        "朋友",
+        "拍照",
+        "学习",
+        "热闹"
+      ],
+      "highlight_note": "亚洲最大星巴克旗舰店。烘焙区像工厂一样，可以看到咖啡豆烘焙全过程。价格比普通店贵，但体验感独一无二。",
+      "permanent_features": [
+        "烘焙工厂",
+        "亚洲最大",
+        "咖啡体验"
+      ],
+      "opening_hours": "07:00-22:00",
+      "rating": 4.4,
+      "is_chain": true
+    },
+    {
+      "amap_id": "B0I0B066",
+      "name": "上海博物馆文创",
+      "tier": 2,
+      "category": "购物",
+      "latitude": 31.2305,
+      "longitude": 121.475,
+      "address": "上海市黄浦区人民大道201号上海博物馆内",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "学习",
+        "历史建筑"
+      ],
+      "highlight_note": "上博官方文创店。青铜器系列周边做得最有文化感，鼠标垫和书签是热门。手帐爱好者不要错过。",
+      "permanent_features": [
+        "青铜器周边",
+        "博物馆内",
+        "手帐"
+      ],
+      "opening_hours": "09:00-17:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B067",
+      "name": "大壶春(云南路店)",
+      "tier": 2,
+      "category": "本帮点心",
+      "latitude": 31.2275,
+      "longitude": 121.481,
+      "address": "上海市黄浦区云南南路71号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "本地老店",
+        "放空"
+      ],
+      "highlight_note": "上海老字号生煎包。汤少皮脆是特点，和常见的大壶春不同。配咖喱牛肉粉丝汤是老吃法。",
+      "permanent_features": [
+        "生煎",
+        "老字号",
+        "咖喱牛肉汤"
+      ],
+      "opening_hours": "06:30-19:30",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B068",
+      "name": "绍兴路",
+      "tier": 2,
+      "category": "漫步",
+      "latitude": 31.218,
+      "longitude": 121.45,
+      "address": "上海市黄浦区绍兴路",
+      "taste_tags": [
+        "漫步",
+        "安静",
+        "文艺",
+        "朋友",
+        "拍照"
+      ],
+      "highlight_note": "上海最文艺的小马路之一。出版社和书店林立，路上经常有猫咪出没。秋天的梧桐树最美。",
+      "permanent_features": [
+        "出版社一条街",
+        "梧桐树",
+        "猫咪"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B069",
+      "name": "UNIKCY",
+      "tier": 2,
+      "category": "潮流零售",
+      "latitude": 31.207,
+      "longitude": 121.439,
+      "address": "上海市徐汇区武康路377号",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "文艺",
+        "情侣"
+      ],
+      "highlight_note": "武康路上主打独立设计的买手店。衣服和配饰都很有个性，不撞款。店员审美很好，会帮忙搭配。",
+      "permanent_features": [
+        "买手店",
+        "独立设计",
+        "不撞款"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B070",
+      "name": "昭和写真馆",
+      "tier": 2,
+      "category": "摄影",
+      "latitude": 31.2095,
+      "longitude": 121.436,
+      "address": "上海市长宁区幸福路51号",
+      "taste_tags": [
+        "拍照",
+        "朋友",
+        "情侣",
+        "文艺",
+        "学习"
+      ],
+      "highlight_note": "胶片摄影体验店。可以租借胶片相机拍照，也有胶片冲洗服务。店里有很多复古相机展示，适合拍照打卡。",
+      "permanent_features": [
+        "胶片摄影",
+        "相机租借",
+        "复古"
+      ],
+      "opening_hours": "11:00-20:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B071",
+      "name": "藏云兰纳",
+      "tier": 2,
+      "category": "云南菜",
+      "latitude": 31.207,
+      "longitude": 121.437,
+      "address": "上海市徐汇区五原路98号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "家庭",
+        "学习"
+      ],
+      "highlight_note": "云南菜小馆，食材大部分从云南空运。汽锅鸡和菌菇火锅是招牌，适合秋冬。老板是云南人，会推荐正宗吃法。",
+      "permanent_features": [
+        "云南空运食材",
+        "汽锅鸡",
+        "菌菇火锅"
+      ],
+      "opening_hours": "11:00-14:00, 17:00-21:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B072",
+      "name": "鲁宾咖啡",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.213,
+      "longitude": 121.434,
+      "address": "上海市长宁区幸福路14号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "学习",
+        "放空"
+      ],
+      "highlight_note": "藏在幸福路弄堂深处的小店。老板烘豆子，店里弥漫着咖啡香。手冲为主，会给客人详细讲解风味。",
+      "permanent_features": [
+        "自家烘焙",
+        "手冲讲解",
+        "弄堂深处"
+      ],
+      "opening_hours": "09:00-18:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B073",
+      "name": "鹅嚯",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.206,
+      "longitude": 121.4385,
+      "address": "上海市徐汇区五原路62号",
+      "taste_tags": [
+        "咖啡",
+        "朋友",
+        "拍照",
+        "文艺",
+        "放空"
+      ],
+      "highlight_note": "武康路附近的小店，名字有趣好记。咖啡和轻食都不错，户外座位看街景很舒服。周末有Brunch套餐。",
+      "permanent_features": [
+        "名字有趣",
+        "户外座位",
+        "Brunch"
+      ],
+      "opening_hours": "09:00-18:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B074",
+      "name": "Mao Pizza",
+      "tier": 2,
+      "category": "西餐",
+      "latitude": 31.209,
+      "longitude": 121.435,
+      "address": "上海市长宁区幸福路118号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "家庭",
+        "热闹",
+        "拍照"
+      ],
+      "highlight_note": "手工披萨小馆，饼底薄脆，芝士给的足。招牌是松露蘑菇和玛格丽特。老板是意大利人，会认真询问口味偏好。",
+      "permanent_features": [
+        "手工披萨",
+        "意大利老板",
+        "薄脆"
+      ],
+      "opening_hours": "11:30-14:30, 17:30-21:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B075",
+      "name": "上海城市规划艺术中心",
+      "tier": 2,
+      "category": "博物馆",
+      "latitude": 31.2315,
+      "longitude": 121.4775,
+      "address": "上海市黄浦区人民大道100号",
+      "taste_tags": [
+        "学习",
+        "朋友",
+        "拍照",
+        "历史建筑",
+        "深度体验"
+      ],
+      "highlight_note": "地下是城市历史陈列，地上是规划馆。可以了解上海从渔村到国际都市的发展历程，对认识这座城市很有帮助。",
+      "permanent_features": [
+        "城市历史",
+        "发展历程",
+        "人民公园"
+      ],
+      "opening_hours": "09:00-17:00（周一闭馆）",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B076",
+      "name": "Juke Coffee",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2045,
+      "longitude": 121.439,
+      "address": "上海市徐汇区安福路53号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "学习",
+        "文艺"
+      ],
+      "highlight_note": "安福路尽头的小咖啡馆，比路另一头安静很多。咖啡师对豆子很有研究，手冲和意式都稳定。是附近居民的隐藏据点。",
+      "permanent_features": [
+        "安福路尽头",
+        "居民据点",
+        "豆子讲究"
+      ],
+      "opening_hours": "08:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B077",
+      "name": "Green House绿室",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.211,
+      "longitude": 121.434,
+      "address": "上海市长宁区昭化路228号",
+      "taste_tags": [
+        "咖啡",
+        "朋友",
+        "拍照",
+        "文艺",
+        "安静"
+      ],
+      "highlight_note": "老厂房改造的咖啡馆，空间大，采光好。植物和工业风混搭，很适合拍照。咖啡和甜品无功无过，但环境加分。",
+      "permanent_features": [
+        "厂房改造",
+        "采光好",
+        "植物"
+      ],
+      "opening_hours": "10:00-19:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B078",
+      "name": "The Can Noodle",
+      "tier": 2,
+      "category": "港式餐吧",
+      "latitude": 31.2065,
+      "longitude": 121.437,
+      "address": "上海市徐汇区武康路105号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "热闹",
+        "夜生活"
+      ],
+      "highlight_note": "港式茶餐厅风格，招牌是沙爹牛肉面和菠萝油。下午茶套餐性价比高，是附近白领的工作餐首选。",
+      "permanent_features": [
+        "港式茶餐",
+        "沙爹牛肉",
+        "菠萝油"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B079",
+      "name": "Pause",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.2115,
+      "longitude": 121.4335,
+      "address": "上海市长宁区昭化路108号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "放空",
+        "学习"
+      ],
+      "highlight_note": "昭化路安静角落的小店。座位不多很安静，有插座可以工作。咖啡师话不多但手艺好，适合一个人静静待着。",
+      "permanent_features": [
+        "安静角落",
+        "有插座",
+        "一个人友好"
+      ],
+      "opening_hours": "09:00-18:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B080",
+      "name": "鲁马滋",
+      "tier": 2,
+      "category": "咖啡馆",
+      "latitude": 31.215,
+      "longitude": 121.432,
+      "address": "上海市长宁区定西路685号",
+      "taste_tags": [
+        "咖啡",
+        "安静",
+        "独行",
+        "学习",
+        "放空"
+      ],
+      "highlight_note": "自家烘焙咖啡豆的小店，豆子也对外出售。手冲为主，咖啡师会详细讲述产地和风味。适合对咖啡有研究的人。",
+      "permanent_features": [
+        "自家烘焙",
+        "豆子出售",
+        "手冲专业"
+      ],
+      "opening_hours": "10:00-18:00",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B081",
+      "name": "Simple Market",
+      "tier": 2,
+      "category": "市集",
+      "latitude": 31.213,
+      "longitude": 121.433,
+      "address": "上海市长宁区上生新所内",
+      "taste_tags": [
+        "购物",
+        "朋友",
+        "拍照",
+        "小众艺术",
+        "漫步"
+      ],
+      "highlight_note": "上生新所内的文创市集，周末不定期举办。摊位都是独立设计品牌，淘不到撞款的东西。",
+      "permanent_features": [
+        "文创市集",
+        "独立设计",
+        "上生新所"
+      ],
+      "opening_hours": "周末不定期",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B082",
+      "name": "昭和堂",
+      "tier": 2,
+      "category": "日式料理",
+      "latitude": 31.2105,
+      "longitude": 121.435,
+      "address": "上海市长宁区幸福路88号",
+      "taste_tags": [
+        "品尝",
+        "朋友",
+        "情侣",
+        "安静",
+        "商务"
+      ],
+      "highlight_note": "很正式的日料店，吧台位可以看师傅捏寿司。午市套餐性价比很高。食材新鲜，处理得很细腻。",
+      "permanent_features": [
+        "吧台寿司",
+        "食材新鲜",
+        "午市套餐"
+      ],
+      "opening_hours": "11:30-14:00, 17:30-21:30",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B083",
+      "name": "上海总商会旧址",
+      "tier": 2,
+      "category": "历史建筑",
+      "latitude": 31.244,
+      "longitude": 121.493,
+      "address": "上海市虹口区北苏州路河滨博物馆北侧",
+      "taste_tags": [
+        "历史建筑",
+        "拍照",
+        "漫步",
+        "朋友",
+        "文艺"
+      ],
+      "highlight_note": "1919年建的英国古典主义建筑，现在荒废着但外表完整。红砖墙和石柱很出片，是历史建筑爱好者必到的地方。",
+      "permanent_features": [
+        "英国古典主义",
+        "红砖",
+        "荒废美"
+      ],
+      "opening_hours": "外观全天",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B084",
+      "name": "Mao Studio",
+      "tier": 2,
+      "category": "创意",
+      "latitude": 31.213,
+      "longitude": 121.435,
+      "address": "上海市长宁区昭化路305号",
+      "taste_tags": [
+        "拍照",
+        "朋友",
+        "小众艺术",
+        "文艺",
+        "学习"
+      ],
+      "highlight_note": "集服装、咖啡、展览于一体的复合空间。经常举办小型展览和活动，审美很一致。适合逛完安静待一会儿。",
+      "permanent_features": [
+        "复合空间",
+        "展览",
+        "审美一致"
+      ],
+      "opening_hours": "11:00-19:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "B0I0B085",
+      "name": "旧物仓",
+      "tier": 2,
+      "category": "生活方式",
+      "latitude": 31.2135,
+      "longitude": 121.4335,
+      "address": "上海市长宁区昭化路77号",
+      "taste_tags": [
+        "拍照",
+        "朋友",
+        "学习",
+        "小众艺术",
+        "漫步"
+      ],
+      "highlight_note": "收集了各个年代的老物件，老式电视机、缝纫机、打字机都有。空间布置很有年代感，适合拍复古照片。",
+      "permanent_features": [
+        "老物件",
+        "复古",
+        "年代感"
+      ],
+      "opening_hours": "10:00-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    }
+  ]
+}

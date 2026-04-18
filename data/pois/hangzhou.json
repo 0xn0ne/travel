@@ -1,0 +1,509 @@
+{
+  "pois": [
+    {
+      "amap_id": "curated_hz_001",
+      "name": "西湖景区",
+      "tier": 1,
+      "category": "自然景观",
+      "latitude": 30.242,
+      "longitude": 120.1485,
+      "address": "杭州市西湖区龙井路1号",
+      "taste_tags": [
+        "自然",
+        "漫步",
+        "拍照",
+        "情侣",
+        "文艺"
+      ],
+      "highlight_note": "杭州的灵魂，但别只去断桥人挤人。清晨走苏堤，傍晚去白堤，人少景美。租辆自行车环湖骑行也很舒服。",
+      "permanent_features": [
+        "世界文化遗产",
+        "免费开放",
+        "环湖步道",
+        "四季皆宜"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.8,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_002",
+      "name": "灵隐寺",
+      "tier": 1,
+      "category": "寺庙",
+      "latitude": 30.245,
+      "longitude": 120.101,
+      "address": "杭州市西湖区灵隐路法云弄1号",
+      "taste_tags": [
+        "寺庙",
+        "自然",
+        "文化",
+        "漫步"
+      ],
+      "highlight_note": "杭州最有灵气的寺庙。建议清早去，雾气中的飞来峰特别有氛围。寺内的素面值得一试。",
+      "permanent_features": [
+        "千年古刹",
+        "飞来峰石刻",
+        "古木参天",
+        "灵隐素斋"
+      ],
+      "opening_hours": "07:00-18:00",
+      "rating": 4.7,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_003",
+      "name": "龙井茶园（梅家坞）",
+      "tier": 1,
+      "category": "茶",
+      "latitude": 30.218,
+      "longitude": 120.125,
+      "address": "杭州市西湖区梅家坞村",
+      "taste_tags": [
+        "茶",
+        "自然",
+        "文艺",
+        "慢生活"
+      ],
+      "highlight_note": "真正的龙井茶产地。找家茶农坐下来喝杯明前龙井，看着茶园发呆，这才是杭州的慢生活。",
+      "permanent_features": [
+        "龙井茶原产地",
+        "茶园梯田",
+        "茶农体验",
+        "山间小路"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_004",
+      "name": "河坊街",
+      "tier": 1,
+      "category": "历史街区",
+      "latitude": 30.246,
+      "longitude": 120.17,
+      "address": "杭州市上城区河坊街",
+      "taste_tags": [
+        "历史建筑",
+        "品尝",
+        "漫步",
+        "文化"
+      ],
+      "highlight_note": "南宋御街旁的老街，小吃和手工艺品的聚集地。定胜糕、葱包桧、龙须糖都是本地特色。",
+      "permanent_features": [
+        "南宋风情街区",
+        "传统手工艺",
+        "特色小吃",
+        "胡庆余堂"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_005",
+      "name": "西溪湿地",
+      "tier": 1,
+      "category": "自然景观",
+      "latitude": 30.268,
+      "longitude": 120.063,
+      "address": "杭州市西湖区天目山路518号",
+      "taste_tags": [
+        "自然",
+        "漫步",
+        "拍照",
+        "文艺"
+      ],
+      "highlight_note": "城市里的世外桃源。坐摇橹船穿行芦苇荡，秋天柿子和芦花最美。非诚勿扰取景地。",
+      "permanent_features": [
+        "国家级湿地公园",
+        "摇橹船",
+        "芦苇荡",
+        "柿子林"
+      ],
+      "opening_hours": "08:00-17:30",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_006",
+      "name": "北山街/宝石山",
+      "tier": 1,
+      "category": "历史街区",
+      "latitude": 30.257,
+      "longitude": 120.151,
+      "address": "杭州市西湖区北山街",
+      "taste_tags": [
+        "漫步",
+        "拍照",
+        "历史建筑",
+        "文艺"
+      ],
+      "highlight_note": "爬上宝石山看西湖全景是杭州人的日常。保俶塔下的视野无敌，日出和夜景都绝。",
+      "permanent_features": [
+        "宝石山登顶",
+        "保俶塔",
+        "西湖全景",
+        "老别墅群"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_007",
+      "name": "中国美术学院象山校区",
+      "tier": 1,
+      "category": "小众艺术",
+      "latitude": 30.18,
+      "longitude": 120.035,
+      "address": "杭州市西湖区转塘街道象山路352号",
+      "taste_tags": [
+        "小众艺术",
+        "拍照",
+        "文艺",
+        "建筑"
+      ],
+      "highlight_note": "王澍设计的校园，每一栋建筑都是艺术品。民艺博物馆的瓦片墙特别出片，人少安静。",
+      "permanent_features": [
+        "普利兹克奖建筑",
+        "瓦片墙",
+        "民艺博物馆",
+        "校园开放"
+      ],
+      "opening_hours": "全天开放（部分场馆需预约）",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_008",
+      "name": "九溪烟树",
+      "tier": 1,
+      "category": "自然景观",
+      "latitude": 30.205,
+      "longitude": 120.122,
+      "address": "杭州市西湖区龙井村南",
+      "taste_tags": [
+        "自然",
+        "漫步",
+        "拍照",
+        "情侣"
+      ],
+      "highlight_note": "九溪十八涧，杭州本地人最爱的徒步路线。溪水潺潺、茶园满坡，夏天踩水特别凉快。",
+      "permanent_features": [
+        "九溪十八涧",
+        "茶园步道",
+        "溪流",
+        "避暑胜地"
+      ],
+      "opening_hours": "全天开放",
+      "rating": 4.6,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_009",
+      "name": "法喜寺",
+      "tier": 1,
+      "category": "寺庙",
+      "latitude": 30.215,
+      "longitude": 120.11,
+      "address": "杭州市西湖区天竺路338号",
+      "taste_tags": [
+        "寺庙",
+        "拍照",
+        "文艺",
+        "小众"
+      ],
+      "highlight_note": "比灵隐寺清净很多，网红御守和五块钱的斋饭是亮点。后山的视角拍寺庙全景超美。",
+      "permanent_features": [
+        "天竺三寺之一",
+        "御守求姻缘",
+        "斋饭",
+        "清净"
+      ],
+      "opening_hours": "06:30-18:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_010",
+      "name": "太子湾公园",
+      "tier": 1,
+      "category": "自然景观",
+      "latitude": 30.233,
+      "longitude": 120.136,
+      "address": "杭州市西湖区南山路5-1号",
+      "taste_tags": [
+        "自然",
+        "拍照",
+        "情侣",
+        "漫步"
+      ],
+      "highlight_note": "春天郁金香和樱花盛开时美到窒息。从苏堤走过去很近，适合野餐和发呆。",
+      "permanent_features": [
+        "郁金香花展",
+        "樱花大道",
+        "草坪野餐",
+        "琵琶洲"
+      ],
+      "opening_hours": "08:00-17:00",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_011",
+      "name": "云栖竹径",
+      "tier": 1,
+      "category": "自然景观",
+      "latitude": 30.195,
+      "longitude": 120.105,
+      "address": "杭州市西湖区云栖路",
+      "taste_tags": [
+        "自然",
+        "漫步",
+        "小众",
+        "文艺"
+      ],
+      "highlight_note": "满眼翠竹的清幽小径，游客很少。石板路配竹林，像走进了武侠片的场景。",
+      "permanent_features": [
+        "竹海步道",
+        "千年枫香",
+        "洗心亭",
+        "人少清幽"
+      ],
+      "opening_hours": "07:00-17:00",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_012",
+      "name": "良渚文化村",
+      "tier": 1,
+      "category": "文艺",
+      "latitude": 30.395,
+      "longitude": 120.02,
+      "address": "杭州市余杭区良渚文化村",
+      "taste_tags": [
+        "文艺",
+        "拍照",
+        "漫步",
+        "建筑"
+      ],
+      "highlight_note": "安藤忠雄设计的大屋顶加上高晓松的晓书馆，文艺青年的天堂。周边还有美丽洲教堂。",
+      "permanent_features": [
+        "安藤忠雄建筑",
+        "晓书馆",
+        "美丽洲教堂",
+        "良渚博物院"
+      ],
+      "opening_hours": "全天开放（场馆各有时间）",
+      "rating": 4.5,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_013",
+      "name": "知味观·味庄（杨公堤店）",
+      "tier": 2,
+      "category": "餐厅",
+      "latitude": 30.24,
+      "longitude": 120.141,
+      "address": "杭州市西湖区杨公堤10号",
+      "taste_tags": [
+        "品尝",
+        "本地老店",
+        "文化"
+      ],
+      "highlight_note": "西湖边的老牌杭帮菜，西湖醋鱼和龙井虾仁是招牌。环境好，适合正餐。",
+      "permanent_features": [
+        "百年老字号",
+        "西湖醋鱼",
+        "龙井虾仁",
+        "湖景"
+      ],
+      "opening_hours": "11:00-14:00, 17:00-21:00",
+      "rating": 4.3,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_014",
+      "name": "朴墅咖啡",
+      "tier": 2,
+      "category": "咖啡",
+      "latitude": 30.252,
+      "longitude": 120.153,
+      "address": "杭州市西湖区北山街",
+      "taste_tags": [
+        "咖啡",
+        "文艺",
+        "拍照"
+      ],
+      "highlight_note": "北山街上的老牌独立咖啡馆，复古老洋房里的手冲很用心。",
+      "permanent_features": [
+        "独立咖啡馆",
+        "老洋房",
+        "手冲咖啡"
+      ],
+      "opening_hours": "10:00-22:00",
+      "rating": 4.2,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_015",
+      "name": "湖滨28",
+      "tier": 2,
+      "category": "餐厅",
+      "latitude": 30.255,
+      "longitude": 120.163,
+      "address": "杭州市上城区湖滨路28号",
+      "taste_tags": [
+        "品尝",
+        "情侣",
+        "本地老店"
+      ],
+      "highlight_note": "杭州高端杭帮菜代表，东坡肉是必点。环境精致，适合约会或请客。",
+      "permanent_features": [
+        "高端杭帮菜",
+        "东坡肉",
+        "湖滨位置",
+        "精致环境"
+      ],
+      "opening_hours": "11:00-14:00, 17:00-21:30",
+      "rating": 4.4,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_016",
+      "name": "南山路咖啡馆",
+      "tier": 2,
+      "category": "咖啡",
+      "latitude": 30.24,
+      "longitude": 120.155,
+      "address": "杭州市上城区南山路",
+      "taste_tags": [
+        "咖啡",
+        "文艺",
+        "拍照",
+        "漫步"
+      ],
+      "highlight_note": "南山路沿线聚集了不少有格调的咖啡馆，随便挑一家坐坐看西湖日落。",
+      "permanent_features": [
+        "西湖沿线",
+        "多家咖啡馆",
+        "文艺氛围"
+      ],
+      "opening_hours": "09:00-22:00",
+      "rating": 4.1,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_017",
+      "name": "外婆家（西湖天地店）",
+      "tier": 2,
+      "category": "餐厅",
+      "latitude": 30.246,
+      "longitude": 120.156,
+      "address": "杭州市上城区延安路",
+      "taste_tags": [
+        "品尝",
+        "本地老店",
+        "性价比"
+      ],
+      "highlight_note": "杭帮菜连锁但品质稳定，性价比高，西湖醋鱼和茶香鸡都不错。",
+      "permanent_features": [
+        "杭帮菜连锁",
+        "性价比高",
+        "茶香鸡"
+      ],
+      "opening_hours": "10:30-21:30",
+      "rating": 4.0,
+      "is_chain": true
+    },
+    {
+      "amap_id": "curated_hz_018",
+      "name": "龙井草堂",
+      "tier": 2,
+      "category": "茶",
+      "latitude": 30.22,
+      "longitude": 120.13,
+      "address": "杭州市西湖区龙井路",
+      "taste_tags": [
+        "茶",
+        "文艺",
+        "慢生活"
+      ],
+      "highlight_note": "龙井路上的隐秘茶馆，环境清幽，适合喝杯龙井发呆。",
+      "permanent_features": [
+        "龙井茶",
+        "山间环境",
+        "清幽"
+      ],
+      "opening_hours": "09:00-21:00",
+      "rating": 4.2,
+      "is_chain": false
+    },
+    {
+      "amap_id": "curated_hz_019",
+      "name": "星巴克（西湖天地店）",
+      "tier": 3,
+      "category": "咖啡",
+      "latitude": 30.248,
+      "longitude": 120.158,
+      "address": "杭州市上城区南山路147号",
+      "taste_tags": [
+        "咖啡",
+        "连锁"
+      ],
+      "highlight_note": "景区里的星巴克，方便歇脚。",
+      "permanent_features": [
+        "连锁咖啡",
+        "西湖边"
+      ],
+      "opening_hours": "07:00-22:00",
+      "rating": 3.8,
+      "is_chain": true
+    },
+    {
+      "amap_id": "curated_hz_020",
+      "name": "瑞幸咖啡（河坊街店）",
+      "tier": 3,
+      "category": "咖啡",
+      "latitude": 30.2455,
+      "longitude": 120.169,
+      "address": "杭州市上城区河坊街",
+      "taste_tags": [
+        "咖啡",
+        "连锁"
+      ],
+      "highlight_note": "河坊街上的瑞幸，价格友好，方便快捷。",
+      "permanent_features": [
+        "连锁咖啡",
+        "性价比"
+      ],
+      "opening_hours": "07:30-22:00",
+      "rating": 3.5,
+      "is_chain": true
+    },
+    {
+      "amap_id": "curated_hz_021",
+      "name": "肯德基（断桥店）",
+      "tier": 3,
+      "category": "快餐",
+      "latitude": 30.259,
+      "longitude": 120.156,
+      "address": "杭州市西湖区北山街",
+      "taste_tags": [
+        "快餐",
+        "连锁"
+      ],
+      "highlight_note": "西湖边的快餐选择，走累了可以歇脚。",
+      "permanent_features": [
+        "连锁快餐",
+        "景区旁"
+      ],
+      "opening_hours": "07:00-23:00",
+      "rating": 3.4,
+      "is_chain": true
+    }
+  ]
+}
