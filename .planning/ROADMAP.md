@@ -236,7 +236,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 9. UI Redesign & Rich Display | v1.1 | 5/5 | Complete | 2026-04-17 |
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
 | 11. Agent Framework Core | v1.2 | 2/2 | Complete | 2026-04-20 |
-| 12. Business & General Tools | v1.2 | 4/4 | Complete | 2026-04-20 |
+| 12. Business & General Tools | v1.2 | 4/4 | Complete    | 2026-04-20 |
 | 13. Memory & Skills | v1.2 | 0/? | Not started | - |
 | 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
 | 15. Chat Integration | v1.2 | 0/? | Not started | - |
