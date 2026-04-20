@@ -64,22 +64,15 @@ async def cleanup_memories(db_session) -> dict:
         cutoff_count = max(1, remaining // 5)
 
         sub = (
-            select(AgentMemory.access_count)
+            select(AgentMemory.id)
             .where(AgentMemory.created_at < quarter_start)
             .order_by(AgentMemory.access_count.asc())
             .limit(cutoff_count)
         )
-        threshold_result = await db_session.execute(sub)
-        threshold_rows = threshold_result.scalars().all()
-
-        if threshold_rows:
-            threshold = threshold_rows[-1]
-            result = await db_session.execute(
-                delete(AgentMemory)
-                .where(AgentMemory.created_at < quarter_start)
-                .where(AgentMemory.access_count <= threshold)
-            )
-            removed_bottom_pct = result.rowcount
+        result = await db_session.execute(
+            delete(AgentMemory).where(AgentMemory.id.in_(sub))
+        )
+        removed_bottom_pct = result.rowcount
 
     await db_session.flush()
 

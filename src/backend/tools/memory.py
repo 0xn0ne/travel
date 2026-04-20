@@ -119,20 +119,18 @@ async def read_memories(
         except (json.JSONDecodeError, TypeError):
             taste_tags = []
 
-    def _score(mem: AgentMemory) -> int:
+    def _score(mem: AgentMemory) -> tuple[int, datetime]:
         if not taste_tags:
-            return 0
+            return (0, mem.updated_at or datetime.min.replace(tzinfo=timezone.utc))
         try:
             val = json.loads(mem.value)
             mem_tags = val.get("tags", [])
-            return len(set(taste_tags) & set(mem_tags))
+            tag_score = len(set(taste_tags) & set(mem_tags))
         except (json.JSONDecodeError, TypeError, AttributeError):
-            return 0
+            tag_score = 0
+        return (tag_score, mem.updated_at or datetime.min.replace(tzinfo=timezone.utc))
 
-    if taste_tags:
-        memories = sorted(memories, key=_score, reverse=True)
-    else:
-        memories = sorted(memories, key=lambda m: m.updated_at, reverse=True)
+    memories = sorted(memories, key=_score, reverse=True)
 
     memories = memories[:limit]
 

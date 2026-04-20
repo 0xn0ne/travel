@@ -1,10 +1,13 @@
 """Skill configuration loader — reads data/skills/*.json files."""
 
 import json
+import logging
 from functools import lru_cache
 from pathlib import Path
 
 from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
 
 SKILLS_DIR = Path(__file__).parent.parent.parent.parent / "data" / "skills"
 
@@ -30,9 +33,12 @@ def _load_all_skills() -> dict[str, SkillConfig]:
     """Load all skill config files from data/skills/*.json."""
     skills: dict[str, SkillConfig] = {}
     for path in SKILLS_DIR.glob("*.json"):
-        data = json.loads(path.read_text(encoding="utf-8"))
-        config = SkillConfig.model_validate(data)
-        skills[config.slug] = config
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            config = SkillConfig.model_validate(data)
+            skills[config.slug] = config
+        except Exception as e:
+            logger.error("Failed to load skill config %s: %s", path, e)
     return skills
 
 

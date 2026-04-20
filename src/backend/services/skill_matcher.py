@@ -1,6 +1,10 @@
 """Skill auto-activation matcher — matches user intent against skill trigger conditions."""
 
+import logging
+
 from backend.services.skill_config import SKILLS_DIR, SkillConfig, get_all_skills
+
+logger = logging.getLogger(__name__)
 
 
 def match_skills(user_message: str, interests: list[str] | None = None) -> list[SkillConfig]:
@@ -37,7 +41,12 @@ def build_skill_prompt(matched_skills: list[SkillConfig]) -> str:
 
     primary = matched_skills[0]
     prompt_path = SKILLS_DIR / "prompts" / primary.prompt_file
-    primary_prompt = prompt_path.read_text(encoding="utf-8").strip()
+
+    try:
+        primary_prompt = prompt_path.read_text(encoding="utf-8").strip()
+    except FileNotFoundError:
+        logger.error("Skill prompt file not found: %s (skill: %s)", prompt_path, primary.slug)
+        primary_prompt = f"[技能：{primary.name}] {primary.description}"
 
     if len(matched_skills) == 1:
         return primary_prompt

@@ -129,6 +129,7 @@ class AgentMemory(Base):
     __tablename__ = "agent_memories"
     __table_args__ = (
         Index("ix_agent_memories_user_category", "user_id", "category"),
+        Index("uq_agent_memories_user_key", "user_id", "key", unique=True),
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
