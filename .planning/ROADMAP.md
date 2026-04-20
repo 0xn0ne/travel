@@ -55,7 +55,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Milestone Goal:** Add model-agnostic AI Agent tool calling system — agent autonomously calls business tools during itinerary generation and user conversations, with memory, skills, and real-time streaming progress.
 
-- [ ] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery
+- [x] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery
 - [ ] **Phase 12: Business & General Tools** — POI search, weather, preferences, web search, file I/O, command (reserved)
 - [ ] **Phase 13: Memory & Skills** — Per-user SQLite memory, skill auto-activation, pre-built skill packs
 - [ ] **Phase 14: Pipeline Integration** — New Agent Stage in existing pipeline, SSE tool-call progress
@@ -166,7 +166,7 @@ Plans:
 
 Plans:
 - [x] 11-01-PLAN.md — LLMClient + ToolResult + ToolRegistry + config.yml (AGENT-02)
-- [ ] 11-02-PLAN.md — AgentLoop with tool-call cycle, iteration guard, error recovery, SSE, DI (AGENT-01, AGENT-04)
+- [x] 11-02-PLAN.md — AgentLoop with tool-call cycle, iteration guard, error recovery, SSE, DI (AGENT-01, AGENT-04)
 
 ### Phase 12: Business & General Tools
 **Goal**: Agent has a complete toolkit to help travelers — search POIs, check weather, read preferences, search the web, and manage files

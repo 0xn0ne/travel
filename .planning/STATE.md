@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: AI Agent Tool System
 status: executing
-last_updated: "2026-04-20T13:48:18Z"
-last_activity: 2026-04-20 -- 11-01 complete
+last_updated: "2026-04-20T14:01:02Z"
+last_activity: 2026-04-20 -- 11-02 complete
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 15
-  completed_plans: 1
-  percent: 7
+  completed_plans: 2
+  percent: 13
 ---
 
 # Project State
@@ -25,23 +25,24 @@ See: .planning/PROJECT.md (updated 2026-04-20)
 ## Current Position
 
 Phase: 11 of 15 (Agent Framework Core)
-Plan: 02 (next)
-Status: 11-01 complete, ready for 11-02
-Last activity: 2026-04-20 -- 11-01 Agent Foundation complete
+Plan: 02 (complete — phase done)
+Status: 11-02 complete, Phase 11 finished (2/2 plans)
+Last activity: 2026-04-20 -- 11-02 AgentLoop complete
 
-Progress: [█░░░░░░░░░] 7%
+Progress: [█░░░░░░░░░] 13%
 
 ## Performance Metrics
 
 **Velocity:**
 
 - Total plans completed (v1.0+v1.1): 37
-- v1.2 plans completed: 1
+- v1.2 plans completed: 2
 
 **Recent Trend:**
 
 - Phase 11-01 completed (Agent Foundation)
-- Trend: Starting v1.2
+- Phase 11-02 completed (AgentLoop)
+- Trend: Phase 11 complete, ready for Phase 12
 
 ## Accumulated Context
 
@@ -63,6 +64,9 @@ Progress: [█░░░░░░░░░] 7%
 - Tool definitions centralized in config.yml (YAML) for startup loading
 - ToolResult dataclass with data/error/summary fields for unified tool output
 - tool_chat() uses non-streaming mode for stable function calling
+- AgentLoop.run() returns full text, run_streaming() yields chunks — same logic, different output
+- EventBus not injected at DI level — provided at call sites (Phase 14/15)
+- ToolExecutor type alias allows custom execution without modifying AgentLoop
 
 ### Decisions (from v1.1)
 
@@ -84,5 +88,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-04-20
-Status: **11-01 Agent Foundation complete**
-Next: Execute 11-02 (AgentLoop) — `/gsd-execute-phase 11`
+Status: **11-02 AgentLoop complete — Phase 11 finished**
+Next: Execute Phase 12 (Agent Tools) — `/gsd-execute-phase 12`

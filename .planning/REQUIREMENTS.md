@@ -9,10 +9,10 @@ Requirements for AI Agent Tool System milestone. Each maps to roadmap phases.
 
 ### Agent Framework
 
-- [ ] **AGENT-01**: Agent loop implements tool-call cycle — send tools + messages to LLM, LLM decides whether to call tools, execute tool functions, append results, loop until LLM responds with final text or max iterations reached
+- [x] **AGENT-01**: Agent loop implements tool-call cycle — send tools + messages to LLM, LLM decides whether to call tools, execute tool functions, append results, loop until LLM responds with final text or max iterations reached
 - [x] **AGENT-02**: Tool registry supports dynamic registration — tools register with name, description, Pydantic input schema; registry validates and exposes tools to agent loop
 - [ ] **AGENT-03**: Agent loop streams tool-call progress via SSE events — `agent_thinking` (LLM processing), `tool_executing` (tool name + args), `tool_completed` (result summary) — transparent to user, no tool mechanics in final response
-- [ ] **AGENT-04**: Max iteration guard (8 rounds per message) — agent stops with graceful message if limit reached; tool errors are caught and returned as error context to LLM for recovery
+- [x] **AGENT-04**: Max iteration guard (8 rounds per message) — agent stops with graceful message if limit reached; tool errors are caught and returned as error context to LLM for recovery
 
 ### General Tools
 
@@ -89,10 +89,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AGENT-01 | Phase 11 | Pending |
+| AGENT-01 | Phase 11 | Complete (11-02) |
 | AGENT-02 | Phase 11 | Complete (11-01) |
 | AGENT-03 | Phase 14 | Pending |
-| AGENT-04 | Phase 11 | Pending |
+| AGENT-04 | Phase 11 | Complete (11-02) |
 | TOOL-01 | Phase 12 | Pending |
 | TOOL-02 | Phase 12 | Pending |
 | TOOL-03 | Phase 12 | Pending |
