@@ -5,6 +5,7 @@
         <AppHeader @open-login="authModal?.openLogin()" />
         <AuthModal ref="authModal" />
         <router-view />
+        <ChatBubble />
       </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
@@ -16,47 +17,48 @@ import { useRoute } from 'vue-router'
 import { NConfigProvider, NMessageProvider, NNotificationProvider } from 'naive-ui'
 import AppHeader from '@/components/AppHeader.vue'
 import AuthModal from '@/components/AuthModal.vue'
+import ChatBubble from '@/components/ChatBubble.vue'
 
 const route = useRoute()
 const authModal = ref<InstanceType<typeof AuthModal> | null>(null)
 
 const themeOverrides = {
   common: {
-    primaryColor: 'var(--color-coral)',
-    primaryColorHover: 'var(--color-coral-light)',
-    primaryColorPressed: 'var(--color-coral-dark)',
-    primaryColorSuppl: 'var(--color-coral)',
-    successColor: 'var(--color-ocean)',
-    successColorHover: 'var(--color-ocean-light)',
-    successColorPressed: 'var(--color-ocean-dark)',
-    warningColor: 'var(--color-warm-amber)',
+    primaryColor: '#FF6B6B',
+    primaryColorHover: '#FF8A8A',
+    primaryColorPressed: '#E55A5A',
+    primaryColorSuppl: '#FF6B6B',
+    successColor: '#4ECDC4',
+    successColorHover: '#6FE0D8',
+    successColorPressed: '#3DBDB4',
+    warningColor: '#F59E0B',
     warningColorHover: '#FBBF24',
     warningColorPressed: '#D97706',
-    errorColor: 'var(--color-coral)',
-    errorColorHover: 'var(--color-coral-light)',
-    errorColorPressed: 'var(--color-coral-dark)',
-    textColorBase: 'var(--color-warm-text)',
-    textColor1: 'var(--color-warm-text)',
+    errorColor: '#FF6B6B',
+    errorColorHover: '#FF8A8A',
+    errorColorPressed: '#E55A5A',
+    textColorBase: '#2D2016',
+    textColor1: '#2D2016',
     textColor2: '#4A3F35',
-    textColor3: 'var(--color-warm-text-muted)',
-    bodyColor: 'var(--color-warm-bg)',
+    textColor3: '#6B5B4E',
+    bodyColor: '#FFFAF5',
     cardColor: '#FFFFFF',
     modalColor: '#FFFFFF',
     popoverColor: '#FFFFFF',
-    tableColor: 'var(--color-warm-bg)',
-    inputColor: 'var(--color-warm-surface)',
-    actionColor: 'var(--color-sand)',
-    borderColor: 'var(--color-warm-border)',
-    dividerColor: 'var(--color-warm-border)',
+    tableColor: '#FFFAF5',
+    inputColor: '#FFF8F0',
+    actionColor: '#F5E6D3',
+    borderColor: '#E8D5C4',
+    dividerColor: '#E8D5C4',
     borderRadius: '16px',
     borderRadiusSmall: '8px',
     fontFamily: 'system-ui, -apple-system, sans-serif',
   },
   Card: {
-    borderRadius: 'var(--radius-card)',
+    borderRadius: '16px',
     color: '#FFFFFF',
-    borderColor: 'var(--color-warm-border)',
-    boxShadow: 'var(--shadow-card)',
+    borderColor: '#E8D5C4',
+    boxShadow: '0 2px 12px rgba(45, 32, 22, 0.08)',
   },
   Button: {
     borderRadiusMedium: '12px',
@@ -67,34 +69,34 @@ const themeOverrides = {
   },
   Input: {
     borderRadius: '12px',
-    borderFocus: `1px solid var(--color-coral)`,
-    borderHover: `1px solid var(--color-warm-border)`,
-    borderFocusWarning: `1px solid var(--color-warm-amber)`,
-    borderFocusError: `1px solid var(--color-coral-dark)`,
-    borderHoverWarning: `1px solid var(--color-warm-amber)`,
-    borderHoverError: `1px solid var(--color-coral-dark)`,
-    color: 'var(--color-warm-surface)',
+    borderFocus: '1px solid #FF6B6B',
+    borderHover: '1px solid #E8D5C4',
+    borderFocusWarning: '1px solid #F59E0B',
+    borderFocusError: '1px solid #E55A5A',
+    borderHoverWarning: '1px solid #F59E0B',
+    borderHoverError: '1px solid #E55A5A',
+    color: '#FFF8F0',
   },
   Alert: {
     titleFontSize: '14px',
-    colorWarning: 'var(--color-warm-amber-light)',
+    colorWarning: '#FEF3C7',
     colorError: '#FFF5F5',
-    colorInfo: 'var(--color-ocean-light)',
-    borderWarning: `1px solid var(--color-warm-amber)`,
-    borderError: `1px solid var(--color-coral)`,
-    iconColorWarning: 'var(--color-warm-amber)',
-    iconColorError: 'var(--color-coral)',
+    colorInfo: '#6FE0D8',
+    borderWarning: '1px solid #F59E0B',
+    borderError: '1px solid #FF6B6B',
+    iconColorWarning: '#F59E0B',
+    iconColorError: '#FF6B6B',
   },
   Empty: {
-    iconColor: 'var(--color-ocean)',
-    textColor: 'var(--color-warm-text-muted)',
+    iconColor: '#4ECDC4',
+    textColor: '#6B5B4E',
   },
   Spin: {
-    textColor: 'var(--color-coral)',
+    textColor: '#FF6B6B',
   },
   Skeleton: {
-    color: 'var(--color-sand)',
-    colorEnd: 'var(--color-warm-gray)',
+    color: '#F5E6D3',
+    colorEnd: '#E8DDD3',
   },
 }
 
