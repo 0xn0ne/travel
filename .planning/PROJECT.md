@@ -8,18 +8,16 @@
 
 "帮你发现你会喜欢但自己找不到的地方，并且用对的方式推荐给你"——品味数据 + SOUL 提示词的组合，让行程有"本地朋友推荐"的温度，而非千篇一律的景点排列。
 
-## Current Milestone: v1.1 Pipeline Quality + UI Redesign
+## Current Milestone: v1.2 AI Agent Tool System
 
-**Goal:** Fix core pipeline to use real Amap POI search (not fixed pool), redesign frontend for excitement and content richness, complete auth flow, add second city, and fix critical technical debt.
+**Goal:** 给拾途添加模型无关的 AI Agent 工具调用系统，让 AI 在行程生成和用户对话中自主调用业务工具
 
 **Target features:**
-- Wire Amap `search_pois` into Stage 2 for dynamic candidate expansion + enable caching
-- Frontend UI overhaul (bright, exciting, "旅途中" feel) using ui-ux-pro-max
-- Display highlight_note, vibe_description, data provenance in POI detail
-- Fix auth (passlib/bcrypt), add frontend login/register + user settings
-- Add second city (杭州 or 成都) with city-config-driven pipeline
-- Map visualization (Amap JS API), itinerary sharing
-- Auto-seed DB, Alembic migrations, JWT production guard, test runner fixes
+- Agent 框架：OpenAI SDK function calling 接口，工具注册/发现机制，模型无关
+- 拾途工具集：POI 搜索、天气查询、路线规划、用户偏好读取等
+- Skill 可组合工具包：动态加载的技能组合（如"杭州探索" = POI + 路线 + 美食）
+- 新增 Agent Stage：补充现有四阶段管线中的 LLM 阶段
+- 对话式 AI 助手：用户聊天时 AI 透明调用工具回答实时问题
 
 ## Requirements
 
@@ -41,21 +39,11 @@
 
 ### Active
 
-- [ ] R5: 高德 POI 搜索接入管线（当前仅采集脚本用） — v1.1
-- [ ] R6: 全量缓存策略（AmapCache 已建但未启用） — v1.1
-- [ ] R8: Tier C 数据缺失（仅 Tier A 12个 + Tier B 85个） — v1.1
-- [ ] 第二城市数据（当前仅上海） — v1.1
-- [ ] 前端 Auth UI（后端已完成，前端未实现） — v1.1
-- [ ] 高德地图可视化（@amap/amap-jsapi-loader 已装未用） — v1.1
-- [ ] 用户偏好个性化（taste_tags_default 已存未接入管线） — v1.1
-- [ ] Alembic 数据库迁移 — v1.1
-- [ ] 前端 UI 重设计（亮色系、旅途中感、POI 详情丰富） — v1.1
-- [ ] 行程分享功能 — v1.1
-- [ ] 行程列表页 — v1.1
-- [ ] 数据来源展示（让用户知道推荐有据可依） — v1.1
-- [ ] DB 自动播种 — v1.1
-- [ ] Test Runner 修复 — v1.1
-- [ ] JWT 生产环境守卫 — v1.1
+- [ ] Agent 框架：工具注册/发现机制 + OpenAI SDK function calling（模型无关） — v1.2
+- [ ] 拾途工具集：POI 搜索、天气、路线、用户偏好等业务工具 — v1.2
+- [ ] Skill 可组合工具包：动态加载技能组合（如"杭州探索"） — v1.2
+- [ ] 新增 Agent Stage：集成到现有四阶段行程生成管线 — v1.2
+- [ ] 对话式 AI 助手：用户聊天时 AI 透明调用工具 — v1.2
 - [ ] 自动化测试 — v1.2
 - [ ] Rate limiting — v1.2
 
@@ -133,4 +121,4 @@
 This document evolves at phase transitions and milestone boundaries.
 
 ---
-*Last updated: 2026-04-16 — v1.1 milestone started*
+*Last updated: 2026-04-20 — v1.2 milestone started*
