@@ -1,0 +1,16 @@
+tools:
+  - name: search_pois
+    description: "搜索指定城市的POI（景点、餐厅、咖啡馆等），支持按关键词和分类筛选"
+    parameters:
+      type: object
+      properties:
+        city:
+          type: string
+          description: "城市名称，如'上海'、'杭州'"
+        keyword:
+          type: string
+          description: "搜索关键词，如'咖啡馆'、'书店'"
+        category:
+          type: string
+          description: "POI分类，如'餐饮'、'景点'、'购物'"
+      required: [city]
