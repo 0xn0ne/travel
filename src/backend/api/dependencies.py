@@ -13,6 +13,7 @@ from backend.config import get_settings
 from backend.db.init_db import get_async_session
 from backend.llm.client import ChatGPTClient, DeepSeekClient, LLMClient
 from backend.services.amap_service import AmapService
+from backend.services.skill_matcher import build_skill_prompt, match_skills
 from backend.tools import ALL_TOOLS
 from backend.tools.registry import ToolRegistry
 
@@ -120,7 +121,23 @@ def get_agent_context(
         amap_service=amap,
         user_id=user["id"] if user else None,
         settings=settings,
+        active_skills=[],
     )
+
+
+def build_agent_instructions(user_message: str, interests: list[str] | None = None) -> str:
+    """Build skill-enriched instructions for a specific user message.
+
+    Per D-20: prompt-only injection. Per D-21: primary + secondary hierarchy.
+    Called at Runner.run() invocation to get per-request skill-aware instructions
+    while reusing the cached SDK Agent.
+    """
+    base = "你是一个旅行助手，帮助用户规划行程。你像一位很会玩的本地朋友，了解用户的喜好并给出有温度的推荐。"
+    matched = match_skills(user_message, interests)
+    skill_prompt = build_skill_prompt(matched)
+    if skill_prompt:
+        return f"{base}\n\n{skill_prompt}"
+    return base
 
 
 @lru_cache

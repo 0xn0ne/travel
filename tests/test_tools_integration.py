@@ -16,7 +16,7 @@ def _make_mock_amap() -> AmapService:
 
 def test_all_tools_count():
     """ALL_TOOLS list has exactly 10 tool functions."""
-    assert len(ALL_TOOLS) == 10, f"Expected 10 tools, got {len(ALL_TOOLS)}"
+    assert len(ALL_TOOLS) == 12, f"Expected 12 tools, got {len(ALL_TOOLS)}"
 
 
 def test_sdk_agent_with_all_tools():
@@ -29,7 +29,7 @@ def test_sdk_agent_with_all_tools():
         model=model,
     )
     assert agent.name == "test-agent"
-    assert len(agent.tools) == 10
+    assert len(agent.tools) == 12
 
 
 def test_tool_names():
@@ -45,6 +45,8 @@ def test_tool_names():
         "read_file",
         "write_file",
         "execute_command",
+        "read_memories",
+        "write_memory",
     }
     actual_names = {tool.name for tool in ALL_TOOLS}
     assert actual_names == expected_names, f"Missing: {expected_names - actual_names}, Extra: {actual_names - expected_names}"

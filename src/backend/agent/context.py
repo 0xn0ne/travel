@@ -25,6 +25,7 @@ class AgentContext(BaseModel):
     amap_service: AmapService
     user_id: str | None = None
     settings: Any  # Settings from backend.config
+    active_skills: list[str] = []  # Slugs of active skills for this request
 
 
 def create_deepseek_model(

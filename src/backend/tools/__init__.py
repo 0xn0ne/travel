@@ -9,7 +9,7 @@ Phase 12 SDK tools (added in Plans 02/03):
     - Registered directly with Agent(tools=[...]) — no ToolRegistry needed
 
 Centralized exports (Plan 04):
-    - ALL_TOOLS: list of all 10 @function_tool functions for SDK Agent construction
+    - ALL_TOOLS: list of all 12 @function_tool functions for SDK Agent construction
 """
 
 from backend.tools.registry import ToolRegistry
