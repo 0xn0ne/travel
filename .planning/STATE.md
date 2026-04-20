@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: AI Agent Tool System
+milestone: v1.1
+milestone_name: Pipeline Quality + UI Redesign
 status: executing
-last_updated: "2026-04-20T14:01:02Z"
-last_activity: 2026-04-20 -- 11-02 complete
+last_updated: "2026-04-20T15:47:24.918Z"
+last_activity: 2026-04-20 -- Phase 12 execution started
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 5
   total_plans: 15
-  completed_plans: 2
-  percent: 13
+  completed_plans: 16
+  percent: 100
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-20)
 
 **Core value:** 帮你发现你会喜欢但自己找不到的地方，并且用对的方式推荐给你——品味数据 + SOUL 提示词的组合，让行程有"本地朋友推荐"的温度
-**Current focus:** v1.2 AI Agent Tool System — Phase 11 in progress
+**Current focus:** Phase 12 — business-tools
 
 ## Current Position
 
-Phase: 11 of 15 (Agent Framework Core)
-Plan: 02 (complete — phase done)
-Status: 11-02 complete, Phase 11 finished (2/2 plans)
-Last activity: 2026-04-20 -- 11-02 AgentLoop complete
+Phase: 12 (business-tools) — COMPLETE
+Plan: 4 of 4 (all complete)
+Status: Phase 12 complete — all tools wired and tested
+Last activity: 2026-04-20 -- Plan 12-04 completed
 
 Progress: [█░░░░░░░░░] 13%
 
@@ -67,6 +67,10 @@ Progress: [█░░░░░░░░░] 13%
 - AgentLoop.run() returns full text, run_streaming() yields chunks — same logic, different output
 - EventBus not injected at DI level — provided at call sites (Phase 14/15)
 - ToolExecutor type alias allows custom execution without modifying AgentLoop
+- ALL_TOOLS centralized export in tools/__init__.py — 10 @function_tool functions
+- SDK Agent built with DeepSeek model + all tools via lru_cache singleton
+- AgentContext request-scoped via FastAPI DI with DB, AmapService, user, settings
+- Backward-compatible get_tool_registry/get_agent_loop preserved for transition
 
 ### Decisions (from v1.1)
 
@@ -88,5 +92,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-04-20
-Status: **11-02 AgentLoop complete — Phase 11 finished**
-Next: Execute Phase 12 (Agent Tools) — `/gsd-execute-phase 12`
+Status: **12-04 complete — Phase 12 (business-tools) finished**
+Next: Plan next phase or verify Phase 12 work

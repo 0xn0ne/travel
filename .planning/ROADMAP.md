@@ -55,8 +55,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Milestone Goal:** Add model-agnostic AI Agent tool calling system — agent autonomously calls business tools during itinerary generation and user conversations, with memory, skills, and real-time streaming progress.
 
-- [x] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery
-- [ ] **Phase 12: Business & General Tools** — POI search, weather, preferences, web search, file I/O, command (reserved)
+- [x] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery — **completed 2026-04-20**
+- [x] **Phase 12: Business & General Tools** — POI search, weather, preferences, web search, file I/O, command (reserved) — **completed 2026-04-20**
 - [ ] **Phase 13: Memory & Skills** — Per-user SQLite memory, skill auto-activation, pre-built skill packs
 - [ ] **Phase 14: Pipeline Integration** — New Agent Stage in existing pipeline, SSE tool-call progress
 - [ ] **Phase 15: Chat Integration** — Chat API, streaming responses, frontend chat UI
@@ -181,10 +181,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — SDK foundation: AgentContext, deps, SDK wiring (AGENT-01, AGENT-02)
-- [ ] 12-02-PLAN.md — Business tools: POI search, weather, user prefs, itinerary context (BIZ-01, BIZ-02, BIZ-03, BIZ-04)
-- [ ] 12-03-PLAN.md — General tools: web search, web fetch, file I/O, command stub (TOOL-01, TOOL-02, TOOL-03, TOOL-04)
-- [ ] 12-04-PLAN.md — DI wiring + integration tests (all requirements)
+- [x] 12-01-PLAN.md — SDK foundation: AgentContext, deps, SDK wiring (AGENT-01, AGENT-02)
+- [x] 12-02-PLAN.md — Business tools: POI search, weather, user prefs, itinerary context (BIZ-01, BIZ-02, BIZ-03, BIZ-04)
+- [x] 12-03-PLAN.md — General tools: web search, web fetch, file I/O, command stub (TOOL-01, TOOL-02, TOOL-03, TOOL-04)
+- [x] 12-04-PLAN.md — DI wiring + integration tests (all requirements)
 
 ### Phase 13: Memory & Skills
 **Goal**: Agent remembers user preferences across conversations and activates the right skill combinations automatically
@@ -235,8 +235,8 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 8. Auth & User System | v1.1 | 2/2 | Complete | 2026-04-17 |
 | 9. UI Redesign & Rich Display | v1.1 | 5/5 | Complete | 2026-04-17 |
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
-| 11. Agent Framework Core | v1.2 | 1/2 | In Progress | - |
-| 12. Business & General Tools | v1.2 | 0/4 | Planned | - |
+| 11. Agent Framework Core | v1.2 | 2/2 | Complete | 2026-04-20 |
+| 12. Business & General Tools | v1.2 | 4/4 | Complete | 2026-04-20 |
 | 13. Memory & Skills | v1.2 | 0/? | Not started | - |
 | 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
 | 15. Chat Integration | v1.2 | 0/? | Not started | - |
