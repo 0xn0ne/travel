@@ -80,6 +80,7 @@ async def generate_itinerary(
     poi_candidates: list[POICandidate],
     user_input: str,
     group: str | None = None,
+    enrichment_context: str = "",
 ) -> tuple[str, Itinerary]:
     """Generate itinerary using SOUL prompt + POI candidates. Returns (raw_response, itinerary)."""
 
@@ -99,6 +100,9 @@ async def generate_itinerary(
         DAYS=intent.days,
         CITY=intent.city,
     )
+
+    if enrichment_context:
+        user_message += f"\n\n## 智能推荐补充信息\n{enrichment_context}"
 
     messages = [
         {"role": "system", "content": system_prompt},
