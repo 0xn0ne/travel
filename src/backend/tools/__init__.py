@@ -23,6 +23,7 @@ from backend.tools.web_search import web_search
 from backend.tools.web_fetch import web_fetch
 from backend.tools.file_io import list_files, read_file, write_file
 from backend.tools.command_exec import execute_command
+from backend.tools.memory import read_memories, write_memory
 
 ALL_TOOLS = [
     search_pois,
@@ -35,6 +36,8 @@ ALL_TOOLS = [
     read_file,
     write_file,
     execute_command,
+    read_memories,
+    write_memory,
 ]
 
 __all__ = ["ToolResult", "ToolRegistry", "ALL_TOOLS"]
