@@ -195,7 +195,12 @@ Plans:
   2. Agent only accesses memories of the authenticated user; unauthenticated sessions have no persistent memory
   3. Pre-built skills ("行程规划", "美食探索", "本地人推荐") define named tool subsets with context prompts, each loaded from a JSON config file in `data/skills/`
   4. When a user message matches a skill's trigger conditions (keywords, city, topic), the skill auto-activates: its tools are enabled and context prompt is injected into the system message
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — AgentMemory model + Alembic migration + memory read/write tools + cleanup (MEM-01, MEM-02, MEM-03)
+- [ ] 13-02-PLAN.md — SkillConfig loader + skill matcher + 3 pre-built skill packs with prompts (SKILL-01, SKILL-02, SKILL-03)
+- [ ] 13-03-PLAN.md — Wire memory + skills into ALL_TOOLS + DI + integration tests (all requirements)
 
 ### Phase 14: Pipeline Integration
 **Goal**: Agent enriches itinerary generation by using tools to gather real-time data, with visible progress streamed to the user
@@ -237,7 +242,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
 | 11. Agent Framework Core | v1.2 | 2/2 | Complete | 2026-04-20 |
 | 12. Business & General Tools | v1.2 | 4/4 | Complete    | 2026-04-20 |
-| 13. Memory & Skills | v1.2 | 0/? | Not started | - |
+| 13. Memory & Skills | v1.2 | 0/3 | Planned | - |
 | 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
 | 15. Chat Integration | v1.2 | 0/? | Not started | - |
 
