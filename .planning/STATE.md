@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: AI Agent Tool System
-status: planning
-stopped_at: Roadmap created
-last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 — v1.2 roadmap created (Phases 11-15)
+status: executing
+last_updated: "2026-04-20T13:48:18Z"
+last_activity: 2026-04-20 -- 11-01 complete
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 15
+  completed_plans: 1
+  percent: 7
 ---
 
 # Project State
@@ -21,26 +20,28 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-20)
 
 **Core value:** 帮你发现你会喜欢但自己找不到的地方，并且用对的方式推荐给你——品味数据 + SOUL 提示词的组合，让行程有"本地朋友推荐"的温度
-**Current focus:** v1.2 AI Agent Tool System — roadmap created, ready to plan Phase 11
+**Current focus:** v1.2 AI Agent Tool System — Phase 11 in progress
 
 ## Current Position
 
 Phase: 11 of 15 (Agent Framework Core)
-Plan: —
-Status: Ready to plan
-Last activity: 2026-04-20 — v1.2 roadmap created
+Plan: 02 (next)
+Status: 11-01 complete, ready for 11-02
+Last activity: 2026-04-20 -- 11-01 Agent Foundation complete
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 7%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed (v1.0+v1.1): 37
-- v1.2 plans completed: 0
+- v1.2 plans completed: 1
 
 **Recent Trend:**
-- v1.1 completed Phases 6-9 (17 plans) over 2 days
-- Trend: Stable
+
+- Phase 11-01 completed (Agent Foundation)
+- Trend: Starting v1.2
 
 ## Accumulated Context
 
@@ -55,6 +56,13 @@ Progress: [░░░░░░░░░░] 0%
 - New Agent Stage inserted between Stage 2 (pre-filter) and Stage 3 (LLM+SOUL)
 - Command execution tool (TOOL-04) registered but disabled by default
 - Tool calling transparent to users — they see results, not mechanics
+
+### Decisions (from v1.2 execution)
+
+- LLMClient renamed from DeepSeekClient with backward-compatible alias
+- Tool definitions centralized in config.yml (YAML) for startup loading
+- ToolResult dataclass with data/error/summary fields for unified tool output
+- tool_chat() uses non-streaming mode for stable function calling
 
 ### Decisions (from v1.1)
 
@@ -76,5 +84,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-04-20
-Status: **v1.2 roadmap created**
-Next: Plan Phase 11 (Agent Framework Core) — `/gsd-plan-phase 11`
+Status: **11-01 Agent Foundation complete**
+Next: Execute 11-02 (AgentLoop) — `/gsd-execute-phase 11`

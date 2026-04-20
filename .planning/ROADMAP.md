@@ -165,7 +165,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — LLMClient + ToolResult + ToolRegistry + config.yml (AGENT-02)
+- [x] 11-01-PLAN.md — LLMClient + ToolResult + ToolRegistry + config.yml (AGENT-02)
 - [ ] 11-02-PLAN.md — AgentLoop with tool-call cycle, iteration guard, error recovery, SSE, DI (AGENT-01, AGENT-04)
 
 ### Phase 12: Business & General Tools
@@ -229,7 +229,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 8. Auth & User System | v1.1 | 2/2 | Complete | 2026-04-17 |
 | 9. UI Redesign & Rich Display | v1.1 | 5/5 | Complete | 2026-04-17 |
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
-| 11. Agent Framework Core | v1.2 | 0/2 | Planned | - |
+| 11. Agent Framework Core | v1.2 | 1/2 | In Progress | - |
 | 12. Business & General Tools | v1.2 | 0/? | Not started | - |
 | 13. Memory & Skills | v1.2 | 0/? | Not started | - |
 | 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
