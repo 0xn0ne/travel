@@ -89,13 +89,42 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated during roadmap creation) | | |
+| AGENT-01 | Phase 11 | Pending |
+| AGENT-02 | Phase 11 | Pending |
+| AGENT-03 | Phase 14 | Pending |
+| AGENT-04 | Phase 11 | Pending |
+| TOOL-01 | Phase 12 | Pending |
+| TOOL-02 | Phase 12 | Pending |
+| TOOL-03 | Phase 12 | Pending |
+| TOOL-04 | Phase 12 | Pending |
+| BIZ-01 | Phase 12 | Pending |
+| BIZ-02 | Phase 12 | Pending |
+| BIZ-03 | Phase 12 | Pending |
+| BIZ-04 | Phase 12 | Pending |
+| SKILL-01 | Phase 13 | Pending |
+| SKILL-02 | Phase 13 | Pending |
+| SKILL-03 | Phase 13 | Pending |
+| MEM-01 | Phase 13 | Pending |
+| MEM-02 | Phase 13 | Pending |
+| MEM-03 | Phase 13 | Pending |
+| PIPE-01 | Phase 14 | Pending |
+| PIPE-02 | Phase 14 | Pending |
+| CHAT-01 | Phase 15 | Pending |
+| CHAT-02 | Phase 15 | Pending |
+| CHAT-03 | Phase 15 | Pending |
 
 **Coverage:**
-- v1.2 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21 ⚠️
+- v1.2 requirements: 23 total
+- Mapped to phases: 23
+- Unmapped: 0 ✓
+
+**Phase distribution:**
+- Phase 11 (Agent Framework Core): 3 requirements
+- Phase 12 (Business & General Tools): 8 requirements
+- Phase 13 (Memory & Skills): 6 requirements
+- Phase 14 (Pipeline Integration): 3 requirements
+- Phase 15 (Chat Integration): 3 requirements
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 — v1.2 requirements defined*
+*Last updated: 2026-04-20 — v1.2 roadmap created, 23/23 requirements mapped*

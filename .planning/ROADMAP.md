@@ -8,6 +8,7 @@ Taste-based travel itinerary generator for 18-35 year old Chinese travelers. The
 
 - ✅ **v1.0 MVP** — Phases 0-4 + E2E (shipped 2026-04-16) — [Archive](milestones/v1.0-ROADMAP.md)
 - 🚧 **v1.1 Pipeline Quality + UI Redesign** — Phases 6-10 (in progress)
+- 📋 **v1.2 AI Agent Tool System** — Phases 11-15 (planned)
 
 ## Phases
 
@@ -49,6 +50,16 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: Auth & User System** — Complete auth: backend fix, frontend login/register, settings, itinerary history — **completed 2026-04-17**
 - [ ] **Phase 9: UI Redesign & Rich Display** — Visual overhaul: warm palette, rich POI cards, journey loading, exciting home
 - [ ] **Phase 10: Map & Sharing** — Map visualization with Amap JS + itinerary sharing via link
+
+### 📋 v1.2 AI Agent Tool System (Planned)
+
+**Milestone Goal:** Add model-agnostic AI Agent tool calling system — agent autonomously calls business tools during itinerary generation and user conversations, with memory, skills, and real-time streaming progress.
+
+- [ ] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery
+- [ ] **Phase 12: Business & General Tools** — POI search, weather, preferences, web search, file I/O, command (reserved)
+- [ ] **Phase 13: Memory & Skills** — Per-user SQLite memory, skill auto-activation, pre-built skill packs
+- [ ] **Phase 14: Pipeline Integration** — New Agent Stage in existing pipeline, SSE tool-call progress
+- [ ] **Phase 15: Chat Integration** — Chat API, streaming responses, frontend chat UI
 
 ## Phase Details
 
@@ -140,10 +151,67 @@ Plans:
 - [ ] 10-02-PLAN.md — MapView component, responsive layout, bidirectional sync, ShareButton, OG tags (MAP-01, MAP-02, MAP-03, MAP-04, SHARE-01, SHARE-02)
 - [ ] 10-03-PLAN.md — Visual verification checkpoint (MAP-01, MAP-02, MAP-03, MAP-04, SHARE-01, SHARE-02)
 
+### 📋 v1.2 AI Agent Tool System
+
+### Phase 11: Agent Framework Core
+**Goal**: AI agent can reason about tasks and call registered tools to accomplish them — the foundation everything else depends on
+**Depends on**: Phase 10 (v1.1 complete)
+**Requirements**: AGENT-01, AGENT-02, AGENT-04
+**Success Criteria** (what must be TRUE):
+  1. Given a registered tool, the agent loop receives a user message, LLM decides to call the tool, executes the function, and returns the result to the LLM for further reasoning
+  2. Tools register dynamically with name, description, and Pydantic input schema — the registry validates schemas and exposes them as OpenAI function-calling format
+  3. After 8 tool-call rounds in a single message, the agent stops and returns a graceful message instead of looping infinitely
+  4. When a tool execution raises an error, the error is caught and returned as error context to the LLM, which can attempt recovery with a different tool or arguments
+**Plans**: TBD
+
+### Phase 12: Business & General Tools
+**Goal**: Agent has a complete toolkit to help travelers — search POIs, check weather, read preferences, search the web, and manage files
+**Depends on**: Phase 11
+**Requirements**: BIZ-01, BIZ-02, BIZ-03, BIZ-04, TOOL-01, TOOL-02, TOOL-03, TOOL-04
+**Success Criteria** (what must be TRUE):
+  1. Agent searches POI database by city + keyword and returns name, rating, tier, coordinates, and highlight_note
+  2. Agent queries weather forecast for a city and date range, returning temperature, conditions, and travel suggestions
+  3. Agent reads current user's taste tags, budget preference, and past itinerary history from the database
+  4. Agent searches the web by keywords as a fallback when POI DB results are insufficient, returning top results with title + snippet + URL
+  5. Agent reads and writes files within a designated `data/agent_memory/` directory, but cannot access paths outside that directory
+**Plans**: TBD
+
+### Phase 13: Memory & Skills
+**Goal**: Agent remembers user preferences across conversations and activates the right skill combinations automatically
+**Depends on**: Phase 12
+**Requirements**: MEM-01, MEM-02, MEM-03, SKILL-01, SKILL-02, SKILL-03
+**Success Criteria** (what must be TRUE):
+  1. New `agent_memories` table stores structured entries with user_id, key, value (JSON), and timestamps — agent writes memories during conversation and reads them at session start
+  2. Agent only accesses memories of the authenticated user; unauthenticated sessions have no persistent memory
+  3. Pre-built skills ("行程规划", "美食探索", "本地人推荐") define named tool subsets with context prompts, each loaded from a JSON config file in `data/skills/`
+  4. When a user message matches a skill's trigger conditions (keywords, city, topic), the skill auto-activates: its tools are enabled and context prompt is injected into the system message
+**Plans**: TBD
+
+### Phase 14: Pipeline Integration
+**Goal**: Agent enriches itinerary generation by using tools to gather real-time data, with visible progress streamed to the user
+**Depends on**: Phase 11, Phase 12
+**Requirements**: PIPE-01, PIPE-02, AGENT-03
+**Success Criteria** (what must be TRUE):
+  1. A new Agent Stage runs between Stage 2 (pre-filter) and Stage 3 (LLM+SOUL) — the agent receives filtered POI candidates + user intent, uses tools to enrich data, and passes enriched context to Stage 3
+  2. During agent tool calls in the pipeline, SSE events stream progress messages like "正在搜索附近好去处..." through the existing EventBus — the user sees meaningful progress, not silent waiting
+  3. Tool-call mechanics (JSON schemas, function names, raw arguments) never appear in the user-facing SSE stream — only human-readable progress messages and final results
+**Plans**: TBD
+
+### Phase 15: Chat Integration
+**Goal**: Users can have a real-time conversation with the AI assistant that transparently uses tools to answer their questions
+**Depends on**: Phase 13, Phase 14
+**Requirements**: CHAT-01, CHAT-02, CHAT-03
+**Success Criteria** (what must be TRUE):
+  1. `POST /api/chat` accepts a user message + optional session_id, processes it through the agent loop with tool calling, and returns a streaming SSE response with the final text answer
+  2. A floating chat bubble or side panel in the itinerary view lets users type messages and see streaming AI responses — tool calls are transparent, user only sees final answer
+  3. Messages are stored in `chat_messages` table per session; the agent receives the last N messages as context when responding to a new message
+**Plans**: TBD
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
+Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14 → 15
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -157,8 +225,12 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10
 | 8. Auth & User System | v1.1 | 2/2 | Complete | 2026-04-17 |
 | 9. UI Redesign & Rich Display | v1.1 | 5/5 | Complete | 2026-04-17 |
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
+| 11. Agent Framework Core | v1.2 | 0/? | Not started | - |
+| 12. Business & General Tools | v1.2 | 0/? | Not started | - |
+| 13. Memory & Skills | v1.2 | 0/? | Not started | - |
+| 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
+| 15. Chat Integration | v1.2 | 0/? | Not started | - |
 
 ---
-
 *Roadmap created: 2026-04-15*
-*Last updated: 2026-04-17 — Phase 10 planned (3 plans)*
+*Last updated: 2026-04-20 — v1.2 roadmap created (Phases 11-15, 23 requirements)*
