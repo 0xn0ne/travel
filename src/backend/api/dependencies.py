@@ -5,11 +5,13 @@ from functools import lru_cache
 from fastapi import Depends, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.agent.loop import AgentLoop
 from backend.api.auth import decode_token, get_jwt_secret_key
 from backend.config import get_settings
 from backend.db.init_db import get_async_session
 from backend.llm.client import ChatGPTClient, DeepSeekClient, LLMClient
 from backend.services.amap_service import AmapService
+from backend.tools.registry import ToolRegistry
 
 get_db = get_async_session
 
@@ -28,6 +30,20 @@ def get_llm_client() -> LLMClient:
 def get_chatgpt_client() -> ChatGPTClient:
     settings = get_settings()
     return ChatGPTClient(api_key=settings.openai_api_key)
+
+
+@lru_cache
+def get_tool_registry() -> ToolRegistry:
+    """Return singleton ToolRegistry loaded from config.yml (per D-12)."""
+    return ToolRegistry(config_path="config.yml")
+
+
+def get_agent_loop(
+    llm: LLMClient = Depends(get_llm_client),
+    registry: ToolRegistry = Depends(get_tool_registry),
+) -> AgentLoop:
+    """Create request-scoped AgentLoop. EventBus is injected at call sites (pipeline/chat)."""
+    return AgentLoop(llm=llm, tool_registry=registry)
 
 
 def get_amap_service(db: AsyncSession = Depends(get_db)) -> AmapService:
