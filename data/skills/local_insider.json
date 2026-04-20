@@ -1,0 +1,13 @@
+{
+  "name": "本地人推荐",
+  "slug": "local_insider",
+  "description": "发现小众、地道、隐藏的好去处，像本地人一样体验城市",
+  "priority": 3,
+  "trigger_conditions": {
+    "keywords": ["小众", "本地人", "隐藏", "推荐", "地道"],
+    "interests": ["探索", "文化"],
+    "min_match": 1
+  },
+  "prompt_file": "local_insider.md",
+  "related_tools": ["search_pois", "web_search", "web_fetch", "read_memories"]
+}

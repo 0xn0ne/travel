@@ -1,0 +1,13 @@
+{
+  "name": "美食探索",
+  "slug": "food_exploration",
+  "description": "发现城市中的美食、餐厅、小吃、咖啡店",
+  "priority": 5,
+  "trigger_conditions": {
+    "keywords": ["吃", "美食", "餐厅", "小吃", "咖啡", "茶"],
+    "interests": ["美食", "品尝"],
+    "min_match": 1
+  },
+  "prompt_file": "food_exploration.md",
+  "related_tools": ["search_pois", "web_search", "get_user_preferences", "read_memories"]
+}
