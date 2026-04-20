@@ -178,7 +178,13 @@ Plans:
   3. Agent reads current user's taste tags, budget preference, and past itinerary history from the database
   4. Agent searches the web by keywords as a fallback when POI DB results are insufficient, returning top results with title + snippet + URL
   5. Agent reads and writes files within a designated `data/agent_memory/` directory, but cannot access paths outside that directory
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — SDK foundation: AgentContext, deps, SDK wiring (AGENT-01, AGENT-02)
+- [ ] 12-02-PLAN.md — Business tools: POI search, weather, user prefs, itinerary context (BIZ-01, BIZ-02, BIZ-03, BIZ-04)
+- [ ] 12-03-PLAN.md — General tools: web search, web fetch, file I/O, command stub (TOOL-01, TOOL-02, TOOL-03, TOOL-04)
+- [ ] 12-04-PLAN.md — DI wiring + integration tests (all requirements)
 
 ### Phase 13: Memory & Skills
 **Goal**: Agent remembers user preferences across conversations and activates the right skill combinations automatically
@@ -230,7 +236,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 9. UI Redesign & Rich Display | v1.1 | 5/5 | Complete | 2026-04-17 |
 | 10. Map & Sharing | v1.1 | 0/3 | Not started | - |
 | 11. Agent Framework Core | v1.2 | 1/2 | In Progress | - |
-| 12. Business & General Tools | v1.2 | 0/? | Not started | - |
+| 12. Business & General Tools | v1.2 | 0/4 | Planned | - |
 | 13. Memory & Skills | v1.2 | 0/? | Not started | - |
 | 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
 | 15. Chat Integration | v1.2 | 0/? | Not started | - |
