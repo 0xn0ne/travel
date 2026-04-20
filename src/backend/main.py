@@ -12,6 +12,7 @@ from sqlalchemy import func, select
 from backend.api.routes import (
     adjust,
     auth,
+    chat,
     config,
     feedback,
     generate,
@@ -110,6 +111,7 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(generate.router, prefix="/api", tags=["generate"])
+app.include_router(chat.router, prefix="/api", tags=["chat"])
 app.include_router(stream.router, prefix="/api", tags=["stream"])
 app.include_router(scenarios.router, prefix="/api", tags=["scenarios"])
 app.include_router(itineraries.router, prefix="/api", tags=["itineraries"])

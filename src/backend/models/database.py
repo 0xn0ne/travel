@@ -149,3 +149,34 @@ class AgentMemory(Base):
                 f"Invalid category '{value}'. Must be one of: {ALLOWED_CATEGORIES}"
             )
         return value
+
+
+ALLOWED_ROLES = {"user", "assistant", "system"}
+
+
+class ChatMessage(Base):
+    """Chat message persistence (CHAT-03).
+
+    Authenticated user messages stored per session.
+    Anonymous users never write here (ephemeral only per D-15).
+    """
+
+    __tablename__ = "chat_messages"
+    __table_args__ = (
+        Index("ix_chat_messages_user_session_created", "user_id", "session_id", "created_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("users.id"), index=True)
+    role: Mapped[str] = mapped_column(String(20))
+    content: Mapped[str] = mapped_column(Text)
+    session_id: Mapped[str] = mapped_column(String(36), index=True, default=lambda: str(uuid4()))
+    created_at: Mapped[datetime] = mapped_column(default=_utcnow)
+
+    @validates("role")
+    def _validate_role(self, key: str, value: str) -> str:
+        if value not in ALLOWED_ROLES:
+            raise ValueError(
+                f"Invalid role '{value}'. Must be one of: {ALLOWED_ROLES}"
+            )
+        return value
