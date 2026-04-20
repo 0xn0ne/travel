@@ -57,8 +57,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 11: Agent Framework Core** — Tool-call loop, registry, iteration guard + error recovery — **completed 2026-04-20**
 - [x] **Phase 12: Business & General Tools** — POI search, weather, preferences, web search, file I/O, command (reserved) — **completed 2026-04-20**
-- [ ] **Phase 13: Memory & Skills** — Per-user SQLite memory, skill auto-activation, pre-built skill packs
-- [ ] **Phase 14: Pipeline Integration** — New Agent Stage in existing pipeline, SSE tool-call progress
+- [x] **Phase 13: Memory & Skills** — Per-user SQLite memory, skill auto-activation, pre-built skill packs — **completed 2026-04-21**
+- [x] **Phase 14: Pipeline Integration** — New Agent Stage in existing pipeline, SSE tool-call progress — **completed 2026-04-21**
 - [ ] **Phase 15: Chat Integration** — Chat API, streaming responses, frontend chat UI
 
 ## Phase Details
