@@ -8,16 +8,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from backend.api.auth import decode_token, get_jwt_secret_key
 from backend.config import get_settings
 from backend.db.init_db import get_async_session
-from backend.llm.client import ChatGPTClient, DeepSeekClient
+from backend.llm.client import ChatGPTClient, DeepSeekClient, LLMClient
 from backend.services.amap_service import AmapService
 
 get_db = get_async_session
 
 
 @lru_cache
-def get_llm_client() -> DeepSeekClient:
+def get_llm_client() -> LLMClient:
     settings = get_settings()
-    return DeepSeekClient(
+    return LLMClient(
         api_key=settings.deepseek_api_key,
         base_url=settings.deepseek_base_url,
         model=settings.deepseek_model,

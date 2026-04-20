@@ -7,7 +7,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.api.dependencies import get_amap_service, get_current_user_optional, get_db, get_llm_client
-from backend.llm.client import DeepSeekClient
+from backend.llm.client import LLMClient
 from backend.models.pydantic import GenerateRequest
 from backend.pipeline.coordinator import PipelineCoordinator
 from backend.pipeline.events import PipelineEvent
@@ -30,7 +30,7 @@ def _validate_input(request: GenerateRequest) -> str | None:
 async def generate_itinerary(
     request: GenerateRequest,
     db: AsyncSession = Depends(get_db),
-    llm: DeepSeekClient = Depends(get_llm_client),
+    llm: LLMClient = Depends(get_llm_client),
     amap: AmapService = Depends(get_amap_service),
     current_user: dict | None = Depends(get_current_user_optional),
 ):

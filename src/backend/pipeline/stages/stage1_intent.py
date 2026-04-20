@@ -8,7 +8,7 @@ from backend.models.pydantic import IntentOutput
 from backend.services.city_config import get_supported_cities_display, is_city_supported
 
 if TYPE_CHECKING:
-    from backend.llm.client import DeepSeekClient
+    from backend.llm.client import LLMClient
 
 
 def _load_prompt(filename: str) -> str:
@@ -17,7 +17,7 @@ def _load_prompt(filename: str) -> str:
 
 
 async def extract_intent(
-    llm_client: "DeepSeekClient",
+    llm_client: "LLMClient",
     user_input: str,
     user_prefs: dict | None = None,
 ) -> IntentOutput:

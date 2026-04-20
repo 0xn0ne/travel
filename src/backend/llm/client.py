@@ -1,4 +1,4 @@
-"""LLM clients for DeepSeek (streaming + JSON mode) and ChatGPT (Group C competitor)."""
+"""LLM clients for DeepSeek (streaming + JSON mode + tool calling) and ChatGPT (Group C competitor)."""
 
 from collections.abc import AsyncIterator
 
@@ -6,8 +6,17 @@ from openai import APIConnectionError, APITimeoutError, AsyncOpenAI, RateLimitEr
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 
-class DeepSeekClient:
-    """Streaming client for DeepSeek-V3 via OpenAI-compatible API."""
+class LLMClient:
+    """LLM client via OpenAI-compatible API with streaming, JSON, and tool-calling support.
+
+    Supports three modes:
+    - ``stream_chat``: streaming token-by-token response
+    - ``generate_json``: non-streaming with optional JSON mode
+    - ``tool_chat``: non-streaming tool-calling completion
+
+    The client is model-agnostic — ``base_url`` and ``model`` are configurable
+    (currently defaults to DeepSeek-V3, but any OpenAI-compatible endpoint works).
+    """
 
     def __init__(
         self,
@@ -76,6 +85,46 @@ class DeepSeekClient:
                 f"Full response: {response.model_dump_json()}"
             )
         return content
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(min=1, max=10),
+        retry=retry_if_exception_type((APIConnectionError, RateLimitError, APITimeoutError)),
+    )
+    async def tool_chat(
+        self,
+        messages: list[dict],
+        tools: list[dict],
+        temperature: float = 0.7,
+        max_tokens: int = 4096,
+    ) -> dict:
+        """Non-streaming tool-calling completion. Returns dict with 'content' and/or 'tool_calls'."""
+        response = await self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            tools=tools,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        message = response.choices[0].message
+        result: dict = {"content": message.content}
+        if message.tool_calls:
+            result["tool_calls"] = [
+                {
+                    "id": tc.id,
+                    "type": "function",
+                    "function": {
+                        "name": tc.function.name,
+                        "arguments": tc.function.arguments,
+                    },
+                }
+                for tc in message.tool_calls
+            ]
+        return result
+
+
+# Backward-compatible alias — existing code importing DeepSeekClient continues to work
+DeepSeekClient = LLMClient
 
 
 class ChatGPTClient:

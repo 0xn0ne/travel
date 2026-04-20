@@ -8,7 +8,7 @@ from backend.llm.output_parsers import parse_itinerary_output
 from backend.models.pydantic import IntentOutput, Itinerary, POICandidate
 
 if TYPE_CHECKING:
-    from backend.llm.client import DeepSeekClient
+    from backend.llm.client import LLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +75,7 @@ def _enforce_max_pois_per_day(itinerary: Itinerary) -> Itinerary:
 
 
 async def generate_itinerary(
-    llm_client: "DeepSeekClient",
+    llm_client: "LLMClient",
     intent: IntentOutput,
     poi_candidates: list[POICandidate],
     user_input: str,
