@@ -2,15 +2,18 @@
 
 from functools import lru_cache
 
+from agents import Agent
 from fastapi import Depends, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.agent.context import AgentContext, create_deepseek_model
 from backend.agent.loop import AgentLoop
 from backend.api.auth import decode_token, get_jwt_secret_key
 from backend.config import get_settings
 from backend.db.init_db import get_async_session
 from backend.llm.client import ChatGPTClient, DeepSeekClient, LLMClient
 from backend.services.amap_service import AmapService
+from backend.tools import ALL_TOOLS
 from backend.tools.registry import ToolRegistry
 
 get_db = get_async_session
@@ -103,3 +106,35 @@ async def get_current_user_optional(
         return await get_current_user(authorization, db)
     except HTTPException:
         return None
+
+
+def get_agent_context(
+    db: AsyncSession = Depends(get_db),
+    amap: AmapService = Depends(get_amap_service),
+    user: dict | None = Depends(get_current_user_optional),
+) -> AgentContext:
+    """Create request-scoped AgentContext with all services (per D-09)."""
+    settings = get_settings()
+    return AgentContext(
+        db_session=db,
+        amap_service=amap,
+        user_id=user["id"] if user else None,
+        settings=settings,
+    )
+
+
+@lru_cache
+def get_sdk_agent() -> Agent:
+    """Create SDK Agent with all tools and DeepSeek model (per D-01, D-02)."""
+    settings = get_settings()
+    model = create_deepseek_model(
+        api_key=settings.deepseek_api_key,
+        base_url=settings.deepseek_base_url,
+        model=settings.deepseek_model,
+    )
+    return Agent(
+        name="拾途助手",
+        tools=ALL_TOOLS,
+        instructions="你是一个旅行助手，帮助用户规划行程。",
+        model=model,
+    )
