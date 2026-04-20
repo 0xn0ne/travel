@@ -21,6 +21,7 @@ from backend.api.routes import (
     test_results,
     test_runner,
 )
+from backend.agent import init_agent_sdk
 from backend.config import get_settings
 from backend.db import init_db as _db_mod
 from backend.db.init_db import init_db
@@ -84,6 +85,7 @@ async def lifespan(app: FastAPI):
                 "Set JWT_SECRET_KEY in .env or set ENVIRONMENT=development for local dev."
             )
     await init_db()
+    init_agent_sdk()
     await _seed_if_empty()
     yield
 
