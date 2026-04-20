@@ -224,8 +224,12 @@ Plans:
   1. `POST /api/chat` accepts a user message + optional session_id, processes it through the agent loop with tool calling, and returns a streaming SSE response with the final text answer
   2. A floating chat bubble or side panel in the itinerary view lets users type messages and see streaming AI responses — tool calls are transparent, user only sees final answer
   3. Messages are stored in `chat_messages` table per session; the agent receives the last N messages as context when responding to a new message
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+Plans:
+- [ ] 15-01-PLAN.md — Backend chat API: ChatMessage model, Alembic migration, POST /api/chat SSE endpoint (CHAT-01, CHAT-03)
+- [ ] 15-02-PLAN.md — Frontend chat UI: ChatBubble component, useChat composable, Pinia store, App.vue integration (CHAT-02)
 
 ## Progress
 
@@ -248,7 +252,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 12. Business & General Tools | v1.2 | 4/4 | Complete    | 2026-04-20 |
 | 13. Memory & Skills | v1.2 | 0/3 | Planned | - |
 | 14. Pipeline Integration | v1.2 | 0/2 | Planned | - |
-| 15. Chat Integration | v1.2 | 0/? | Not started | - |
+| 15. Chat Integration | v1.2 | 0/2 | Planned | - |
 
 ---
 *Roadmap created: 2026-04-15*
