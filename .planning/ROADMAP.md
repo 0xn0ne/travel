@@ -210,7 +210,11 @@ Plans:
   1. A new Agent Stage runs between Stage 2 (pre-filter) and Stage 3 (LLM+SOUL) — the agent receives filtered POI candidates + user intent, uses tools to enrich data, and passes enriched context to Stage 3
   2. During agent tool calls in the pipeline, SSE events stream progress messages like "正在搜索附近好去处..." through the existing EventBus — the user sees meaningful progress, not silent waiting
   3. Tool-call mechanics (JSON schemas, function names, raw arguments) never appear in the user-facing SSE stream — only human-readable progress messages and final results
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 14-01-PLAN.md — Agent enrichment stage: agent_enrich() + SSE hooks + unit tests (PIPE-01, PIPE-02, AGENT-03)
+- [ ] 14-02-PLAN.md — Wire coordinator + stage3 enrichment + API route + integration tests (PIPE-01, PIPE-02, AGENT-03)
 
 ### Phase 15: Chat Integration
 **Goal**: Users can have a real-time conversation with the AI assistant that transparently uses tools to answer their questions
@@ -243,7 +247,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13
 | 11. Agent Framework Core | v1.2 | 2/2 | Complete | 2026-04-20 |
 | 12. Business & General Tools | v1.2 | 4/4 | Complete    | 2026-04-20 |
 | 13. Memory & Skills | v1.2 | 0/3 | Planned | - |
-| 14. Pipeline Integration | v1.2 | 0/? | Not started | - |
+| 14. Pipeline Integration | v1.2 | 0/2 | Planned | - |
 | 15. Chat Integration | v1.2 | 0/? | Not started | - |
 
 ---
