@@ -1,7 +1,7 @@
 """Async client for 高德开放平台 Web Service APIs (Amap).
 
-Provides walking route validation between POI pairs. Uses httpx async client
-with tenacity retry and concurrent request limiting.
+Provides walking route validation, POI search, and weather query.
+Uses httpx async client with tenacity retry and concurrent request limiting.
 """
 
 import asyncio
@@ -313,3 +313,91 @@ class AmapService:
                 await asyncio.sleep(0.1)  # avoid rate limit
 
         return list(all_pois.values())
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(min=1, max=10),
+        retry=retry_if_exception_type((httpx.HTTPError, httpx.TimeoutException)),
+    )
+    async def get_weather(self, city_name: str, days: int = 3) -> dict:
+        """Query weather for a city using 高德 weather API.
+
+        Uses CityConfig adcode mapping for city→adcode resolution.
+        Fetches both live conditions (extensions=base) and forecast (extensions=all).
+
+        Args:
+            city_name: Chinese city name, e.g. "上海", "杭州".
+            days: Number of forecast days to return (1-7, default 3).
+
+        Returns:
+            Dict with city, current conditions, and forecast list.
+        """
+        from backend.services.city_config import get_city_config
+
+        city_config = get_city_config(city_name)
+        if not city_config:
+            return {"error": f"暂不支持该城市的天气查询: {city_name}"}
+
+        adcode = city_config.adcode
+
+        # Fetch current conditions
+        self.increment_call_count()
+        live_resp = await self.client.get(
+            f"{self.BASE_URL}/weather/weatherInfo",
+            params={
+                "key": self.api_key,
+                "city": adcode,
+                "extensions": "base",
+            },
+        )
+        live_resp.raise_for_status()
+        live_data = live_resp.json()
+
+        current = {}
+        if live_data.get("status") == "1" and live_data.get("lives"):
+            live = live_data["lives"][0]
+            current = {
+                "temperature": live.get("temperature", ""),
+                "weather": live.get("weather", ""),
+                "winddirection": live.get("winddirection", ""),
+                "windpower": live.get("windpower", ""),
+                "humidity": live.get("humidity", ""),
+                "reporttime": live.get("reporttime", ""),
+            }
+
+        # Fetch forecast
+        self.increment_call_count()
+        forecast_resp = await self.client.get(
+            f"{self.BASE_URL}/weather/weatherInfo",
+            params={
+                "key": self.api_key,
+                "city": adcode,
+                "extensions": "all",
+            },
+        )
+        forecast_resp.raise_for_status()
+        forecast_data = forecast_resp.json()
+
+        forecast = []
+        if forecast_data.get("status") == "1" and forecast_data.get("forecasts"):
+            casts = forecast_data["forecasts"][0].get("casts", [])
+            for cast in casts[:days]:
+                forecast.append(
+                    {
+                        "date": cast.get("date", ""),
+                        "dayweather": cast.get("dayweather", ""),
+                        "nightweather": cast.get("nightweather", ""),
+                        "daytemp": cast.get("daytemp", ""),
+                        "nighttemp": cast.get("nighttemp", ""),
+                        "daywind": cast.get("daywind", ""),
+                        "nightwind": cast.get("nightwind", ""),
+                        "daypower": cast.get("daypower", ""),
+                        "nightpower": cast.get("nightpower", ""),
+                    }
+                )
+
+        return {
+            "city": city_name,
+            "current": current,
+            "forecast": forecast,
+        }

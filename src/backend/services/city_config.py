@@ -26,6 +26,7 @@ class CityConfig(BaseModel):
     bounds: CityBounds
     supported_interests: list[str]
     amap_city_code: str
+    adcode: str  # 行政区划代码，用于天气 API (e.g., "330100" for 杭州, "310000" for 上海)
     tier_a_count: int
     poi_data_file: str
 
