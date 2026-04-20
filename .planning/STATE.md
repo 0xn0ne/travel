@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: AI Agent Tool System
-status: in_progress
+status: complete
 last_updated: "2026-04-21"
 last_activity: 2026-04-21
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 9
-  completed_plans: 9
-  percent: 40
+  completed_phases: 5
+  total_plans: 11
+  completed_plans: 11
+  percent: 100
 ---
 
 # Project State
@@ -20,29 +20,28 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-20)
 
 **Core value:** 帮你发现你会喜欢但自己找不到的地方，并且用对的方式推荐给你——品味数据 + SOUL 提示词的组合，让行程有"本地朋友推荐"的温度
-**Current focus:** Phase 15 — Chat Integration
+**Current focus:** v1.2 milestone COMPLETE — all 5 phases done
 
 ## Current Position
 
-Phase: 14
-Plan: All complete (14-01, 14-02)
-Status: Phase 14 complete — agent enrichment stage wired into pipeline (58 tests pass)
+Phase: 15
+Plan: All complete (15-01, 15-02)
+Status: Phase 15 complete — chat API + frontend ChatBubble (71 tests pass)
 Last activity: 2026-04-21
 
-Progress: [████░░░░░░] 40%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
 - Total plans completed (v1.0+v1.1): 37
-- v1.2 plans completed: 9
+- v1.2 plans completed: 11
 
 **Recent Trend:**
 
-- Phase 11-01 completed (Agent Foundation)
-- Phase 11-02 completed (AgentLoop)
-- Trend: Phase 11 complete, ready for Phase 12
+- Phase 15 completed (Chat Integration)
+- v1.2 milestone COMPLETE
 
 ## Accumulated Context
 
@@ -60,17 +59,17 @@ Progress: [████░░░░░░] 40%
 
 ### Decisions (from v1.2 execution)
 
-- LLMClient renamed from DeepSeekClient with backward-compatible alias
-- Tool definitions centralized in config.yml (YAML) for startup loading
-- ToolResult dataclass with data/error/summary fields for unified tool output
-- tool_chat() uses non-streaming mode for stable function calling
-- AgentLoop.run() returns full text, run_streaming() yields chunks — same logic, different output
-- EventBus not injected at DI level — provided at call sites (Phase 14/15)
-- ToolExecutor type alias allows custom execution without modifying AgentLoop
-- ALL_TOOLS centralized export in tools/__init__.py — 10 @function_tool functions
-- SDK Agent built with DeepSeek model + all tools via lru_cache singleton
-- AgentContext request-scoped via FastAPI DI with DB, AmapService, user, settings
-- Backward-compatible get_tool_registry/get_agent_loop preserved for transition
+- Migrated to openai-agents-python SDK (D-01 Phase 12)
+- SDK `@function_tool` decorator with `RunContextWrapper[AgentContext]`
+- ALL_TOOLS centralized export — 12 function tools
+- AgentContext: db_session, amap_service, user_id, settings, active_skills
+- AgentMemory model with 4 categories, profile-scored retrieval, quarterly cleanup
+- SkillConfig loader (city_config.py pattern), 3 pre-built skills
+- PipelineSSEHooks for SSE tool progress events
+- Agent enrichment stage (agent_enrich) between filter and generate
+- POST /api/chat with SSE streaming, session persistence for auth users
+- ChatMessage model with role validation, composite index
+- Floating ChatBubble component registered in App.vue
 
 ### Decisions (from v1.1)
 
@@ -86,11 +85,10 @@ None.
 
 ### Blockers/Concerns
 
-- Phase 10 (v1.1) not yet started — v1.2 phases depend on v1.1 completion
-- Web search tool (TOOL-01) needs external API selection — no search provider configured yet
+None — v1.2 complete.
 
 ## Session Continuity
 
 Last session: 2026-04-21
-Status: **Phase 14 (Pipeline Integration) — complete, 58 tests pass**
-Next: Phase 15 (Chat Integration)
+Status: **v1.2 milestone COMPLETE — 5/5 phases, 71 tests pass**
+Next: Deploy v1.2 or begin v1.1 remaining phases (9-10)
