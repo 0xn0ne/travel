@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock
 
 from agents import Agent
-from backend.agent.context import AgentContext, create_deepseek_model
+from backend.agent.context import AgentContext, create_provider_model
 from backend.services.amap_service import AmapService
 from backend.tools import ALL_TOOLS
 
@@ -21,7 +21,7 @@ def test_all_tools_count():
 
 def test_sdk_agent_with_all_tools():
     """SDK Agent can be constructed with all tools."""
-    model = create_deepseek_model(api_key="test-key")
+    model = create_provider_model(api_key="test-key")
     agent = Agent(
         name="test-agent",
         tools=ALL_TOOLS,

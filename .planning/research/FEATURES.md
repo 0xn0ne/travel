@@ -1,237 +1,144 @@
-# Feature Research
+# Feature Landscape: AI Agent Tool Calling System
 
-**Domain:** AI-powered travel itinerary generation (Chinese market focus)
-**Researched:** 2026-04-15
-**Confidence:** MEDIUM (Chinese competitor data based on training knowledge + partial web verification; Western competitors verified via official sites)
+**Domain:** AI Agent function calling for travel itinerary app (拾途 Shí Tú v1.2)
+**Researched:** 2026-04-20
+**Context:** Adding agent tool calling to an existing 4-stage pipeline app. Not greenfield — must integrate with existing `DeepSeekClient`, `AmapService`, `EventBus`, and Pydantic models.
 
-## Feature Landscape
+---
 
-### Table Stakes (Users Expect These)
+## Table Stakes
 
-Features users assume exist in any AI itinerary product. Missing these = product feels broken or incomplete.
+Features users expect from a conversational AI travel assistant. Missing = the AI feels dumb or helpless.
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Natural language input | ChatGPT normalized conversational AI — users won't fill long forms | LOW | Plain text → structured intent extraction (destination, dates, budget, interests) |
-| Day-by-day itinerary output | Core value prop of the category — must produce structured day plans | MEDIUM | Time-sequenced nodes with name, type, duration, location, description |
-| POI data with basic info | Users expect place names, photos, ratings, hours | MEDIUM | Tier B/C data from Amap API; photos from Amap POI detail |
-| Route/time validation | If route is impossible (3h drive in 30min), trust is destroyed | MEDIUM | Amap directions API for travel time between nodes |
-| Budget awareness | Users specify budget ranges and expect recommendations to respect them | LOW | LLM prompt constraint + post-generation filter |
-| Interest/style preferences | Minimum: foodie/culture/nature/shopping/nightlife tags | LOW | Tag-based pre-filtering of POI candidates |
-| Edit/adjust after generation | No first draft is perfect — must allow refinement | MEDIUM | Dialog-based adjustment: swap/add/remove nodes, re-balance days |
-| Mobile-responsive web | Target demographic (18-35) primarily uses phones | LOW | CSS responsive design; not a native app |
-| Save/load itineraries | Users expect to return to their generated trips | LOW | JWT auth + SQLite storage |
-| Chinese language UI | Target market is Chinese users | LOW | All UI copy in Simplified Chinese |
+| Feature | Why Expected | Complexity | Dependencies | Notes |
+|---------|--------------|------------|--------------|-------|
+| **Agent loop (tool-call cycle)** | Users ask "帮我找个上海的小众咖啡店" — AI must search POIs, not hallucinate. The core value of agent tools. | Med | `DeepSeekClient`, `AmapService` | Standard OpenAI tool-call loop: send tools → get tool_calls → execute → append result → loop. DeepSeek V3.2 supports this natively. Max iteration guard (e.g., 10 turns). |
+| **Tool: POI search** | "找杭州西湖附近的咖啡店" is the #1 use case. Without it, AI is just a chatbot. | Low | `AmapService.search_pois()`, `AmapService.batch_search_pois()` | Wrap existing service. Return: name, address, rating, taste_tags, distance. Already cached in DB via `AmapCache`. |
+| **Tool: Weather query** | "明天杭州天气怎么样？带伞吗？" — basic travel question. | Low | New `get_weather()` method or wrap existing if present | Simple API call. Return: temp range, rain probability, UV index, clothing suggestion. |
+| **Tool: Route planning** | "从灵隐寺怎么走到北高峰？" — navigation is core to travel. | Low | `AmapService.get_walking_route()` | Already exists. Wrap as tool. Return: distance, duration, polyline for map. |
+| **Tool: User preferences** | AI should know "我喜欢文艺风，预算中等" without being told again. | Low | `User.taste_tags_default`, `User.budget_default` from DB | Read-only tool. Inject into system prompt context. NOT a tool the model calls — rather, a tool that returns user profile when asked "我喜欢什么？". |
+| **Tool: Itinerary context** | When adjusting, AI needs to know current itinerary state. "把第三天的灵隐寺换成法喜寺" requires knowing Day 3 exists. | Low | Existing `Itinerary`/`ItineraryDay` Pydantic models | Read current itinerary from session. Return structured summary (POIs per day, time slots, notes). |
+| **Transparent tool calling** | Users see results ("找到了3家咖啡店"), not the tool mechanics. No JSON schemas or function names in chat. | Low | SSE `EventBus` pattern | Emit `tool_start`/`tool_result` SSE events for frontend loading states. User sees "正在搜索咖啡店..." not `calling search_pois({"keyword": "咖啡店"})`. |
+| **Streaming responses** | The existing app streams via SSE. Agent responses must also stream — not block until the entire loop completes. | Med | `DeepSeekClient.stream_chat()`, SSE infrastructure | Stream the LLM's text responses between tool calls. Tool execution itself is fast (sub-second). The final narrative answer streams token by token. |
+| **Error handling** | "搜索失败，换个关键词试试？" — graceful degradation when APIs fail. | Low | `tenacity` retry on `AmapService` | Rate limit (429), timeout, no results. Never expose raw error. AI should interpret and suggest alternatives. |
+| **Max iteration guard** | Prevent infinite loops where AI keeps calling tools forever. | Low | Agent loop config | Hard cap at 8-10 tool-call rounds per user message. On limit, force final text response. |
 
-### Differentiators (Competitive Advantage)
+---
 
-Features that set 拾途 apart from competitors. These align with the core value: **curated taste data + LLM narrative personality**.
+## Differentiators
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| **SOUL narrative voice** ("本地朋友" tone) | This IS the product — warm, opinionated, personal descriptions vs. encyclopedia-style summaries. The emotional differentiator. | MEDIUM | SOUL prompt engineering + golden examples. Phase 0 blocking prerequisite: ≥60% blind test preference. |
-| **Curated taste database** (3-tier POI) | Not "all restaurants" but "restaurants worth your time" — quality over quantity. Tier A (10-15 hand-picked) get rich narrative treatment. | HIGH | Manual curation ~30min/city for Tier A; LLM batch-labeling for Tier B; Amap raw for Tier C. Unique data asset. |
-| **Taste-tag scoring** (D1/D3/D7 dimensions) | Quantified taste profile per POI enables matching to user preferences beyond simple category filters. D1 (ambiance), D3 (taste level), D7 (surprise factor). | MEDIUM | Scored during data pipeline; used in Stage 2 pre-filtering. Post-MVP expands to D1-D8. |
-| **Emotional pacing** in itineraries | Not just "efficient route" but rhythm — quiet morning → energetic afternoon → cozy evening. Feels human-planned. | MEDIUM | LLM prompt instruction + SOUL. No competitor does this. Hard to replicate without taste data. |
-| **SSE streaming progress** (4-stage pipeline visibility) | 30-60s generation feels alive, not frozen. Shows "正在理解你的需求 → 正在挑选好地方 → 正在规划行程 → 正在优化路线". | LOW | FastAPI SSE; 4 explicit progress stages. Trust builder during wait. |
-| **A/B comparison-free positioning** | Don't compete on features — compete on feeling. Deliberately minimal UI, warm visual design, no booking clutter. | LOW | Product strategy decision, not code. Sand/seafoam/shell-pink palette, card UI, handwriting accents. |
-| **Highlight notes per POI** (recommend理由) | "Why this place?" answered in friend-voice, not Wikipedia voice. "这家店的咖啡是自己烘的，老板以前做摄影" vs. "评分4.5的咖啡馆". | LOW | Stored in taste DB (highlight_note field). SOUL prompt differentiates by tier. |
+Features that set 拾途's agent apart from generic chatbots. Not expected, but directly amplify the core value ("像一个很会玩的本地朋友").
 
-### Anti-Features (Commonly Requested, Often Problematic)
+| Feature | Value Proposition | Complexity | Dependencies | Notes |
+|---------|-------------------|------------|--------------|-------|
+| **Skills (composable tool packs)** | "杭州探索" skill = POI search + route + food filter. User doesn't pick tools — the AI activates the right skill set based on context. This IS the differentiator. | High | Tool registry, skill definitions | A skill is a named subset of tools + context prompt + example queries. E.g., skill `"杭州咖啡探店"` = `{tools: [search_pois, get_walking_route], context: "杭州精品咖啡场景", examples: ["西湖边安静的咖啡店"]}`. Skills are NOT user-facing — they're internal routing that makes the AI smarter. |
+| **Tool: Taste-based POI scoring** | AI doesn't just find POIs — it ranks them by match with user's taste profile. "帮你找到3家咖啡店，按你的喜好排序：第一是你爱的日系风格..." | Med | `filter_pois()` logic (Stage 2), `User.taste_tags_default` | Reuse existing tag-overlap + tier + rating scoring. Expose as a tool that returns scored+ranked results, not raw search. This is what makes it "有品味" vs "有结果". |
+| **Tool: Itinerary adjustment** | "把第三天改成更轻松的节奏" — AI reads current itinerary, understands structure, makes targeted changes. Beyond simple chat. | High | Existing adjust pipeline, `AdjustmentPreview` model | The current adjust pipeline works via explicit commands. Agent tool lets AI interpret vague intent ("更轻松") into concrete changes (swap POIs, adjust timing), preview changes, and confirm. |
+| **Tool: Nearby discovery** | "我现在在龙翔桥地铁站，附近有什么值得去的？" — location-aware discovery. | Med | Amap nearby search API, user location | Requires `location` parameter (lat/lng). Amap supports `around` search. Returns POIs sorted by distance + taste match. |
+| **Skill auto-activation** | AI detects "我想在杭州找好吃的" → auto-activates "杭州美食" skill. User never says "activate skill X". | Med | LLM system prompt, skill registry | Use `tool_choice: "auto"` and inject skill-specific tools into the tools list based on city/intent context. Or include ALL tools and let the model pick — simpler for v1.2. |
+| **Tool call progress indicators** | "正在搜索... 找到了3个地方，正在规划路线..." — real-time progress during multi-tool sequences. | Med | SSE `EventBus`, frontend | Emit granular SSE events: `agent_thinking`, `tool_executing(name)`, `tool_completed(name, summary)`. Frontend shows a lightweight progress stepper. Makes multi-tool calls feel fast instead of opaque. |
+| **Conversation memory (session-scoped)** | "刚才找到的那家咖啡店，加到行程里" — AI remembers what it found earlier in the conversation. | Low | Message history management | Simply maintain the full message list (user + assistant + tool) within the session. No vector DB needed. Session = one conversation. Clears on new chat. |
 
-Features that seem appealing but would undermine the product's core identity or stretch MVP beyond viability.
+---
 
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| **Embedded map/navigation** | Users want to see where things are and get directions | Massive dev effort; Amap/Mapbox SDK integration; users already have 地图 app; shifts focus from "discover" to "navigate" | Time-axis visualization only; link out to Amap for navigation |
-| **Booking integration** (hotels/flights/tickets) | Revenue opportunity; one-stop-shop appeal | Transforms product into OTA platform (携程 territory); enormous API integration; compliance/licensing; kills the "local friend" vibe with transactional UX | Provide deep links to booking platforms; stay in recommendation layer |
-| **Multi-city/cross-city trips** | Real travelers visit multiple cities | Multiplier on route complexity; breaks the "single city depth" positioning; dilutes POI quality across cities | MVP: single city only. Post-MVP: sequential single-city itineraries (not a routing problem) |
-| **Social sharing** (朋友圈/小红书) | Growth through virality; users want to share cool trips | Adds social graph complexity; invites comparison/review culture; shifts from "personal friend" to "performative content" brand | Post-MVP: simple image export card, not social platform |
-| **UGC/reviews from users** | Community content = scale; everyone loves "real reviews" | Content moderation nightmare; quality dilution; competing with 大众点评; data compliance risk (爬取点评内容) | Expert curation (Tier A) + LLM labeling (Tier B) — quality over quantity |
-| **Real-time pricing/comparison** | Users want to know costs | Fragile API dependencies; price data ages fast; shifts value prop from "discovery" to "shopping" | Budget bands in POI data (¥/¥¥/¥¥¥); link out for current prices |
-| **Itinerary marketplace/templates** | "Popular itineraries" for inspiration | Undermines personalization; one-size-fits-all is the problem we're solving; template library = maintenance burden | Each itinerary is AI-generated for the individual; no templates |
-| **Fine-tuned LLM model** | Better quality = competitive moat, right? | Expensive to train/maintain; brittle; single-model dependency; hard to iterate | SOUL prompts + structured data = controllable quality without model training. Faster iteration loop. |
-| **WeChat Mini Program** | Chinese users live in WeChat | WeChat dev tools are separate ecosystem; doubles frontend work; WeChat review process; premature distribution optimization | Web first (mobile-responsive). Post-product-market-fit: migrate to 小程序. |
+## Anti-Features
+
+Features to explicitly NOT build for the agent tool system. These are traps that look useful but would waste effort or hurt UX.
+
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| **User-facing tool selection UI** | Users don't care about "tools" or "skills". They just want to ask questions. Exposing tool toggles adds complexity without value. | AI selects tools automatically via `tool_choice: "auto"`. Skills are internal routing, not user controls. |
+| **Custom tool builder (user-created tools)** | This is a developer platform feature, not a travel app feature. Massive complexity for near-zero MVP value. | Ship with curated tool set. If users want custom tools, that's a v3+ platform play. |
+| **MCP (Model Context Protocol) integration** | MCP is for inter-tool orchestration in general AI platforms. 拾途 is a domain-specific app with a fixed set of tools. MCP adds abstraction without benefit. | Direct function calling via OpenAI SDK. Tools are Python functions, not MCP servers. |
+| **Multi-agent orchestration** | "Planning agent" + "POI agent" + "weather agent" — adds complexity (inter-agent communication, state sharing) with no benefit for a single-city itinerary. One agent with multiple tools is simpler and better. | Single agent loop with composable tools. If complexity grows, add skills (tool packs), not agents. |
+| **Vector DB / RAG for tool results** | Overkill for session-scoped tool memory. The tool results fit in DeepSeek's 128K context window. Vector DB adds infrastructure complexity (embedding service, similarity search) for zero MVP benefit. | Keep full message history in session. DeepSeek V3.2 has 128K context — more than enough for 10+ tool calls + results in one conversation. |
+| **Tool result caching (cross-session)** | "上次找的咖啡店" — sounds useful but requires persistent storage, cache invalidation, and session linkage. The POI DB already caches Amap results. | Search again — it's fast (DB cache + Amap cache). If user says "刚才那家", session memory handles it within the same chat. |
+| **Streaming tool call arguments** | Showing tool arguments as they stream ("search_pois(keywor...") is a debug feature, not a user feature. It exposes internals and looks broken. | Show human-readable progress: "正在搜索咖啡店..." after the tool call is fully formed. |
+| **Agent orchestration frameworks (LangChain, CrewAI, AutoGen)** | These frameworks add layers of abstraction that fight with the existing pipeline architecture. 拾途 already has a pipeline, EventBus, and DeepSeekClient. Adding LangChain means rewriting the world. | Build a lightweight agent loop (~100 lines) using the `openai` SDK's built-in tool calling. No framework needed. The loop is: send tools → execute → append → loop. |
+| **Human-in-the-loop tool approval** | "AI wants to search POIs. Approve?" — kills the conversational flow. This is for enterprise agent safety, not travel planning. | Trust the agent with pre-approved tools. All tools are read-only (search, read preferences, calculate routes). No destructive actions to guard against. |
+| **Web search tool** | 拾途 is about curated taste, not web scraping. Web search returns generic TripAdvisor/XiaoHongShu results — the opposite of "有品味". | Stick to curated POI database + Amap search. The taste data IS the moat. Web search dilutes it. |
+
+---
 
 ## Feature Dependencies
 
 ```
-[Natural Language Input]
-    └──requires──> [Intent Extraction LLM (Stage 1)]
-                        └──requires──> [POI Database (Tier B/C)]
-                                            └──requires──> [Amap Data Pipeline]
+Agent Loop (core)
+├── Tool: POI search (AmapService)
+├── Tool: Route planning (AmapService)
+├── Tool: Weather query (new or existing)
+├── Tool: User preferences (DB read)
+├── Tool: Itinerary context (DB read)
+├── Tool: Taste-based POI scoring (Stage 2 logic)
+└── Tool: Itinerary adjustment (adjust pipeline)
 
-[SOUL Narrative Voice]
-    └──requires──> [Taste Database (Tier A curation)]
-    └──requires──> [SOUL Prompt Engineering (Phase 0 validation)]
+Skills (composable packs)
+├── Depends on: Tool registry
+├── Depends on: Agent loop
+└── Each skill = subset of tools + context prompt
 
-[Day-by-Day Itinerary]
-    └──requires──> [Intent Extraction LLM (Stage 1)]
-    └──requires──> [POI Pre-filtering (Stage 2)]
-    └──requires──> [Route Generation LLM+SOUL (Stage 3)]
-    └──requires──> [Route Validation (Stage 4)]
+Streaming agent responses
+├── Depends on: Agent loop
+├── Depends on: SSE EventBus (existing)
+└── Tool progress indicators
+    └── Depends on: Streaming responses
 
-[Edit/Adjust Itinerary]
-    └──requires──> [Day-by-Day Itinerary] (must exist to edit)
-    └──requires──> [SSE Streaming Progress] (for adjustment preview)
+Conversation memory
+└── Depends on: Agent loop (message history)
+    └── No external dependencies
 
-[Save/Load Itineraries]
-    └──requires──> [JWT Authentication]
-    └──requires──> [Day-by-Day Itinerary]
-
-[Emotional Pacing]
-    └──enhances──> [SOUL Narrative Voice] (same prompt system)
-    └──requires──> [Taste-tag Scoring (D1/D3/D7)]
-
-[SSE Streaming Progress]
-    └──requires──> [4-Stage Pipeline Architecture]
-    └──enhances──> [User Trust During Long Generation]
-
-[Taste-tag Scoring]
-    └──enhances──> [POI Pre-filtering (Stage 2)] (better candidate selection)
-    └──conflicts──> [Simple Category Filters] (replaces, not supplements)
-
-[Booking Integration] ──conflicts──> [SOUL Narrative Voice] (transactional kills warmth)
-[Embedded Map] ──conflicts──> [Minimal UI Philosophy] (visual clutter)
-[UGC Reviews] ──conflicts──> [Curated Quality] (dilutes Tier A exclusivity)
+Error handling
+└── Depends on: Agent loop (error catching)
+    └── Retry via tenacity (existing)
 ```
 
-### Dependency Notes
+**Critical path:** Agent loop → Tool definitions → Tool execution → Streaming integration
 
-- **Intent Extraction requires POI Database:** Can't recommend places without place data. Data pipeline is foundational.
-- **SOUL Narrative requires both Taste DB and SOUL Prompts:** The moat is data + prompt coupling, not either alone.
-- **Edit/Adjust requires completed itinerary + SSE:** Must have something to edit, and adjustments need the same streaming UX for trust.
-- **Emotional Pacing enhances SOUL Narrative:** Same prompt system controls both; they're deeply intertwined.
-- **Booking conflicts with SOUL Voice:** Every OTA comparison study shows that adding booking shifts user mode from "exploration" to "optimization" — kills the emotional experience.
-- **UGC conflicts with Curated Quality:** The entire point of Tier A is editorial judgment. User reviews make every place a 3.5-star blur.
+---
 
-## MVP Definition
+## MVP Recommendation (v1.2)
 
-### Launch With (v1)
+### Must-Have (Phase 1 of milestone)
+1. **Agent loop** — the core tool-call cycle with max iteration guard
+2. **Tool: POI search** — wraps `AmapService.search_pois()`
+3. **Tool: Route planning** — wraps `AmapService.get_walking_route()`
+4. **Tool: User preferences** — reads `User.taste_tags_default` from DB
+5. **Tool: Weather query** — simple weather API wrapper
+6. **Streaming responses** — SSE events during agent loop
+7. **Error handling** — graceful degradation with retry
 
-Minimum viable product — what's needed to validate the core hypothesis: **curated taste + SOUL narrative > standard AI itinerary**.
+### Should-Have (Phase 2 of milestone)
+8. **Skills (composable tool packs)** — 2-3 pre-defined skills (e.g., "城市探索", "美食发现")
+9. **Tool: Taste-based POI scoring** — reuse `filter_pois()` logic
+10. **Tool call progress indicators** — "正在搜索..." SSE events
+11. **Conversation memory** — session-scoped message history
 
-- [x] **Phase 0: SOUL Prompt Validation** — Blind test ≥60% preference. BLOCKING — don't build anything else until this passes.
-- [ ] **Natural language input** → structured intent extraction — This is the entry point for all users.
-- [ ] **3-tier POI database** (1-2 cities, Amap pipeline) — Without data, there's nothing to recommend.
-- [ ] **4-stage generation pipeline** (intent → pre-filter → LLM+SOUL → validation) — Core engine.
-- [ ] **Day-by-day itinerary output** (timeline visualization) — The deliverable users see.
-- [ ] **SOUL narrative voice** on all POI descriptions — THE differentiator. Must feel different from ChatGPT travel prompts.
-- [ ] **SSE streaming progress** (4 stages visible) — 30-60s is too long for a blank screen.
-- [ ] **Edit/adjust via dialog** (swap/add/remove nodes) — First drafts are never perfect.
-- [ ] **Save/load itineraries** (simple auth) — Users need to come back to their plans.
-- [ ] **Minimal feedback mechanism** ("推荐准不准?" 准/一般/不准) — Data flywheel starts here.
-- [ ] **Mobile-responsive web** (card-based UI, natural color palette) — Target demographic is mobile-first.
+### Defer to v1.3+
+12. **Tool: Itinerary adjustment** — complex, needs careful integration with adjust pipeline
+13. **Tool: Nearby discovery** — requires location input
+14. **Skill auto-activation** — can manually route skills in v1.2
+15. **Cross-session memory** — overkill for MVP
 
-### Add After Validation (v1.x)
+---
 
-Features to add once core loop works and users return.
+## Complexity Assessment
 
-- [ ] **Taste-tag scoring refinement** (use feedback data to improve D1/D3/D7 accuracy) — Trigger: 500+ feedback signals collected
-- [ ] **User taste profile building** (from saved trips and feedback, build per-user preference model) — Trigger: users generating 3+ trips
-- [ ] **Additional cities** (expand beyond MVP 1-2) — Trigger: SOUL validation proven in first cities
-- [ ] **Itinerary sharing card** (beautiful image export, not social platform) — Trigger: users asking "can I share this?"
-- [ ] **Weather awareness** (adjust outdoor plans for rain) — Trigger: user complaints about rain-ruined plans
-- [ ] **Time-of-day sensitivity** (morning markets vs. nightlife, seasonal hours) — Trigger: feedback about "it was closed"
+| Component | Lines of Code (est.) | New Concepts | Risk |
+|-----------|---------------------|--------------|------|
+| Agent loop | ~100-150 | Tool-call cycle, message management | Low — standard OpenAI pattern |
+| Tool definitions (JSON schemas) | ~50-80 per tool | JSON Schema for parameters | Low — Pydantic can auto-generate |
+| Tool execution dispatcher | ~50-80 | Tool name → function mapping | Low — dict dispatch |
+| SSE event integration | ~30-50 | New event types in EventBus | Low — extend existing pattern |
+| Skill definitions | ~20-30 per skill | Skill = tool subset + prompt | Low — data structure, not code |
+| Taste-based scoring tool | ~40-60 | Extract from Stage 2 | Med — refactor existing logic into standalone function |
+| Itinerary adjustment tool | ~100-150 | Bidirectional sync with pipeline | High — modifying existing pipeline |
+| **Total v1.2 MVP** | **~500-700** | | |
 
-### Future Consideration (v2+)
-
-Features to defer until product-market fit is established.
-
-- [ ] **WeChat Mini Program** — Validate on web first; WeChat is distribution, not product.
-- [ ] **Multi-city itinerary chaining** — Requires solving a fundamentally different routing problem.
-- [ ] **Group trip planning** — Social complexity; needs user base first.
-- [ ] **Community-shared itineraries** (curated, not open UGC) — Needs enough quality content to curate.
-- [ ] **Full 8-dimension scoring** (D1-D8) — MVP ships with D1/D3/D7; others require more data.
-- [ ] **Real-time POI status** (closed/temporary/popularity spikes) — Needs monitoring infrastructure.
-- [ ] **Offline access** — PWA consideration for travelers without reliable data.
-- [ ] **WeChat login integration** — Lower friction for Chinese users, but adds platform dependency.
-
-## Feature Prioritization Matrix
-
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| SOUL prompt validation (Phase 0) | CRITICAL | LOW (prompt engineering only) | P0-BLOCKING |
-| Natural language input | HIGH | LOW | P1 |
-| 3-tier POI data pipeline | HIGH | MEDIUM | P1 |
-| 4-stage generation pipeline | HIGH | HIGH | P1 |
-| Day-by-day timeline output | HIGH | MEDIUM | P1 |
-| SOUL narrative on POI descriptions | HIGH | LOW (prompt + data) | P1 |
-| SSE streaming progress | MEDIUM | LOW | P1 |
-| Edit/adjust via dialog | HIGH | MEDIUM | P1 |
-| Save/load itineraries | MEDIUM | LOW | P1 |
-| Mobile-responsive UI | HIGH | LOW | P1 |
-| Minimal feedback ("准不准?") | MEDIUM | LOW | P1 |
-| Taste-tag scoring (D1/D3/D7) | MEDIUM | MEDIUM | P2 |
-| User taste profile | MEDIUM | MEDIUM | P2 |
-| Additional cities | HIGH (growth) | MEDIUM | P2 |
-| Sharing card export | LOW | LOW | P2 |
-| Weather awareness | LOW | LOW | P2 |
-| WeChat Mini Program | MEDIUM (distribution) | HIGH | P3 |
-| Multi-city trips | MEDIUM | HIGH | P3 |
-| Group planning | LOW | HIGH | P3 |
-| Community itineraries | LOW | HIGH | P3 |
-
-**Priority key:**
-- P0-BLOCKING: Must validate before building anything
-- P1: Must have for launch
-- P2: Should have, add when possible
-- P3: Nice to have, future consideration
-
-## Competitor Feature Analysis
-
-| Feature | Layla.ai (Western) | Wanderlog (Western) | 携程AI Trip Planner (Chinese) | 穷游 行程助手 (Chinese) | 拾途 Our Approach |
-|---------|---------------------|---------------------|-------------------------------|--------------------------|-------------------|
-| **Input method** | Form + chat | Form + map pins | Chat (自然语言) | Manual drag-and-drop | Chat (自然语言, conversational) |
-| **AI generation** | Full AI itineraries | AI suggestions (Pro only) | Full AI itineraries | None (manual tool) | Full AI + SOUL narrative |
-| **Narrative personality** | Neutral/factual | Neutral/factual | Neutral/factual | N/A | "本地朋友" warm voice ★ |
-| **Taste curation** | None (algorithmic) | None (user-driven) | None (popularity-based) | None (user-driven) | 3-tier curated taste DB ★ |
-| **POI depth** | Standard descriptions | Auto-populated from Google | Standard POI data | User-generated guides | Tier A: curated stories; Tier B: LLM-labeled; Tier C: raw |
-| **Emotional pacing** | None (efficient routing) | None | None | None | Rhythm-aware day planning ★ |
-| **Booking integration** | Full (Skyscanner/Booking.com) | Hotel search (Pro) | Full OTA stack | Hotel/insurance/visa | None — link out only |
-| **Map view** | Yes | Yes (killer feature) | Yes | Yes | No — timeline only (MVP) |
-| **Route optimization** | AI-powered | Pro feature | Yes | Manual | Amap validation (Stage 4) |
-| **Collaboration** | Group planning | Group collaboration | Limited | None | None (MVP) |
-| **Community/shared trips** | Trip library | Shared guides | User reviews | UGC community | None (anti-feature) |
-| **Chinese market focus** | No | No | Yes (primary) | Yes (primary) | Yes (exclusive) ★ |
-| **Pricing** | Free + $49/yr | Free + ~$50/yr | Free (OTA monetized) | Free (OTA monetized) | TBD (data/experience moat) |
-
-★ = 拾途 unique differentiator
-
-### Competitor Insights (Training Knowledge + Partial Verification)
-
-**携程 (Ctrip/Trip.com) AI Planner** — MEDIUM confidence:
-- Integrated into main 携程 app as a chat feature
-- Uses LLM to generate itineraries but output is functional/transactional
-- Monetizes through booking commissions, not itinerary quality
-- Massive POI database but popularity-based, not taste-based
-- Advantage: scale, data, booking ecosystem. Weakness: no personality, no "hidden gems" curation
-
-**飞猪 (Fliggy/Alibaba) AI** — LOW confidence (training knowledge only):
-- Alibaba's travel platform with AI planning features
-- Integrated with Alibaba ecosystem (支付宝, 芝麻信用)
-- Similar to 携程 in approach: functional AI, booking-driven monetization
-- Likely uses Tongyi/Qwen models internally
-
-**马蜂窝 (Mafengwo)** — MEDIUM confidence:
-- UGC travel content platform with strong community
-- Travel guides (攻略) are the core product, not AI generation
-- Has been exploring AI features but core value is still user-written content
-- Direct competitor to 穷游 in the UGC travel content space
-- Weakness: content quality varies wildly, no taste curation
-
-**Key competitive insight:** Chinese market AI travel tools (携程, 飞猪) compete on booking comprehensiveness and data scale. No one is competing on **taste curation and narrative personality**. This is 拾途's gap.
+---
 
 ## Sources
 
-- **Wanderlog** — Official site features page (HIGH confidence, directly fetched)
-- **Layla.ai** — Official site + tripplanner.ai redirect verification (HIGH confidence, directly fetched)
-- **TripIt** — Official site features page (HIGH confidence, directly fetched)
-- **穷游 (Qyer)** — Official site (MEDIUM confidence, directly fetched)
-- **携程AI, 飞猪AI, 马蜂窝** — Training knowledge only (LOW-MEDIUM confidence, could not verify via web due to Chinese site access restrictions)
-- **Project documents** — PROJECT.md, detailed requirements doc (HIGH confidence, primary source)
-- **Sygic Travel** — Official site (MEDIUM confidence, directly fetched)
-
----
-*Feature research for: AI-powered travel itinerary generation (Chinese market focus)*
-*Researched: 2026-04-15*
+- **DeepSeek Tool Calls docs** — Official API documentation, verified 2026-04-20. OpenAI-compatible format confirmed.
+- **OpenAI Python SDK** — `openai` 2.31.0 function calling patterns, `pydantic_function_tool()` helper, streaming tool deltas.
+- **openai-cookbook** — Function calling best practices, multi-tool patterns, error handling.
+- **Existing 拾途 codebase** — `DeepSeekClient`, `AmapService`, `PipelineCoordinator`, `EventBus`, Pydantic/SQLAlchemy models analyzed for integration points.

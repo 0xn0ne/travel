@@ -7,6 +7,7 @@ export interface PipelineEvent {
   data?: Record<string, unknown>
   timestamp: string
   event_type?: string
+  itinerary_id?: string
 }
 
 export interface SSEConnection {

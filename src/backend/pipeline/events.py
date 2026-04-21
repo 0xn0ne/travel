@@ -19,6 +19,9 @@ class PipelineEvent:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
     def to_sse(self) -> str:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"[DEBUG] to_sse: itinerary_id={self.itinerary_id}")
         payload = json.dumps(
             {
                 "event_type": self.event_type,

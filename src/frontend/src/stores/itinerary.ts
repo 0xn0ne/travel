@@ -37,6 +37,7 @@ export const useItineraryStore = defineStore('itinerary', () => {
     // Extract itinerary_id from top-level event field
     if ((event as any).itinerary_id && typeof (event as any).itinerary_id === 'string') {
       itineraryId.value = (event as any).itinerary_id
+      console.log('[DEBUG] itinerary_id extracted:', itineraryId.value)
     }
     if (event.data) {
       const d = event.data

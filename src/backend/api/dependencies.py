@@ -6,7 +6,7 @@ from agents import Agent
 from fastapi import Depends, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.agent.context import AgentContext, create_deepseek_model
+from backend.agent.context import AgentContext, create_provider_model
 from backend.agent.loop import AgentLoop
 from backend.api.auth import decode_token, get_jwt_secret_key
 from backend.config import get_settings
@@ -24,9 +24,9 @@ get_db = get_async_session
 def get_llm_client() -> LLMClient:
     settings = get_settings()
     return LLMClient(
-        api_key=settings.deepseek_api_key,
-        base_url=settings.deepseek_base_url,
-        model=settings.deepseek_model,
+        api_key=settings.provider_api_key,
+        base_url=settings.provider_base_url,
+        model=settings.provider_model,
     )
 
 
@@ -142,12 +142,12 @@ def build_agent_instructions(user_message: str, interests: list[str] | None = No
 
 @lru_cache
 def get_sdk_agent() -> Agent:
-    """Create SDK Agent with all tools and DeepSeek model (per D-01, D-02)."""
+    """Create SDK Agent with all tools and provider model (per D-01, D-02)."""
     settings = get_settings()
-    model = create_deepseek_model(
-        api_key=settings.deepseek_api_key,
-        base_url=settings.deepseek_base_url,
-        model=settings.deepseek_model,
+    model = create_provider_model(
+        api_key=settings.provider_api_key,
+        base_url=settings.provider_base_url,
+        model=settings.provider_model,
     )
     return Agent(
         name="拾途助手",

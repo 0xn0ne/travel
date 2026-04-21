@@ -28,20 +28,20 @@ class AgentContext(BaseModel):
     active_skills: list[str] = []  # Slugs of active skills for this request
 
 
-def create_deepseek_model(
+def create_provider_model(
     api_key: str,
     base_url: str = "https://api.deepseek.com",
     model: str = "deepseek-chat",
 ) -> Any:
-    """Create an OpenAIChatCompletionsModel configured for DeepSeek.
+    """Create an OpenAIChatCompletionsModel for any OpenAI-compatible provider.
 
-    DeepSeek exposes an OpenAI-compatible API. The SDK's ChatCompletions
-    model adapter wraps it for use with Agent(model=...).
+    Works with DeepSeek, OpenAI, or any compatible endpoint.
+    The SDK's ChatCompletions model adapter wraps it for use with Agent(model=...).
 
     Args:
-        api_key: DeepSeek API key.
-        base_url: DeepSeek API base URL.
-        model: Model identifier (default: deepseek-chat = DeepSeek-V3).
+        api_key: Provider API key.
+        base_url: Provider API base URL.
+        model: Model identifier (e.g. deepseek-chat, gpt-4o).
 
     Returns:
         OpenAIChatCompletionsModel instance.

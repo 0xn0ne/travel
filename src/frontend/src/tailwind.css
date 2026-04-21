@@ -1,4 +1,17 @@
-@import "tailwindcss";
+/* Tailwind v4 CSS reset — put in a layer so Naive UI styles (outside layers) take priority */
+@layer tailwind-base {
+  @import "tailwindcss";
+}
+
+@layer base {
+  /* Restore Naive UI disabled/loading states that Tailwind reset overrides */
+  .n-button.n-button--disabled,
+  .n-button[disabled],
+  .n-input.n-input--disabled,
+  .n-input[disabled] {
+    opacity: unset !important;
+  }
+}
 
 @theme {
   /* === Warm Palette (D-01) === */

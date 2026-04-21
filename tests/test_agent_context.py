@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import MagicMock
 
 from agents import Agent
-from backend.agent.context import AgentContext, create_deepseek_model
+from backend.agent.context import AgentContext, create_provider_model
 from backend.agent import init_agent_sdk
 from backend.services.amap_service import AmapService
 
@@ -37,9 +37,9 @@ def test_agent_context_with_user():
     assert ctx.user_id == "test-uuid-123"
 
 
-def test_create_deepseek_model():
-    """create_deepseek_model returns model with correct name."""
-    model = create_deepseek_model(api_key="test-key")
+def test_create_provider_model():
+    """create_provider_model returns model with correct name."""
+    model = create_provider_model(api_key="test-key")
     assert model.model == "deepseek-chat"
 
 
@@ -49,8 +49,8 @@ def test_init_agent_sdk():
 
 
 def test_sdk_agent_construction():
-    """SDK Agent can be constructed with empty tools and DeepSeek model."""
-    model = create_deepseek_model(api_key="test-key")
+    """SDK Agent can be constructed with empty tools and provider model."""
+    model = create_provider_model(api_key="test-key")
     agent = Agent(
         name="test-agent",
         tools=[],

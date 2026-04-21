@@ -51,6 +51,24 @@
         @select="setActiveDay"
       />
 
+      <!-- 视图切换按钮 -->
+      <div class="view-toggle">
+        <n-button
+          :type="viewMode === 'diary' ? 'primary' : 'default'"
+          size="small"
+          @click="viewMode = 'diary'"
+        >
+          📖 手帐风格
+        </n-button>
+        <n-button
+          :type="viewMode === 'map' ? 'primary' : 'default'"
+          size="small"
+          @click="viewMode = 'map'"
+        >
+          🗺️ 手绘地图
+        </n-button>
+      </div>
+
       <div class="split-layout">
         <div class="split-left">
           <ItineraryTimeline
@@ -63,12 +81,25 @@
           />
         </div>
         <div class="split-right">
-          <MapView
-            :days="filteredDays"
-            :active-day="null"
-            :highlight-poi-id="highlightPoiId"
-            :height="'100%'"
-            @marker-click="handleMapMarkerClick"
+          <DiaryRoute
+            v-if="viewMode === 'diary'"
+            :days="displayDays"
+            :title="(store.currentItinerary as any)?.title || '旅行手帐'"
+            :date-range="formatDateRange()"
+            :people-count="peopleCount"
+            :total-distance="formatWalkingDistance()"
+            :weather="itineraryWeather"
+            :taste-tags="itineraryTags"
+            :highlighted-id="highlightPoiId"
+            @poi-click="handleDiaryPoiClick"
+          />
+          <HandDrawnMap
+            v-else
+            :days="displayDays"
+            :title="(store.currentItinerary as any)?.title || '旅行地图'"
+            :subtitle="formatDateRange()"
+            :highlighted-id="highlightPoiId"
+            @poi-click="handleDiaryPoiClick"
           />
         </div>
       </div>
@@ -136,7 +167,8 @@ import { NSkeleton, NResult, NButton, NAlert, NInput } from 'naive-ui'
 import ItineraryTimeline from '../components/ItineraryTimeline.vue'
 import StageProgress from '../components/StageProgress.vue'
 import FeedbackWidget from '../components/FeedbackWidget.vue'
-import MapView from '../components/MapView.vue'
+import DiaryRoute from '../components/DiaryRoute.vue'
+import HandDrawnMap from '../components/HandDrawnMap.vue'
 import DayRouteSelector from '../components/DayRouteSelector.vue'
 import ShareButton from '../components/ShareButton.vue'
 import { useItineraryStore } from '../stores/itinerary'
@@ -152,6 +184,7 @@ const notFound = ref(false)
 const adjustText = ref('')
 const activeDay = ref<number | null>(null)
 const highlightPoiId = ref<string | number | null>(null)
+const viewMode = ref<'diary' | 'map'>('map')
 
 let clearHighlightTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -166,14 +199,18 @@ async function loadItinerary() {
 
   try {
     const id = getItineraryId()
+    console.log('[DEBUG] Loading itinerary:', id)
     const res = await fetch(`/api/itinerary/${id}`)
+    console.log('[DEBUG] Response status:', res.status)
     if (res.status === 404) {
+      console.log('[DEBUG] Itinerary not found')
       loading.value = false
       notFound.value = true
       return
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
+    console.log('[DEBUG] Itinerary data loaded:', data)
     if (data.itinerary) {
       store.currentItinerary = data.itinerary
     } else {
@@ -211,21 +248,46 @@ function handleTimelinePoiClick(poiId: string | number) {
   scheduleClearHighlight()
 }
 
-function handleMapMarkerClick(poiId: string | number) {
-  highlightPoiId.value = poiId
-  scheduleClearHighlight()
-
-  const el = document.querySelector(`[data-poi-id="${poiId}"]`) as HTMLElement
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }
-}
-
 function scheduleClearHighlight() {
   if (clearHighlightTimer) clearTimeout(clearHighlightTimer)
   clearHighlightTimer = setTimeout(() => {
     highlightPoiId.value = null
   }, 3000)
+}
+
+function handleDiaryPoiClick(poi: POIVisitData) {
+  const id = poi.poi_id
+  if (id) {
+    highlightPoiId.value = id
+    scheduleClearHighlight()
+    const el = document.querySelector(`[data-poi-id="${id}"]`) as HTMLElement
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+}
+
+function formatDateRange(): string {
+  const days = (store.currentItinerary as any)?.days as DayData[] || []
+  if (days.length === 0) return ''
+  return `${days.length}天${days.length - 1}晚`
+}
+
+function peopleCount(): string {
+  return '2人'
+}
+
+function formatWalkingDistance(): string {
+  const total = (store.currentItinerary as any)?.total_walking_minutes
+  if (!total) return ''
+  const km = (total * 0.75 / 1000).toFixed(1)
+  return `约${km}km`
+}
+
+function itineraryWeather(): string {
+  return ''
+}
+
+function itineraryTags(): string[] {
+  return []
 }
 
 function findDayNumber(poiName: string): number {
@@ -350,6 +412,13 @@ onUnmounted(() => {
   font-size: 15px;
   color: var(--color-warm-text-muted);
   margin: 0;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
 }
 
 .split-layout {

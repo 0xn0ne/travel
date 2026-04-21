@@ -9,6 +9,7 @@ RUN pip install --no-cache-dir .
 COPY src/backend/ src/backend/
 COPY alembic.ini .
 COPY alembic/ alembic/
+COPY config.yml .
 COPY data/ data/
 COPY scripts/ scripts/
 

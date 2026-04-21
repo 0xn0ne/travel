@@ -17,7 +17,7 @@ async def main():
     await init_db()
     async with AsyncSessionFactory() as sess:
         settings = get_settings()
-        llm = DeepSeekClient(settings.deepseek_api_key)
+        llm = DeepSeekClient(settings.provider_api_key)
         chatgpt = ChatGPTClient(settings.openai_api_key)
         runner = TestRunnerService(sess, llm, chatgpt)
         result = await runner.generate_all()

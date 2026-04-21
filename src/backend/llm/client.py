@@ -14,8 +14,8 @@ class LLMClient:
     - ``generate_json``: non-streaming with optional JSON mode
     - ``tool_chat``: non-streaming tool-calling completion
 
-    The client is model-agnostic — ``base_url`` and ``model`` are configurable
-    (currently defaults to DeepSeek-V3, but any OpenAI-compatible endpoint works).
+    The client is model-agnostic — ``base_url`` and ``model`` are configurable.
+    Works with DeepSeek, OpenAI, or any OpenAI-compatible endpoint.
     """
 
     def __init__(

@@ -199,7 +199,7 @@ if __name__ == "__main__":
     settings = get_settings()
 
     amap_key = args.amap_key or settings.amap_api_key
-    llm_key = args.llm_key or settings.deepseek_api_key
+    llm_key = args.llm_key or settings.provider_api_key
 
     if not amap_key:
         print("Error: Amap API key required. Set AMAP_API_KEY in .env or pass --amap-key")

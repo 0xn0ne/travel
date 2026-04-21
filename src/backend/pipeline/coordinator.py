@@ -4,6 +4,8 @@ import asyncio
 from typing import TYPE_CHECKING
 from uuid import uuid4
 
+import sqlalchemy
+from backend.models.database import POI
 from backend.models.pydantic import POICandidate
 from backend.pipeline.events import EventBus, PipelineEvent
 
@@ -213,10 +215,9 @@ class PipelineCoordinator:
             return
 
         # Query all POI coordinates in one batch
-        result = await self.db.execute(
-            f"SELECT id, latitude, longitude FROM pois WHERE id IN ({','.join(['?'] * len(poi_ids))})",
-            poi_ids
-        )
+        stmt = sqlalchemy.select(POI.id, POI.latitude, POI.longitude).where(POI.id.in_(poi_ids))
+        result = await self.db.execute(stmt)
+        rows = result.fetchall()
         rows = result.fetchall()
         coord_map = {row[0]: (row[1], row[2]) for row in rows}
 

@@ -7,17 +7,16 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.llm.client import ChatGPTClient, LLMClient
+from backend.llm.client import LLMClient
 from backend.models.database import ItineraryRow, Scenario
 
 
 class TestRunnerService:
     """Generates blind test data: 4 scenarios × 3 groups = 12 itineraries."""
 
-    def __init__(self, db_session: AsyncSession, llm: LLMClient, chatgpt: ChatGPTClient):
+    def __init__(self, db_session: AsyncSession, llm: LLMClient):
         self.db = db_session
         self.llm = llm
-        self.chatgpt = chatgpt
 
     async def generate_all(self) -> dict:
         """Generate all 3 groups for all scenarios."""
