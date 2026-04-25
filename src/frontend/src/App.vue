@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
+  <n-config-provider :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
     <n-message-provider>
       <n-notification-provider>
         <AppHeader @open-login="authModal?.openLogin()" />
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { NConfigProvider, NMessageProvider, NNotificationProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NNotificationProvider, zhCN, dateZhCN } from 'naive-ui'
 import AppHeader from '@/components/AppHeader.vue'
 import AuthModal from '@/components/AuthModal.vue'
 import ChatBubble from '@/components/ChatBubble.vue'
@@ -61,11 +61,11 @@ const themeOverrides = {
     boxShadow: '0 2px 12px rgba(45, 32, 22, 0.08)',
   },
   Button: {
-    borderRadiusMedium: '12px',
-    borderRadiusSmall: '8px',
+    borderRadiusMedium: '14px',
+    borderRadiusSmall: '10px',
   },
   Tag: {
-    borderRadius: '8px',
+    borderRadius: '999px',
   },
   Input: {
     borderRadius: '12px',
@@ -106,3 +106,11 @@ onMounted(() => {
   }
 })
 </script>
+
+<style>
+.app-bg {
+  min-height: calc(100vh - 64px);
+  background: #D5EBFA;
+  font-family: var(--font-ui-rounded);
+}
+</style>

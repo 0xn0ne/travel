@@ -14,48 +14,80 @@
 }
 
 @theme {
-  /* === Warm Palette (D-01) === */
-  --color-sand: #F5E6D3;
-  --color-sand-light: #FAF0E6;
-  --color-sand-dark: #E8D5C4;
-  --color-coral: #FF6B6B;
-  --color-coral-dark: #E55A5A;
-  --color-coral-light: #FF8A8A;
-  --color-ocean: #4ECDC4;
-  --color-ocean-dark: #3DBDB4;
-  --color-ocean-light: #6FE0D8;
+  /* === 柔和雾紫主题 === */
 
-  /* === Semantic Colors === */
-  --color-warm-bg: #FFFAF5;
-  --color-warm-surface: #FFF8F0;
-  --color-warm-text: #2D2016;
-  --color-warm-text-muted: #6B5B4E;
-  --color-warm-border: #E8D5C4;
-  --color-warm-gray: #E8DDD3;
-  --color-warm-amber: #F59E0B;
-  --color-warm-amber-light: #FEF3C7;
+  /* === 背景色 === */
+  --color-bg-primary: #F5F6FA;
+  --color-bg-secondary: #F8F8FC;
+  --color-surface: #FFFFFF;
 
-  /* === Tier Colors (D-05) === */
-  --color-tier-gold: #F0A020;
-  --color-tier-silver: #B5A89A;
-  --color-tier-bronze: #CD7F32;
+  /* === 主色调 === */
+  --color-primary: #A78BFA;
+  --color-primary-dark: #8F79DB;
+  --color-primary-light: #DDD6FE;
+  --color-accent-gradient: linear-gradient(135deg, #A78BFA 0%, #8F79DB 100%);
 
-  /* === Map Day-Route Colors (Phase 10) === */
-  --color-day-1: #3B82F6;
-  --color-day-2: #10B981;
-  --color-day-3: #F59E0B;
+  /* === 点缀色 === */
+  --color-accent-pink: #F3ECFB;
+  --color-accent-lavender: #F1EEFA;
+  --color-accent-mint: #F7F8FB;
+  --color-accent-peach: #F8F5FF;
 
-  /* === Data Source Colors (D-06) === */
-  --color-source-curated: #F0A020;
-  --color-source-amap: #6BA3D6;
-  --color-source-ai: #8B5CF6;
+  /* === 功能色 === */
+  --color-success: #86EFAC;
+  --color-error: #FCA5A5;
+  --color-warning: #FDE68A;
 
-  /* === Card Design Tokens (D-02) === */
-  --radius-card: 16px;
-  --shadow-card: 0 2px 12px rgba(45, 32, 22, 0.08);
-  --shadow-card-hover: 0 8px 24px rgba(45, 32, 22, 0.15);
+  /* === 文本色 === */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666A73;
+  --color-text-tertiary: #8A8F9D;
+  --color-text-muted: #8A8F9D;
 
-  /* === Transitions === */
-  --transition-smooth: all 0.2s ease;
+  /* === 边框 === */
+  --color-border: #E7E8EE;
+  --color-border-light: #ECECF2;
 
+  /* === 设计 tokens === */
+  --radius-card: 22px;
+  --radius-button: 16px;
+  --shadow-card: 0 10px 28px rgba(35, 38, 47, 0.05);
+  --shadow-card-hover: 0 16px 36px rgba(35, 38, 47, 0.08);
+  --shadow-soft: 0 4px 12px rgba(35, 38, 47, 0.04);
+  --transition-smooth: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === 兼容旧变量 === */
+  --color-warm-bg: #F5F6FA;
+  --color-warm-surface: #FFFFFF;
+  --color-warm-text: #333333;
+  --color-warm-text-muted: #8A8F9D;
+  --color-warm-border: #E7E8EE;
+  --color-warm-gray: #F7F8FB;
+  --color-sand-light: #FAFBFD;
+
+  --color-macaron-lavender: #F1EEFA;
+  --color-macaron-mint: #F7F8FB;
+  --color-macaron-ice-blue: #F3F5FA;
+  --color-macaron-peach: #F8F5FF;
+
+  --color-forest: #86EFAC;
+  --color-amber: #FDE68A;
+
+  /* === Homepage 变量（HomeView.vue 依赖） === */
+  --text-main: #3A6D9E;
+  --text-body: #3A6D9E;
+  --text-soft: #5A8FBF;
+  --type-title: #3A6D9E;
+  --type-body: #3A6D9E;
+  --type-muted: #5A8FBF;
+  --type-chip: #3A6D9E;
+  --type-title-soft: #4A88B0;
+  --paper-2: #EDF4FC;
+  --line: rgba(108, 140, 213, 0.45);
+  --line-strong: rgba(108, 140, 213, 0.65);
+  --accent-orange: #FF9F6B;
+  --bg-main: #D5EBFA;
+  --bg-accent: #DCE9FF;
+  --card-radius: 22px;
+  --card-shadow: 0 10px 28px rgba(108, 140, 213, 0.06);
 }

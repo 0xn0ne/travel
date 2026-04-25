@@ -228,6 +228,8 @@
         </div>
       </div>
     </div>
+
+    <PoiDetailDrawer v-model:show="candidateDetailVisible" :poi="activeCandidatePoi" />
   </div>
 </template>
 
@@ -238,6 +240,9 @@ import { NInput, NButton, NAlert, NDatePicker, zhCN } from 'naive-ui'
 import { useItineraryStore } from '../stores/itinerary'
 import StageProgress from '../components/StageProgress.vue'
 import ItineraryTimeline from '../components/ItineraryTimeline.vue'
+import PoiCandidateGrid from '../components/PoiCandidateGrid.vue'
+import PoiDetailDrawer from '../components/PoiDetailDrawer.vue'
+import type { CandidatePoiData, CandidatePoiRequestPayload } from '../types/itinerary'
 
 const store = useItineraryStore()
 const router = useRouter()
@@ -430,6 +435,7 @@ const travelStyles = [
   { value: 'cafe', label: '☕ 咖啡下午茶' },
   { value: 'senior', label: '🧓 长辈出行' },
 ]
+const selectedCrowd = ref('moderate')
 
 // 按字数排序：4字在前，5字在后
 const sortedStyles = computed(() =>
@@ -541,12 +547,31 @@ async function handleRetry() {
   }
 }
 
+watch(
+  () => store.homeFlowStage,
+  async (stage) => {
+    if (stage !== 'candidate_selection') return
+    await nextTick()
+    candidateStageRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  },
+)
+
 onUnmounted(() => {
   store.abort()
 })
 </script>
 
 <style scoped>
+.brand-title,
+.hero-title,
+.guide-title,
+.candidate-title {
+  font-family: 'ZCoolHappy', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--type-title);
+}
+
 .home-view {
   height: calc(100vh - 60px);
   overflow: hidden;
@@ -945,9 +970,78 @@ onUnmounted(() => {
   color: white;
   font-size: 15px;
   font-weight: 600;
+  font-size: 12px;
+  color: var(--type-chip);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 14px;
+}
+
+.location-input,
+.custom-input {
+  width: 100%;
+  background: var(--paper-2);
+  border: none;
+  border-radius: 18px;
+  color: var(--type-body);
+  font-size: 14px;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.location-input {
+  width: 100%;
+  padding: 10px 14px;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.custom-input {
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.7;
+  min-height: 128px;
+}
+
+.date-range-picker :deep(.n-input),
+.chat-input-inner :deep(.n-input),
+.date-range-picker :deep(.n-base-selection),
+.chat-input-inner :deep(.n-input-wrapper) {
+  background: var(--paper-2);
+  border: none;
+  border-radius: 18px;
+  color: var(--type-body);
+  font-size: 15px;
+  box-shadow: none;
+  flex: 1;
+}
+
+.add-location-btn {
   cursor: pointer;
   font-family: inherit;
   display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: visible;
+  position: relative;
+}
+
+.step-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.82);
+  border: none;
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
+  box-shadow: none;
+}
+
+.step {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -973,14 +1067,16 @@ onUnmounted(() => {
   margin-top: 8px;
 }
 
-.btn-loading {
-  display: inline-block;
-  animation: spin 1s linear infinite;
+.hero-title,
+.guide-title,
+.candidate-title {
+  text-wrap: balance;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.hero-title {
+  font-size: clamp(38px, 4.5vw, 54px);
+  line-height: 1.16;
+  margin: 0;
 }
 
 /* ===== RIGHT PANEL ===== */

@@ -1,0 +1,75 @@
+/* Tailwind v4 CSS reset — put in a layer so Naive UI styles (outside layers) take priority */
+@layer tailwind-base {
+  @import "tailwindcss";
+}
+
+@layer base {
+  /* Restore Naive UI disabled/loading states that Tailwind reset overrides */
+  .n-button.n-button--disabled,
+  .n-button[disabled],
+  .n-input.n-input--disabled,
+  .n-input[disabled] {
+    opacity: unset !important;
+  }
+}
+
+@theme {
+  /* === 柔和雾紫主题 === */
+
+  /* === 背景色 === */
+  --color-bg-primary: #F5F6FA;
+  --color-bg-secondary: #F8F8FC;
+  --color-surface: #FFFFFF;
+
+  /* === 主色调 === */
+  --color-primary: #A78BFA;
+  --color-primary-dark: #8F79DB;
+  --color-primary-light: #DDD6FE;
+  --color-accent-gradient: linear-gradient(135deg, #A78BFA 0%, #8F79DB 100%);
+
+  /* === 点缀色 === */
+  --color-accent-pink: #F3ECFB;
+  --color-accent-lavender: #F1EEFA;
+  --color-accent-mint: #F7F8FB;
+  --color-accent-peach: #F8F5FF;
+
+  /* === 功能色 === */
+  --color-success: #86EFAC;
+  --color-error: #FCA5A5;
+  --color-warning: #FDE68A;
+
+  /* === 文本色 === */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666A73;
+  --color-text-tertiary: #8A8F9D;
+  --color-text-muted: #8A8F9D;
+
+  /* === 边框 === */
+  --color-border: #E7E8EE;
+  --color-border-light: #ECECF2;
+
+  /* === 设计 tokens === */
+  --radius-card: 22px;
+  --radius-button: 16px;
+  --shadow-card: 0 10px 28px rgba(35, 38, 47, 0.05);
+  --shadow-card-hover: 0 16px 36px rgba(35, 38, 47, 0.08);
+  --shadow-soft: 0 4px 12px rgba(35, 38, 47, 0.04);
+  --transition-smooth: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === 兼容旧变量 === */
+  --color-warm-bg: #F5F6FA;
+  --color-warm-surface: #FFFFFF;
+  --color-warm-text: #333333;
+  --color-warm-text-muted: #8A8F9D;
+  --color-warm-border: #E7E8EE;
+  --color-warm-gray: #F7F8FB;
+  --color-sand-light: #FAFBFD;
+
+  --color-macaron-lavender: #F1EEFA;
+  --color-macaron-mint: #F7F8FB;
+  --color-macaron-ice-blue: #F3F5FA;
+  --color-macaron-peach: #F8F5FF;
+
+  --color-forest: #86EFAC;
+  --color-amber: #FDE68A;
+}

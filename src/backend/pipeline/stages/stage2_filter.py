@@ -34,6 +34,8 @@ def _poi_to_candidate(poi: POI, include_highlight: bool = True) -> POICandidate:
         permanent_features=json.loads(poi.permanent_features) if poi.permanent_features else [],
         walk_time_minutes=poi.walk_time_minutes,
         rating=poi.rating,
+        latitude=poi.latitude,
+        longitude=poi.longitude,
     )
 
 

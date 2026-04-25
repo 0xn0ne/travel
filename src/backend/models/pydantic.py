@@ -31,6 +31,7 @@ class IntentOutput(BaseModel):
     interests: list[str] = []  # taste_tags from controlled vocabulary
     special_requests: str | None = None  # avoidance items, preferences
     time_constraints: str | None = None
+    weather_considered: bool = False  # 近期待规划（7天内）且有天气数据时为true
 
 
 class POICandidate(BaseModel):
@@ -43,6 +44,16 @@ class POICandidate(BaseModel):
     permanent_features: list[str] = []
     walk_time_minutes: int | None = None
     rating: float | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    district: str | None = None
+    region_key: str | None = None
+    cover_image_url: str | None = None
+    is_free: bool | None = None
+    ticket_url: str | None = None
+    description: str | None = None
+    suggested_route: str | None = None
+    suggested_duration_minutes: int | None = None
 
 
 class POIVisit(BaseModel):
@@ -95,6 +106,34 @@ class GenerateRequest(BaseModel):
 class GenerateResponse(BaseModel):
     itinerary_id: str
     itinerary: Itinerary
+
+
+class CandidatePoiRequest(BaseModel):
+    destinations: list[str]
+    date_range: list[int] | None = None
+    trip_days: int | None = Field(default=None, ge=1, le=7)
+    styles: list[str] = []
+    crowd_preference: str | None = None
+    budget: str | None = None
+    extra_info: str | None = None
+    scenario_id: str | None = None
+    group: str | None = None
+
+
+class CandidatePoiResponse(BaseModel):
+    city: str
+    trip_days: int
+    user_input: str
+    candidates: list[POICandidate]
+
+
+class GenerateFromPoisRequest(BaseModel):
+    user_input: str
+    selected_pois: list[POICandidate]
+    city: str
+    trip_days: int = Field(ge=1, le=7)
+    scenario_id: str | None = None
+    group: str | None = None
 
 
 # --- Phase 3: Adjustment & Feedback ---
