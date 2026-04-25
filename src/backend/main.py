@@ -23,6 +23,7 @@ from backend.api.routes import (
     stream,
     test_results,
     test_runner,
+    tour_guide,
 )
 from backend.agent import init_agent_sdk
 from backend.config import get_settings
@@ -124,6 +125,7 @@ app.include_router(adjust.router, prefix="/api", tags=["adjust"])
 app.include_router(feedback.router, prefix="/api", tags=["feedback"])
 app.include_router(test_results.router, prefix="/api", tags=["test-results"])
 app.include_router(test_runner.router, prefix="/api", tags=["test-runner"])
+app.include_router(tour_guide.router, prefix="/api", tags=["tour-guide"])
 
 
 @app.exception_handler(ValueError)

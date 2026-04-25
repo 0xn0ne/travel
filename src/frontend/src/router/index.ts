@@ -9,6 +9,7 @@ const routes = [
   { path: '/p', name: 'pmap', component: () => import('@/views/PMapView.vue') },
   { path: '/itinerary/:id', name: 'itinerary-old', component: () => import('@/views/ItineraryView.vue') },
   { path: '/blind-test', name: 'blind-test', component: () => import('@/views/BlindTestView.vue') },
+  { path: '/guide', name: 'tour-guide', component: () => import('@/views/TourGuideView.vue') },
   { path: '/settings', name: 'settings', component: () => import('@/views/SettingsView.vue'), meta: { requiresAuth: true } },
   { path: '/my-itineraries', name: 'my-itineraries', component: () => import('@/views/ItineraryListView.vue'), meta: { requiresAuth: true } },
 ]

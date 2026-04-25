@@ -1,6 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
+/** Generate a UUID v4 — works in both secure and non-secure contexts */
+function uuid(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+  })
+}
+
 export interface ChatMsg {
   id: string
   role: 'user' | 'assistant' | 'system'
@@ -11,7 +22,7 @@ export interface ChatMsg {
 
 export const useChatStore = defineStore('chat', () => {
   const messages = ref<ChatMsg[]>([])
-  const sessionId = ref<string>(crypto.randomUUID())
+  const sessionId = ref<string>(uuid())
   const isOpen = ref(false)
   const isLoading = ref(false)
   const toolMessage = ref<string | null>(null)
@@ -20,7 +31,7 @@ export const useChatStore = defineStore('chat', () => {
 
   function addUserMessage(content: string) {
     messages.value.push({
-      id: crypto.randomUUID(),
+      id: uuid(),
       role: 'user',
       content,
       timestamp: new Date().toISOString(),
@@ -29,7 +40,7 @@ export const useChatStore = defineStore('chat', () => {
 
   function addAssistantMessage(content: string, isStreaming = true) {
     const msg: ChatMsg = {
-      id: crypto.randomUUID(),
+      id: uuid(),
       role: 'assistant',
       content,
       timestamp: new Date().toISOString(),
@@ -57,7 +68,7 @@ export const useChatStore = defineStore('chat', () => {
 
   function clearSession() {
     messages.value = []
-    sessionId.value = crypto.randomUUID()
+    sessionId.value = uuid()
     toolMessage.value = null
   }
 

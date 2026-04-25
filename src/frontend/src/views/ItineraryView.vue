@@ -198,7 +198,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { NSkeleton, NResult, NButton, NAlert, NInput } from 'naive-ui'
 import ItineraryTimeline from '../components/ItineraryTimeline.vue'
@@ -325,27 +325,20 @@ function findDayNumber(poiName: string): number {
   return 1
 }
 
+/* Reserved for future POI action handling:
 function handlePoiAction(type: string, poi: POIVisitData) {
   const dayNum = findDayNumber(poi.name)
   switch (type) {
     case 'delete':
-      if (poi.poi_id) {
-        store.deletePoi(dayNum, poi.poi_id)
-      }
+      if (poi.poi_id) { store.deletePoi(dayNum, poi.poi_id) }
       break
     case 'insert_before':
       adjustText.value = `请在第${dayNum}天${poi.name}前面插入一个新的体验`
-      nextTick(() => {
-        const el = document.querySelector('.chat-input-bar textarea') as HTMLElement
-        el?.focus()
-      })
+      nextTick(() => { const el = document.querySelector('.chat-input-bar textarea') as HTMLElement; el?.focus() })
       break
     case 'insert_after':
       adjustText.value = `请在第${dayNum}天${poi.name}后面插入一个新的体验`
-      nextTick(() => {
-        const el = document.querySelector('.chat-input-bar textarea') as HTMLElement
-        el?.focus()
-      })
+      nextTick(() => { const el = document.querySelector('.chat-input-bar textarea') as HTMLElement; el?.focus() })
       break
     case 'replace':
       store.adjust(getItineraryId(), `请替换第${dayNum}天的${poi.name}`)
@@ -353,31 +346,7 @@ function handlePoiAction(type: string, poi: POIVisitData) {
       break
   }
 }
-
-function formatDateRange(): string {
-  const days = (store.currentItinerary as any)?.days as DayData[] || []
-  if (days.length === 0) return ''
-  return `${days.length}天${days.length - 1}晚`
-}
-
-function peopleCount(): string {
-  return '2人'
-}
-
-function formatWalkingDistance(): string {
-  const total = (store.currentItinerary as any)?.total_walking_minutes
-  if (!total) return ''
-  const km = (total * 0.75 / 1000).toFixed(1)
-  return `约${km}km`
-}
-
-function itineraryWeather(): string {
-  return ''
-}
-
-function itineraryTags(): string[] {
-  return []
-}
+*/
 
 function handleUpdateDay(updatedDay: DayData) {
   const itinerary = store.currentItinerary as any

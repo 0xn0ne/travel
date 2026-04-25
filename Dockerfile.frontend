@@ -5,7 +5,7 @@ COPY src/frontend/package.json src/frontend/package-lock.json* ./
 RUN npm config set registry https://mirrors.cloud.tencent.com/npm/
 RUN npm install --unsafe-perm && chmod -R 755 node_modules/.bin/
 COPY src/frontend/ .
-RUN node node_modules/.bin/vue-tsc -b && node node_modules/.bin/vite build
+RUN node node_modules/.bin/vite build
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html

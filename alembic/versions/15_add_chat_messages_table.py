@@ -1,7 +1,7 @@
 """add chat_messages table
 
-Revision ID: 15_chat_messages
-Revises: a422b22ab4c1
+ Revision ID: 15_chat_messages
+Revises: 9ccde6d944e6
 Create Date: 2026-04-21
 
 """
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 revision: str = '15_chat_messages'
-down_revision: Union[str, Sequence[str], None] = 'a422b22ab4c1'
+down_revision: Union[str, Sequence[str], None] = '9ccde6d944e6'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

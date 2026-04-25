@@ -2,7 +2,6 @@
 
 import asyncio
 
-from alembic import command
 from alembic.config import Config as AlembicConfig
 from sqlalchemy import event, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -36,16 +35,34 @@ def _get_engine():
 
 
 async def init_db() -> None:
-    """Run Alembic migrations, then ensure all tables exist via create_all().
+    """Ensure all tables exist via create_all(), then stamp Alembic to head.
 
-    The Alembic migration chain (9ccde6d944e6_initial) is empty — tables are
-    created by SQLAlchemy's Base.metadata.create_all() on first start.
+    create_all() is idempotent — it skips existing tables. We stamp the
+    Alembic version table so future migration-aware tools know the DB is current.
+    We cannot use ``asyncio.to_thread(command.upgrade, ...)`` because alembic's
+    env.py calls ``asyncio.run()`` internally, which deadlocks inside an
+    already-running event loop.
     """
     engine = _get_engine()
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    alembic_cfg = AlembicConfig("alembic.ini")
-    await asyncio.to_thread(command.upgrade, alembic_cfg, "head")
+        # Stamp alembic to head so the version table is up-to-date
+        await conn.execute(
+            text(
+                "CREATE TABLE IF NOT EXISTS alembic_version "
+                "(version_num VARCHAR(32) NOT NULL, CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num))"
+            )
+        )
+        # Determine the latest revision from the migration scripts
+        from alembic.script import ScriptDirectory
+        script = ScriptDirectory.from_config(AlembicConfig("alembic.ini"))
+        head = script.get_current_head()
+        if head:
+            await conn.execute(text("DELETE FROM alembic_version"))
+            await conn.execute(
+                text("INSERT INTO alembic_version (version_num) VALUES (:ver)"),
+                {"ver": head},
+            )
 
 
 async def get_async_session():

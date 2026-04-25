@@ -6,7 +6,7 @@ PipelineEvent lives in pipeline/events.py (created in Plan 03), NOT here.
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 # --- Pipeline stage outputs ---
 
@@ -167,3 +167,29 @@ class FeedbackRequest(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     session_id: str | None = None
+
+
+# --- Tour Guide ---
+
+
+class TourGuideProfile(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    visited_pois: list[str] = Field(default_factory=list, alias="visitedPois")
+    preferences: list[str] = Field(default_factory=list)
+    budget: str = "适中"
+    pace: str = "适中"
+
+
+class TourGuideHistoryMessage(BaseModel):
+    role: Literal["user", "guide"]
+    content: str
+
+
+class TourGuideRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    observations: list[str] = Field(default_factory=list)
+    profile: TourGuideProfile = Field(default_factory=TourGuideProfile)
+    session_id: str = ""
+    history: list[TourGuideHistoryMessage] = Field(default_factory=list)

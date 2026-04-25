@@ -435,7 +435,6 @@ const travelStyles = [
   { value: 'cafe', label: '☕ 咖啡下午茶' },
   { value: 'senior', label: '🧓 长辈出行' },
 ]
-const selectedCrowd = ref('moderate')
 
 // 按字数排序：4字在前，5字在后
 const sortedStyles = computed(() =>
