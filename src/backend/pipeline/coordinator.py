@@ -4,22 +4,25 @@ import asyncio
 from typing import TYPE_CHECKING
 from uuid import uuid4
 
+import sqlalchemy
+from backend.models.database import POI
 from backend.models.pydantic import POICandidate
 from backend.pipeline.events import EventBus, PipelineEvent
 
 if TYPE_CHECKING:
-    from backend.llm.client import DeepSeekClient
+    from backend.llm.client import LLMClient
     from backend.models.pydantic import Itinerary
     from backend.services.amap_service import AmapService
 
 
 class PipelineCoordinator:
-    """Orchestrates the 4-stage itinerary generation pipeline."""
+    """Orchestrates the 5-stage itinerary generation pipeline."""
 
-    def __init__(self, db_session, llm_client: "DeepSeekClient", amap_service: "AmapService" = None):
+    def __init__(self, db_session, llm_client: "LLMClient", amap_service: "AmapService" = None, agent_context=None):
         self.db = db_session
         self.llm = llm_client
         self.amap = amap_service
+        self._agent_context = agent_context
         self._poi_candidates: list[POICandidate] | None = None
         self._intent = None
         self._scenario_id: str | None = None
@@ -98,6 +101,35 @@ class PipelineCoordinator:
             )
         )
 
+        enrichment_text = ""
+        if self._agent_context is not None:
+            from backend.pipeline.stages.stage_agent import agent_enrich
+
+            await self.event_bus.emit(
+                PipelineEvent(
+                    stage="agent",
+                    status="started",
+                    event_type="pipeline_stage",
+                    message="开始智能推荐...",
+                )
+            )
+            enrichment_text = await agent_enrich(
+                llm_client=self.llm,
+                intent=self._intent,
+                poi_candidates=poi_candidates,
+                user_input=user_input,
+                event_bus=self.event_bus,
+                agent_context=self._agent_context,
+            )
+            await self.event_bus.emit(
+                PipelineEvent(
+                    stage="agent",
+                    status="completed",
+                    event_type="pipeline_stage",
+                    message="智能推荐完成",
+                )
+            )
+
         await self.event_bus.emit(
             PipelineEvent(
                 stage="generation",
@@ -106,7 +138,10 @@ class PipelineCoordinator:
                 message="正在为你生成个性化行程...",
             )
         )
-        raw_response, itinerary = await generate_itinerary(self.llm, intent, poi_candidates, user_input, group)
+        raw_response, itinerary = await generate_itinerary(
+            self.llm, intent, poi_candidates, user_input, group,
+            enrichment_context=enrichment_text,
+        )
 
         # Enrich POI coordinates from database
         await self._enrich_poi_coordinates(itinerary)
@@ -180,10 +215,9 @@ class PipelineCoordinator:
             return
 
         # Query all POI coordinates in one batch
-        result = await self.db.execute(
-            f"SELECT id, latitude, longitude FROM pois WHERE id IN ({','.join(['?'] * len(poi_ids))})",
-            poi_ids
-        )
+        stmt = sqlalchemy.select(POI.id, POI.latitude, POI.longitude).where(POI.id.in_(poi_ids))
+        result = await self.db.execute(stmt)
+        rows = result.fetchall()
         rows = result.fetchall()
         coord_map = {row[0]: (row[1], row[2]) for row in rows}
 

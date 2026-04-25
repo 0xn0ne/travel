@@ -3,8 +3,8 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, func
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Text, func
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, validates
 
 
 class Base(DeclarativeBase):
@@ -13,6 +13,9 @@ class Base(DeclarativeBase):
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
+
+
+ALLOWED_CATEGORIES = {"preference", "constraint", "feedback", "trip_context"}
 
 
 class POI(Base):
@@ -114,3 +117,66 @@ class FeedbackLog(Base):
     rating: Mapped[str] = mapped_column(String(10))
     comment: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
+
+
+class AgentMemory(Base):
+    """Per-user agent memory store (MEM-01, MEM-02).
+
+    Structured key-value storage scoped to 4 categories.
+    Upsert by (user_id, key). Profile-scored retrieval for read.
+    """
+
+    __tablename__ = "agent_memories"
+    __table_args__ = (
+        Index("ix_agent_memories_user_category", "user_id", "category"),
+        Index("uq_agent_memories_user_key", "user_id", "key", unique=True),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("users.id"), index=True)
+    key: Mapped[str] = mapped_column(String(200), index=True)
+    value: Mapped[str] = mapped_column(Text)
+    category: Mapped[str] = mapped_column(String(50))
+    access_count: Mapped[int] = mapped_column(Integer, default=1)
+    created_at: Mapped[datetime] = mapped_column(default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(default=_utcnow)
+    last_accessed_at: Mapped[datetime] = mapped_column(default=_utcnow)
+
+    @validates("category")
+    def _validate_category(self, key: str, value: str) -> str:
+        if value not in ALLOWED_CATEGORIES:
+            raise ValueError(
+                f"Invalid category '{value}'. Must be one of: {ALLOWED_CATEGORIES}"
+            )
+        return value
+
+
+ALLOWED_ROLES = {"user", "assistant", "system"}
+
+
+class ChatMessage(Base):
+    """Chat message persistence (CHAT-03).
+
+    Authenticated user messages stored per session.
+    Anonymous users never write here (ephemeral only per D-15).
+    """
+
+    __tablename__ = "chat_messages"
+    __table_args__ = (
+        Index("ix_chat_messages_user_session_created", "user_id", "session_id", "created_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("users.id"), index=True)
+    role: Mapped[str] = mapped_column(String(20))
+    content: Mapped[str] = mapped_column(Text)
+    session_id: Mapped[str] = mapped_column(String(36), index=True, default=lambda: str(uuid4()))
+    created_at: Mapped[datetime] = mapped_column(default=_utcnow)
+
+    @validates("role")
+    def _validate_role(self, key: str, value: str) -> str:
+        if value not in ALLOWED_ROLES:
+            raise ValueError(
+                f"Invalid role '{value}'. Must be one of: {ALLOWED_ROLES}"
+            )
+        return value

@@ -1,0 +1,13 @@
+{
+  "name": "行程规划",
+  "slug": "trip_planning",
+  "description": "规划城市行程，包括景点选择、路线安排、时间分配",
+  "priority": 10,
+  "trigger_conditions": {
+    "keywords": ["规划", "行程", "安排", "天", "日", "路线"],
+    "interests": ["景点", "规划"],
+    "min_match": 1
+  },
+  "prompt_file": "trip_planning.md",
+  "related_tools": ["search_pois", "query_weather", "get_user_preferences", "write_memory"]
+}

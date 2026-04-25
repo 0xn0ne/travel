@@ -4,9 +4,8 @@
       <n-notification-provider>
         <AppHeader @open-login="authModal?.openLogin()" />
         <AuthModal ref="authModal" />
-        <div class="app-bg">
-          <router-view />
-        </div>
+        <router-view />
+        <ChatBubble />
       </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
@@ -18,48 +17,48 @@ import { useRoute } from 'vue-router'
 import { NConfigProvider, NMessageProvider, NNotificationProvider, zhCN, dateZhCN } from 'naive-ui'
 import AppHeader from '@/components/AppHeader.vue'
 import AuthModal from '@/components/AuthModal.vue'
+import ChatBubble from '@/components/ChatBubble.vue'
 
 const route = useRoute()
 const authModal = ref<InstanceType<typeof AuthModal> | null>(null)
 
 const themeOverrides = {
   common: {
-    primaryColor: '#6C8CD5',
-    primaryColorHover: '#7B99DC',
-    primaryColorPressed: '#5D7EC9',
-    primaryColorSuppl: '#6C8CD5',
-    successColor: '#76C893',
-    successColorHover: '#8FD8A7',
-    successColorPressed: '#5FB17C',
-    warningColor: '#FFD8A8',
-    warningColorHover: '#FFE1B9',
-    warningColorPressed: '#F2C48D',
-    errorColor: '#F39AA8',
-    errorColorHover: '#F7B2BD',
-    errorColorPressed: '#E17F91',
-    textColorBase: '#2F4F6F',
-    textColor1: '#2F4F6F',
-    textColor2: '#5B6B7B',
-    textColor3: '#8EA2B5',
-    bodyColor: '#EAF3F8',
+    primaryColor: '#FF6B6B',
+    primaryColorHover: '#FF8A8A',
+    primaryColorPressed: '#E55A5A',
+    primaryColorSuppl: '#FF6B6B',
+    successColor: '#4ECDC4',
+    successColorHover: '#6FE0D8',
+    successColorPressed: '#3DBDB4',
+    warningColor: '#F59E0B',
+    warningColorHover: '#FBBF24',
+    warningColorPressed: '#D97706',
+    errorColor: '#FF6B6B',
+    errorColorHover: '#FF8A8A',
+    errorColorPressed: '#E55A5A',
+    textColorBase: '#2D2016',
+    textColor1: '#2D2016',
+    textColor2: '#4A3F35',
+    textColor3: '#6B5B4E',
+    bodyColor: '#FFFAF5',
     cardColor: '#FFFFFF',
     modalColor: '#FFFFFF',
     popoverColor: '#FFFFFF',
-    tableColor: '#F0F8FF',
-    inputColor: '#FFFFFF',
-    actionColor: '#F0F8FF',
-    borderColor: '#1D4271',
-    dividerColor: '#C5DEFF',
-    borderRadius: '22px',
-    borderRadiusSmall: '12px',
-    fontFamily: "'ZCoolHappy', sans-serif",
-    fontFamilyMono: "'ZCoolHappy', sans-serif",
+    tableColor: '#FFFAF5',
+    inputColor: '#FFF8F0',
+    actionColor: '#F5E6D3',
+    borderColor: '#E8D5C4',
+    dividerColor: '#E8D5C4',
+    borderRadius: '16px',
+    borderRadiusSmall: '8px',
+    fontFamily: 'system-ui, -apple-system, sans-serif',
   },
   Card: {
-    borderRadius: '22px',
+    borderRadius: '16px',
     color: '#FFFFFF',
-    borderColor: '#1D4271',
-    boxShadow: 'none',
+    borderColor: '#E8D5C4',
+    boxShadow: '0 2px 12px rgba(45, 32, 22, 0.08)',
   },
   Button: {
     borderRadiusMedium: '14px',
@@ -69,31 +68,35 @@ const themeOverrides = {
     borderRadius: '999px',
   },
   Input: {
-    borderRadius: '14px',
-    borderFocus: '2px solid #6C8CD5',
-    borderHover: '2px solid #1D4271',
-    color: '#FFFFFF',
+    borderRadius: '12px',
+    borderFocus: '1px solid #FF6B6B',
+    borderHover: '1px solid #E8D5C4',
+    borderFocusWarning: '1px solid #F59E0B',
+    borderFocusError: '1px solid #E55A5A',
+    borderHoverWarning: '1px solid #F59E0B',
+    borderHoverError: '1px solid #E55A5A',
+    color: '#FFF8F0',
   },
   Alert: {
     titleFontSize: '14px',
-    colorWarning: '#FFF8E8',
-    colorError: '#FDF0F3',
-    colorInfo: '#F0F8FF',
-    borderWarning: '2px solid #FFD166',
-    borderError: '2px solid #F39AA8',
-    iconColorWarning: '#D2A43C',
-    iconColorError: '#E17F91',
+    colorWarning: '#FEF3C7',
+    colorError: '#FFF5F5',
+    colorInfo: '#6FE0D8',
+    borderWarning: '1px solid #F59E0B',
+    borderError: '1px solid #FF6B6B',
+    iconColorWarning: '#F59E0B',
+    iconColorError: '#FF6B6B',
   },
   Empty: {
-    iconColor: '#9D94FF',
-    textColor: '#6F86A6',
+    iconColor: '#4ECDC4',
+    textColor: '#6B5B4E',
   },
   Spin: {
-    textColor: '#9D94FF',
+    textColor: '#FF6B6B',
   },
   Skeleton: {
-    color: '#D6EAFF',
-    colorEnd: '#EAF4FF',
+    color: '#F5E6D3',
+    colorEnd: '#E8DDD3',
   },
 }
 

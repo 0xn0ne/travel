@@ -18,6 +18,9 @@ dependencies = [
     "email-validator>=2.1.0",
     "passlib[bcrypt]>=1.7.4",
     "PyJWT>=2.7.0",
+    "pyyaml>=6.0",
+    "openai-agents>=0.14.2",
+    "ddgs",
 ]
 
 [dependency-groups]

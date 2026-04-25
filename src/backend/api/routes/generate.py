@@ -6,8 +6,10 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.agent.context import AgentContext
 from backend.api.dependencies import get_amap_service, get_current_user_optional, get_db, get_llm_client
-from backend.llm.client import DeepSeekClient
+from backend.config import get_settings
+from backend.llm.client import LLMClient
 from backend.models.pydantic import GenerateRequest
 from backend.pipeline.coordinator import PipelineCoordinator
 from backend.pipeline.events import PipelineEvent
@@ -30,7 +32,7 @@ def _validate_input(request: GenerateRequest) -> str | None:
 async def generate_itinerary(
     request: GenerateRequest,
     db: AsyncSession = Depends(get_db),
-    llm: DeepSeekClient = Depends(get_llm_client),
+    llm: LLMClient = Depends(get_llm_client),
     amap: AmapService = Depends(get_amap_service),
     current_user: dict | None = Depends(get_current_user_optional),
 ):
@@ -40,6 +42,17 @@ async def generate_itinerary(
 
     coordinator = PipelineCoordinator(db, llm, amap)
     coordinator._user_id = current_user["id"] if current_user else None
+
+    agent_context = None
+    if current_user:
+        agent_context = AgentContext(
+            db_session=db,
+            amap_service=amap,
+            user_id=current_user["id"],
+            settings=get_settings(),
+            active_skills=[],
+        )
+    coordinator._agent_context = agent_context
 
     # Extract user preferences for pipeline scoring (PIPE-03)
     user_prefs = None

@@ -1,15 +1,18 @@
 <template>
   <div class="home-view">
     <div class="split-layout">
-      <aside class="left-panel">
+      <!-- LEFT PANEL - Preference Selection -->
+      <div class="left-panel">
         <div class="left-scroll">
+          <!-- Brand -->
           <div class="panel-brand">
             <h1 class="brand-title">拾途</h1>
-            <p class="brand-subtitle">像一只贴心小狗，陪伴你挑景点、辨路线、做攻略。</p>
+            <p class="brand-subtitle">像本地朋友一样帮你规划旅行</p>
           </div>
 
-          <div class="pref-card pastel-blue primary-pref-card">
-            <div class="section-label section-label-inline">想去哪儿</div>
+          <!-- ① 地点 -->
+          <div class="section-label">想去哪儿</div>
+          <div class="pref-card">
             <div class="location-input-row">
               <input
                 v-model="locationInput"
@@ -19,37 +22,47 @@
               />
               <button class="add-location-btn" @click="addLocation">添加</button>
             </div>
-            <div v-if="locations.length > 0" class="location-tags">
-              <span v-for="loc in locations" :key="loc" class="location-tag">
+            <div class="location-tags" v-if="locations.length > 0">
+              <span
+                v-for="loc in locations"
+                :key="loc"
+                class="location-tag"
+              >
                 {{ loc }}
-                <span class="location-remove" @click="locations = []">×</span>
+                <span class="location-remove" @click="removeLocation(loc)">×</span>
               </span>
+            </div>
+            <div class="location-hint" v-if="locations.length === 0">
+              输入地点后按回车或点击「添加」，可添加多个目的地
             </div>
           </div>
 
-          <div class="pref-card pastel-yellow secondary-pref-card">
-            <div class="section-label section-label-inline">行程日期</div>
+          <!-- ② 行程日期 -->
+          <div class="section-label">行程日期</div>
+          <div class="pref-card">
             <div class="date-range-picker">
               <n-date-picker
                 v-model:value="dateRange"
                 type="daterange"
                 clearable
-                :actions="['clear', 'confirm']"
                 :is-date-disabled="isDateDisabled"
                 placeholder="选择出发和返回日期"
                 start-placeholder="出发日期"
                 end-placeholder="返回日期"
                 format="MM月dd日"
                 style="width: 100%"
-                :first-day-of-week="0"
+                :locale="zhCN"
                 @update:value="onDateRangeChange"
               />
             </div>
-            <div v-if="tripDays > 0" class="trip-days-badge">🗓️ 共 {{ tripDays }} 天</div>
+            <div v-if="tripDays > 0" class="trip-days-badge">
+              共 {{ tripDays }} 天
+            </div>
 
+            <!-- 天气预告 -->
             <div v-if="weatherLoading" class="weather-loading">
               <span class="weather-spinner"></span>
-              <span>正在帮你看看天气...</span>
+              <span>正在获取天气...</span>
             </div>
             <div v-else-if="weatherData.length > 0" class="weather-section">
               <div class="weather-header">
@@ -57,7 +70,11 @@
                 <span class="weather-city">{{ dateRangeCity }}</span>
               </div>
               <div class="weather-days">
-                <div v-for="(day, idx) in weatherData" :key="idx" class="weather-day-card">
+                <div
+                  v-for="(day, idx) in weatherData"
+                  :key="idx"
+                  class="weather-day-card"
+                >
                   <div class="weather-date">{{ day.date }}</div>
                   <div class="weather-icon">{{ day.icon }}</div>
                   <div class="weather-temp">{{ day.tempMax }}° / {{ day.tempMin }}°</div>
@@ -65,226 +82,151 @@
                 </div>
               </div>
             </div>
-            <div v-else-if="dateRange && !weatherLoading" class="weather-empty">选择地点后可查看天气预报</div>
+            <div v-else-if="dateRange && !weatherLoading" class="weather-empty">
+              选择地点后可查看天气预报
+            </div>
           </div>
 
-          <div class="pref-card pastel-pink crowd-pref-card">
-            <div class="section-label section-label-inline">人流偏好</div>
-            <div class="tag-container crowd-grid">
+          <!-- ③ 旅行偏好 -->
+          <div class="section-label">旅行偏好</div>
+          <div class="pref-card">
+            <div class="pref-sub-label">人流偏好</div>
+            <div class="tag-container" style="margin-bottom: 12px;">
               <span
                 v-for="c in crowdPrefs"
                 :key="c.value"
-                class="tag teal style-tag crowd-pill"
+                class="tag teal"
                 :class="{ selected: selectedCrowd === c.value }"
                 @click="selectedCrowd = c.value"
               >{{ c.label }}</span>
             </div>
+
+            <div class="pref-sub-label">旅行风格（可多选）</div>
+            <div class="tag-container">
+              <span
+                v-for="t in sortedStyles"
+                :key="t.value"
+                class="tag"
+                :class="{ selected: selectedStyles.includes(t.value) }"
+                @click="toggleTag(selectedStyles, t.value)"
+              >{{ t.label }}</span>
+            </div>
           </div>
 
-          <div class="left-secondary-stack">
-            <div class="section-label section-label-secondary">旅行风格</div>
-            <div class="pref-card pref-card-secondary pastel-mint secondary-pref-card">
-              <div class="tag-container style-tag-grid">
-                <span
-                  v-for="t in sortedStyles"
-                  :key="t.value"
-                  class="tag style-tag"
-                  :class="{ selected: selectedStyles.includes(t.value) }"
-                  @click="toggleTag(selectedStyles, t.value)"
-                >{{ t.label }}</span>
-              </div>
+          <!-- ④ 预算区间 -->
+          <div class="section-label">人均预算</div>
+          <div class="pref-card">
+            <div class="tag-container">
+              <span
+                v-for="b in budgets"
+                :key="b.value"
+                class="tag amber"
+                :class="{ selected: selectedBudget === b.value }"
+                @click="selectedBudget = b.value"
+              >{{ b.label }}</span>
             </div>
+          </div>
 
-            <div class="section-label section-label-secondary">人均预算</div>
-            <div class="pref-card pref-card-secondary pastel-mint secondary-pref-card">
-              <div class="tag-container">
-                <span
-                  v-for="b in budgets"
-                  :key="b.value"
-                  class="tag amber"
-                  :class="{ selected: selectedBudget === b.value }"
-                  @click="selectedBudget = b.value"
-                >{{ b.label }}</span>
-              </div>
-            </div>
-
-            <div class="section-label section-label-secondary">补充信息</div>
-            <div class="pref-card pref-card-secondary pastel-peach secondary-pref-card">
-              <textarea
-                v-model="extraInfo"
-                class="custom-input"
-                placeholder="还有什么想告诉我们的？
+          <!-- ⑤ 补充信息 -->
+          <div class="section-label">补充信息</div>
+          <div class="pref-card">
+            <textarea
+              v-model="extraInfo"
+              class="custom-input"
+              placeholder="还有什么想告诉我们的？
 比如：带老人/小孩、有宠物、想拍照出片、不能走太多路……"
-                rows="4"
-              ></textarea>
-            </div>
+              rows="3"
+            ></textarea>
+          </div>
 
-            <button
-              class="generate-btn"
-              :disabled="store.isGenerating || store.isLoadingCandidates || locations.length === 0"
-              @click="handleGenerate"
-            >
-              <span v-if="store.isGenerating || store.isLoadingCandidates" class="btn-loading">✦</span>
-              {{ store.homeFlowStage === 'candidate_selection' ? '重新匹配景点' : '开始规划' }}
-            </button>
+          <!-- 发起规划 -->
+          <button
+            class="generate-btn"
+            :disabled="store.isGenerating || locations.length === 0"
+            @click="handleGenerate"
+          >
+            <span v-if="store.isGenerating" class="btn-loading">✦</span>
+            ⚡ 开始规划
+          </button>
 
-            <div v-if="locations.length === 0" class="generate-hint"></div>
+          <div class="generate-hint" v-if="locations.length === 0">
+            请先添加至少一个目的地
           </div>
         </div>
-      </aside>
+      </div>
 
-      <section class="right-panel">
+      <!-- RIGHT PANEL - Content -->
+      <div class="right-panel">
+        <!-- Step Bar -->
         <div class="step-bar">
-          <div class="step" :class="{ active: currentStep === 1, done: currentStep > 1 }"><span class="step-num">①</span> 填愿望</div>
+          <div class="step" :class="{ active: currentStep === 1, done: currentStep > 1 }">
+            <span class="step-num">①</span> 填写偏好
+          </div>
           <div class="step-arrow">→</div>
-          <div class="step" :class="{ active: currentStep === 2, done: currentStep > 2 }"><span class="step-num">②</span> 挑景点</div>
+          <div class="step" :class="{ active: currentStep === 2, done: currentStep > 2 }">
+            <span class="step-num">②</span> 生成行程
+          </div>
           <div class="step-arrow">→</div>
-          <div class="step" :class="{ active: currentStep === 3, done: currentStep > 3 }"><span class="step-num">③</span> 拼路线</div>
-          <div class="step-arrow">→</div>
-          <div class="step" :class="{ active: currentStep === 4 }"><span class="step-num">④</span> 看结果</div>
+          <div class="step" :class="{ active: currentStep === 3 }">
+            <span class="step-num">③</span> 查看结果
+          </div>
         </div>
 
         <div class="right-scroll">
-          <div v-if="showEmptyState" class="hero-card">
-            <div class="hero-copy">
-              <h2 class="hero-title">让小狗搭子帮你规划旅行叭</h2>
-              <p class="hero-sub">输入目的地、日期和偏好，我会先帮你挑一批值得去的地方，再一起生成路线。</p>
-              <div class="hero-actions">
-                <button class="hero-primary" @click="fillLocation('上海')">从上海开始</button>
-                <button class="hero-secondary" @click="fillLocation('杭州')">换个城市试试</button>
-              </div>
-              <div class="empty-examples">
-                <span class="example-chip" @click="fillLocation('北京')">北京</span>
-                <span class="example-chip" @click="fillLocation('上海')">上海</span>
-                <span class="example-chip" @click="fillLocation('福州')">福州</span>
-                <span class="example-chip" @click="fillLocation('厦门')">厦门</span>
-                <span class="example-chip" @click="fillLocation('成都')">成都</span>
-                <span class="example-chip" @click="fillLocation('重庆')">重庆</span>
-              </div>
-            </div>
-            <div class="hero-illustration" aria-hidden="true">
-              <div class="hero-art-frame">
-                <img
-                  class="hero-mascot"
-                  src="/imgs/177101776915152_.pic-removebg-preview.png"
-                  alt="小狗旅行搭子"
-                />
-              </div>
+          <!-- Empty State Hint -->
+          <div v-if="!store.isGenerating && store.stage === 'idle' && !store.currentItinerary?.days" class="empty-hint">
+            <div class="empty-icon">🗺️</div>
+            <p class="empty-title">告诉我想去哪儿</p>
+            <p class="empty-sub">在左侧添加目的地和偏好，AI 为你生成专属行程</p>
+            <div class="empty-examples">
+              <span class="example-chip" @click="fillLocation('上海')">上海</span>
+              <span class="example-chip" @click="fillLocation('成都')">成都</span>
+              <span class="example-chip" @click="fillLocation('杭州')">杭州</span>
+              <span class="example-chip" @click="fillLocation('北京')">北京</span>
+              <span class="example-chip" @click="fillLocation('大理')">大理</span>
+              <span class="example-chip" @click="fillLocation('大阪')">大阪</span>
             </div>
           </div>
 
-          <div v-else-if="store.homeFlowStage === 'input'" class="guide-card">
-            <div class="guide-copy">
-              <h3 class="guide-title">把愿望告诉我，我来把路线拼顺。</h3>
-              <p class="guide-sub">先在左边填地点和日期，再补一点偏好；我会按你想要的节奏挑景点、看天气、排出一条更轻松的路线。</p>
-              <div class="guide-points">
-                <div class="guide-point">
-                  <span class="guide-point-icon">🧳</span>
-                  <span>先写城市和日期</span>
-                </div>
-                <div class="guide-point">
-                  <span class="guide-point-icon">🎨</span>
-                  <span>选喜欢的旅行风格</span>
-                </div>
-                <div class="guide-point">
-                  <span class="guide-point-icon">🐾</span>
-                  <span>我来给你候选景点</span>
-                </div>
-              </div>
-            </div>
-            <div class="guide-illustration" aria-hidden="true">
-              <div class="guide-scene-card">
-                <img
-                  class="guide-mascot"
-                  src="/imgs/176801776846821_.pic-removebg-preview.png"
-                  alt="小狗旅行搭子"
-                />
-              </div>
-            </div>
-          </div>
-
+          <!-- Stage Progress -->
           <StageProgress
-            v-if="store.isLoadingCandidates || store.homeFlowStage === 'generating' || store.isGenerating"
-            :current-stage="store.isLoadingCandidates ? 'prefilter' : store.stage"
-            :message="store.isLoadingCandidates ? '正在帮你嗅探候选景点' : store.stageMessage"
+            v-if="store.isGenerating || store.stage !== 'idle'"
+            :current-stage="store.stage"
+            :message="store.stageMessage"
           />
 
-          <div v-if="store.homeFlowStage === 'candidate_selection'" class="candidate-stage-anchor">
-            🐾 已匹配 {{ store.candidatePois.length }} 个候选景点，请继续往下挑选喜欢的卡片。
-          </div>
-
-          <div
-            v-if="store.homeFlowStage === 'candidate_selection'"
-            ref="candidateStageRef"
-            class="candidate-stage"
-          >
-            <div class="candidate-stage-head">
-              <div>
-                <div class="candidate-kicker">候选景点贴纸墙</div>
-                <h2 class="candidate-title">先挑你真正想去的点</h2>
-                <p class="candidate-sub">已为 {{ store.candidateTripContext?.city }} 匹配 {{ store.candidatePois.length }} 个候选景点，默认帮你勾选了一部分，你也可以自己慢慢挑。</p>
-              </div>
-              <div class="candidate-summary">已选 {{ store.selectedCandidatePoiIds.length }} / {{ store.candidatePois.length }}</div>
-            </div>
-
-            <div v-if="store.candidateError" class="error-banner">
-              <n-alert type="warning" :title="store.candidateError" />
-            </div>
-
-            <div
-              v-else-if="store.homeFlowStage === 'candidate_selection' && store.candidatePois.length === 0"
-              class="candidate-debug-card"
-            >
-              已进入候选景点阶段，但当前没有可展示的景点。
-            </div>
-
-            <PoiCandidateGrid
-              :pois="store.candidatePois"
-              :selected-ids="store.selectedCandidatePoiIds"
-              @toggle="store.toggleCandidatePoi"
-              @detail="openCandidateDetail"
-            />
-
-            <div class="candidate-footer">
-              <div class="candidate-footer-copy">勾选后会仅基于这些景点生成路线，并尽量按区域聚合安排行程。</div>
-              <button class="generate-btn candidate-confirm-btn" :disabled="store.selectedCandidatePoiIds.length === 0 || store.isGenerating" @click="handleGenerateFromSelectedPois">
-                🐕 基于已选景点生成行程
-              </button>
-            </div>
-          </div>
-
+          <!-- Itinerary Timeline -->
           <ItineraryTimeline v-if="store.currentItinerary?.days" :days="(store.currentItinerary as any).days" />
 
+          <!-- Error Banner -->
           <div v-if="store.error" class="error-banner">
             <n-alert type="warning" :title="store.error" />
             <n-button size="small" type="primary" style="margin-top: 8px" @click="handleRetry">重试</n-button>
           </div>
         </div>
 
-          <div class="chat-input-bar">
-          <div class="chat-input-row">
-            <img
-              class="chat-mascot-inline"
-              src="/imgs/IMG_0084-removebg-preview.png"
-              alt="小狗搭子"
-            />
-            <textarea
-              v-model="chatInput"
-              class="chat-text-input"
+        <!-- Chat Input Bar -->
+        <div class="chat-input-bar">
+          <div class="chat-input-inner">
+            <n-input
+              v-model:value="chatInput"
+              type="textarea"
               placeholder="想调整行程？比如「换个更有氛围的」「少走一点路」"
-              rows="1"
+              :autosize="{ minRows: 1, maxRows: 3 }"
               @keydown.enter.exact.prevent="handleChatSend"
-            ></textarea>
-            <button class="chat-send-btn" @click="handleChatSend" :disabled="!chatInput.trim()">↑</button>
+            />
+            <button class="chat-send-btn" @click="handleChatSend" :disabled="!chatInput.trim()">
+              ↑
+            </button>
           </div>
           <div class="chat-hints">
-            <span class="hint-chip" @click="fillChatHint(0)">换个地方吃饭</span>
-            <span class="hint-chip" @click="fillChatHint(1)">不想去这里了</span>
-            <span class="hint-chip" @click="fillChatHint(2)">加一个上午行程</span>
-            <span class="hint-chip" @click="fillChatHint(3)">轻松一点</span>
+            <span class="hint-chip" @click="fillChatHint(0)">🍽️ 换个地方吃饭</span>
+            <span class="hint-chip" @click="fillChatHint(1)">📍 不想去这里了</span>
+            <span class="hint-chip" @click="fillChatHint(2)">☀️ 加一个上午行程</span>
+            <span class="hint-chip" @click="fillChatHint(3)">🚶 轻松一点</span>
           </div>
         </div>
-      </section>
+      </div>
     </div>
 
     <PoiDetailDrawer v-model:show="candidateDetailVisible" :poi="activeCandidatePoi" />
@@ -292,9 +234,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted, nextTick, watch } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { NButton, NAlert, NDatePicker } from 'naive-ui'
+import { NInput, NButton, NAlert, NDatePicker, zhCN } from 'naive-ui'
 import { useItineraryStore } from '../stores/itinerary'
 import StageProgress from '../components/StageProgress.vue'
 import ItineraryTimeline from '../components/ItineraryTimeline.vue'
@@ -305,19 +247,9 @@ import type { CandidatePoiData, CandidatePoiRequestPayload } from '../types/itin
 const store = useItineraryStore()
 const router = useRouter()
 const chatInput = ref('')
-const candidateStageRef = ref<HTMLElement | null>(null)
-const candidateDetailVisible = ref(false)
-const activeCandidatePoi = ref<CandidatePoiData | null>(null)
+const currentStep = ref(1)
 
-const currentStep = computed(() => {
-  if (store.homeFlowStage === 'result') return 4
-  if (store.homeFlowStage === 'generating') return 3
-  if (store.homeFlowStage === 'candidate_selection') return 2
-  return 1
-})
-
-const showEmptyState = computed(() => !store.isGenerating && !store.isLoadingCandidates && store.homeFlowStage === 'input' && store.stage === 'idle' && !store.currentItinerary?.days)
-
+// --- 地点 ---
 const locationInput = ref('')
 const locations = ref<string[]>([])
 
@@ -329,12 +261,17 @@ function addLocation() {
   }
 }
 
+function removeLocation(loc: string) {
+  locations.value = locations.value.filter(l => l !== loc)
+}
+
 function fillLocation(loc: string) {
   if (!locations.value.includes(loc)) {
     locations.value.push(loc)
   }
 }
 
+// --- 行程日期 ---
 const dateRange = ref<[number, number] | null>(null)
 const weatherData = ref<any[]>([])
 const weatherLoading = ref(false)
@@ -360,6 +297,7 @@ async function onDateRangeChange(val: [number, number] | null) {
   }
 }
 
+// 城市中文名到坐标的映射
 const CITY_COORDS: Record<string, [number, number]> = {
   '上海': [31.2304, 121.4737],
   '北京': [39.9042, 116.4074],
@@ -420,16 +358,24 @@ function getWeatherDesc(code: number): string {
 
 async function fetchWeather() {
   if (!dateRange.value || locations.value.length === 0) return
+
   weatherLoading.value = true
   const [start, end] = dateRange.value
+
+  // 优先用第一个城市
   const city = locations.value[0]
   dateRangeCity.value = city
+
+  // 找坐标
   let lat = CITY_COORDS[city]?.[0]
   let lon = CITY_COORDS[city]?.[1]
 
+  // 如果没有预存坐标，尝试用 geocoding API 获取
   if (!lat) {
     try {
-      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`)
+      const geoRes = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+      )
       const geoData = await geoRes.json()
       if (geoData.results?.[0]) {
         lat = geoData.results[0].latitude
@@ -443,6 +389,7 @@ async function fetchWeather() {
     return
   }
 
+  // Open-Meteo 天气 API
   const startDate = new Date(start).toISOString().split('T')[0]
   const endDate = new Date(end).toISOString().split('T')[0]
 
@@ -474,92 +421,112 @@ async function fetchWeather() {
   weatherLoading.value = false
 }
 
+// --- 喜好偏好 ---
 const travelStyles = [
-  { value: 'landmark', label: '经典必去' },
-  { value: 'hidden', label: '宝藏小店' },
-  { value: 'nature', label: '自然风光' },
-  { value: 'culture', label: '历史人文' },
-  { value: 'photo', label: '拍照打卡' },
-  { value: 'art', label: '艺术展览' },
-  { value: 'cafe', label: '咖啡饮品' },
-  { value: 'food_shopping', label: '美食购物' },
-  { value: 'romantic', label: '约会浪漫' },
-  { value: 'senior', label: '长辈出行' },
-]
-
-const sortedStyles = computed(() => [...travelStyles].sort((a, b) => a.label.replace(/[^\u4e00-\u9fa5]/g, '').length - b.label.replace(/[^\u4e00-\u9fa5]/g, '').length))
-const selectedStyles = ref<string[]>(['food_shopping', 'culture'])
-
-const crowdPrefs = [
-  { value: 'quiet', label: '人少清静' },
-  { value: 'moderate', label: '热闹适中' },
-  { value: 'lively', label: '人山人海' },
+  { value: 'food_shopping', label: '🛍️ 美食购物' },
+  { value: 'nature', label: '🌿 自然风光' },
+  { value: 'culture', label: '🏛️ 历史人文' },
+  { value: 'landmark', label: '📍 经典打卡' },
+  { value: 'hidden', label: '💎 宝藏小店' },
+  { value: 'art', label: '🎨 艺术展览' },
+  { value: 'photo', label: '📸 拍照打卡' },
+  { value: 'romantic', label: '🎠 约会浪漫' },
+  { value: 'local', label: '🗺️ 本地人推荐' },
+  { value: 'cafe', label: '☕ 咖啡下午茶' },
+  { value: 'senior', label: '🧓 长辈出行' },
 ]
 const selectedCrowd = ref('moderate')
 
+// 按字数排序：4字在前，5字在后
+const sortedStyles = computed(() =>
+  [...travelStyles].sort((a, b) => {
+    const ca = a.label.replace(/[^\u4e00-\u9fa5]/g, '').length
+    const cb = b.label.replace(/[^\u4e00-\u9fa5]/g, '').length
+    return ca - cb
+  })
+)
+const selectedStyles = ref<string[]>(['food_shopping', 'culture'])
+
+const crowdPrefs = [
+  { value: 'quiet', label: '🌿 人少清静' },
+  { value: 'moderate', label: '🎵 热闹适中' },
+  { value: 'lively', label: '🔥 人山人海' },
+]
+const selectedCrowd = ref('moderate')
+
+// --- 预算区间 ---
 const budgets = [
-  { value: 'low', label: '50以下' },
-  { value: 'avg', label: '50-200' },
-  { value: 'high', label: '200-500' },
-  { value: 'luxury', label: '500+' },
+  { value: 'low', label: '💰 50以下' },
+  { value: 'avg', label: '💰 50-200' },
+  { value: 'high', label: '💎 200-500' },
+  { value: 'luxury', label: '👑 500+' },
 ]
 const selectedBudget = ref('avg')
+
+// --- 补充信息 ---
 const extraInfo = ref('')
 
+// --- 工具函数 ---
 function toggleTag(arr: string[], val: string) {
   const idx = arr.indexOf(val)
   if (idx === -1) arr.push(val)
   else arr.splice(idx, 1)
 }
 
-const canGenerate = computed(() => locations.value.length > 0 && !store.isGenerating && !store.isLoadingCandidates)
+// --- 生成行程 ---
+const canGenerate = computed(() => locations.value.length > 0 && !store.isGenerating)
 
 async function handleGenerate() {
   if (!canGenerate.value) return
+  currentStep.value = 2
 
-  const normalizedDateRange = Array.isArray(dateRange.value)
-    && dateRange.value.every(value => typeof value === 'number' && Number.isFinite(value))
-    ? dateRange.value.map(value => Math.trunc(value))
-    : undefined
+  // 拼接用户输入
+  const styleLabels = travelStyles.filter(t => selectedStyles.value.includes(t.value)).map(t => t.label).join('、')
+  const crowdLabel = crowdPrefs.find(c => c.value === selectedCrowd.value)?.label || ''
+  const budgetLabel = budgets.find(b => b.value === selectedBudget.value)?.label || ''
 
-  const payload: CandidatePoiRequestPayload = {
-    destinations: locations.value,
-    date_range: normalizedDateRange,
-    trip_days: tripDays.value || undefined,
-    styles: selectedStyles.value,
-    crowd_preference: selectedCrowd.value,
-    budget: selectedBudget.value,
-    extra_info: extraInfo.value.trim() || undefined,
-  }
-
-  console.log('[candidate-pois] payload', payload)
-
-  try {
-    await store.loadCandidatePois(payload)
-  } catch (e) {
-    console.error('候选景点匹配失败', e)
-    if (e instanceof Error) {
-      console.error('候选景点匹配失败详情', e.message)
+  // 日期范围
+  let durationStr = ''
+  if (dateRange.value) {
+    const [start, end] = dateRange.value
+    const fmt = (ts: number) => {
+      const d = new Date(ts)
+      return `${d.getMonth() + 1}月${d.getDate()}日`
     }
+    durationStr = `${fmt(start)} - ${fmt(end)}，共${tripDays.value}天`
+  }
+
+  const parts: string[] = [
+    `目的地：${locations.value.join('、')}`,
+  ]
+  if (durationStr) parts.push(`行程日期：${durationStr}`)
+  if (styleLabels) parts.push(`喜好：${styleLabels}`)
+  if (crowdLabel) parts.push(`人流偏好：${crowdLabel}`)
+  if (budgetLabel) parts.push(`预算：${budgetLabel}`)
+
+  // 加入天气信息
+  if (weatherData.value.length > 0) {
+    const weatherSummary = weatherData.value
+      .map(d => `${d.date.replace(' ', ' ')} ${d.icon}${d.desc} ${d.tempMin}°-${d.tempMax}°`)
+      .join('、')
+    parts.push(`天气预报：${weatherSummary}`)
+  }
+
+  if (extraInfo.value.trim()) {
+    parts.push(`补充：${extraInfo.value.trim()}`)
+  }
+
+  const fullInput = parts.join('；')
+  console.log('[HomeView] 生成输入:', fullInput)
+  await store.generate(fullInput)
+
+  if (store.itineraryId && !store.error) {
+    currentStep.value = 3
+    router.push(`/itinerary/${store.itineraryId}`)
   }
 }
 
-async function handleGenerateFromSelectedPois() {
-  try {
-    await store.generateFromSelectedPois()
-    if (store.itineraryId && !store.error) {
-      router.push(`/itinerary/${store.itineraryId}`)
-    }
-  } catch (e) {
-    console.error('生成行程失败', e)
-  }
-}
-
-function openCandidateDetail(poi: CandidatePoiData) {
-  activeCandidatePoi.value = poi
-  candidateDetailVisible.value = true
-}
-
+// --- 聊天调整 ---
 const chatHints = ['换个地方吃饭', '不想去这里了', '加一个上午行程', '轻松一点']
 
 function fillChatHint(i: number) {
@@ -606,426 +573,402 @@ onUnmounted(() => {
 }
 
 .home-view {
-  position: relative;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 60px);
   overflow: hidden;
-  background-color: var(--bg-main);
-  color: var(--text-body);
-  background-image:
-    radial-gradient(rgba(158, 190, 219, 0.1) 1px, transparent 1px),
-    radial-gradient(rgba(255, 255, 255, 0.65) 1px, transparent 1px);
-  background-position: 0 0, 14px 14px;
-  background-size: 26px 26px, 26px 26px;
 }
 
-.wish-card-head {
+/* ===== SPLIT LAYOUT (智行风格) ===== */
+.split-layout {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  height: 100%;
 }
 
+/* ===== LEFT PANEL ===== */
+.left-panel {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--color-warm-surface);
+  border-right: 1px solid var(--color-warm-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 18px;
+}
+
+/* Brand */
+.panel-brand {
+  text-align: center;
+  padding: 10px 0 20px;
+  border-bottom: 1px solid var(--color-warm-border);
+  margin-bottom: 20px;
+}
+
+.brand-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-coral);
+  margin: 0;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: var(--color-warm-text-muted);
+  margin: 4px 0 0;
+}
+
+/* Section Label */
+.section-label {
+  font-size: 11px;
+  color: var(--color-coral);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-label::before {
+  content: '▸';
+  font-size: 10px;
+}
+
+/* Preference Card */
+.pref-card {
+  background: white;
+  border: 1px solid var(--color-warm-border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Tag Container */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  padding: 5px 12px;
+  border: 1px solid var(--color-warm-border);
+  border-radius: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-warm-text-muted);
+  background: var(--color-sand-light);
+  user-select: none;
+}
+
+.tag:hover {
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  background: var(--color-coral-light);
+}
+
+.tag.selected {
+  background: rgba(255, 107, 107, 0.12);
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.15);
+}
+
+/* Tag - Teal */
+.tag.teal {
+  border-color: rgba(78, 205, 196, 0.3);
+  color: var(--color-warm-text-muted);
+  background: var(--color-sand-light);
+}
+
+.tag.teal:hover {
+  border-color: var(--color-ocean);
+  color: var(--color-ocean-dark);
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.tag.teal.selected {
+  border-color: var(--color-ocean);
+  color: var(--color-ocean-dark);
+  background: rgba(78, 205, 196, 0.12);
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.15);
+}
+
+/* Tag - Amber */
+.tag.amber {
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--color-warm-text-muted);
+  background: var(--color-sand-light);
+}
+
+.tag.amber:hover {
+  border-color: var(--color-warm-amber);
+  color: var(--color-warm-amber);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.tag.amber.selected {
+  border-color: var(--color-warm-amber);
+  color: var(--color-warm-amber);
+  background: rgba(245, 158, 11, 0.12);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.15);
+}
+
+/* ===== 地点输入 ===== */
 .location-input-row {
   display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.location-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1.5px solid var(--color-warm-border);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--color-warm-text);
+  background: var(--color-sand-light);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.location-input:focus {
+  border-color: var(--color-coral);
+}
+
+.location-input::placeholder {
+  color: var(--color-warm-text-muted);
+  font-size: 12px;
+}
+
+.add-location-btn {
+  padding: 8px 14px;
+  background: var(--color-coral);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.add-location-btn:hover {
+  background: var(--color-coral-dark);
+  transform: translateY(-1px);
 }
 
 .location-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .location-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: var(--text-main);
-  font-weight: 700;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-coral);
 }
 
 .location-remove {
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 14px;
   line-height: 1;
-  color: var(--text-soft);
+  opacity: 0.6;
+  transition: opacity 0.2s;
 }
 
-.step-arrow {
-  font-weight: 700;
-  color: var(--text-soft);
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.step-num {
-  font-weight: 700;
-}
-
-.candidate-stage-head,
-.weather-header,
-.candidate-footer,
-.chat-input-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.weather-title {
-  color: var(--type-title-soft);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.weather-days {
-  margin-top: 12px;
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-}
-
-.weather-date,
-.weather-desc {
-  font-size: 12px;
-  color: var(--text-body);
-}
-
-.weather-icon {
-  font-size: 24px;
-  margin: 8px 0 4px;
-}
-
-.weather-temp {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.weather-loading,
-.weather-empty {
-  padding: 10px 0 2px;
-}
-
-.weather-spinner,
-.btn-loading {
-  display: inline-block;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.date-range-picker {
-  margin-bottom: 12px;
-}
-
-.trip-days-badge {
-  margin-bottom: 12px;
-}
-
-.split-layout {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  height: 100%;
-  gap: 24px;
-  padding: 24px;
-}
-
-.left-panel,
-.right-panel {
-  min-height: 0;
-}
-
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
-  backdrop-filter: blur(12px);
-}
-
-.left-scroll,
-.right-scroll {
-  min-height: 0;
-  overflow-y: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.left-scroll {
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.panel-brand,
-.pref-card {
-  background: rgba(255, 255, 255, 0.82);
-  border: none;
-  border-radius: var(--card-radius);
-}
-
-.hero-card,
-.guide-card,
-.candidate-stage,
-.candidate-stage-anchor,
-.chat-input-bar,
-.candidate-debug-card {
-  background: rgba(255, 255, 255, 0.96);
-  border: none;
-  border-radius: var(--card-radius);
-}
-
-.panel-brand {
-  margin-bottom: 0;
-  padding: 20px 20px 18px;
-  background: rgba(255, 255, 255, 0.40);
-  border: none;
-}
-
-.left-secondary-stack {
-  display: grid;
-  gap: 0;
-}
-
-.left-secondary-stack-hidden {
-  display: none;
-}
-
-.primary-pref-card,
-.crowd-pref-card {
-  margin-bottom: 0;
-}
-
-.secondary-pref-card {
-  margin-bottom: 12px;
-}
-
-.brand-title {
-  font-size: 28px;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.brand-subtitle,
-.location-input,
-.custom-input,
-.pref-sub-label,
-.tag,
-.tag.teal,
-.tag.amber,
-.hero-sub,
-.guide-sub,
-.candidate-sub,
-.candidate-footer-copy,
-.generate-hint,
-.location-hint,
-.weather-empty,
-.weather-loading,
-.weather-city,
-.section-label,
-.wish-sub,
-.guide-point,
-.weather-date,
-.weather-desc,
-.weather-temp,
-.step,
-.location-remove,
-:deep(.n-input__input-el),
-:deep(.n-input__textarea-el),
-:deep(.n-input__placeholder),
-:deep(.n-base-selection-placeholder),
-:deep(.n-base-selection-label) {
-  font-family: var(--font-ui-rounded);
-}
-
-.brand-subtitle {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--type-body);
-}
-
-.section-label {
-  font-size: 14px;
-  color: var(--type-muted);
-  margin: 24px 0 8px 8px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.section-label-inline {
-  margin: 0 0 10px;
-  padding-left: 2px;
-}
-
-.section-label-secondary {
-  margin-top: 18px;
-  color: var(--type-muted);
-}
-
-.section-label:first-child,
-.section-label:nth-of-type(2) {
-  margin-top: 0;
-}
-
-.pref-card {
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
-.pref-card-secondary {
-  background: rgba(255, 255, 255, 0.40);
-  border: none;
-  box-shadow: none;
-}
-
-.pastel-blue,
-.pastel-yellow {
-  background: rgba(255, 255, 255, 0.48);
-  border: none;
-  box-shadow: none;
-}
-
-.pastel-pink {
-  background: rgba(255, 255, 255, 0.42);
-  border: none;
-  box-shadow: none;
-}
-
-.pastel-mint {
-  background: rgba(255, 255, 255, 0.44);
-  border: none;
-  box-shadow: none;
-}
-
-.pastel-peach {
-  background: rgba(255, 255, 255, 0.46);
-  border: none;
-  box-shadow: none;
-}
-
-.pref-sub-label {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--type-title-soft);
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.tag-container,
-.style-tag-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.style-tag-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.crowd-grid {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
-  margin-bottom: 0;
-}
-
-.crowd-grid-stack {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-
-.crowd-pill {
-  justify-content: center;
-  border-radius: 18px;
-  min-height: 38px;
-  padding: 8px 14px;
-}
-
-.style-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  min-height: 44px;
-  padding: 9px 12px;
-  text-align: center;
-  line-height: 1.35;
-  word-break: break-word;
-}
-
-.tag,
-.tag.teal,
-.tag.amber {
-  border: none;
-  border-radius: 18px;
-  font-weight: 500;
-  padding: 7px 15px;
-  font-size: 13px;
-  color: var(--type-chip);
-  background: var(--paper-2);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.tag:hover,
-.example-chip:hover,
-.hint-chip:hover {
-  transform: none;
-  background-color: var(--paper-2);
-  opacity: 0.8;
-}
-
-.tag.selected,
-.tag.teal.selected,
-.tag.amber.selected {
-  background: var(--accent-orange);
-  color: #fff;
-  font-weight: 800;
+.location-remove:hover {
   opacity: 1;
 }
 
-.hint-chip {
-  border: none;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--type-chip);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 9px 20px;
+.location-hint {
+  font-size: 11px;
+  color: var(--color-warm-text-muted);
+  margin-top: 6px;
 }
 
-.example-chip {
-  border: none;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--type-chip);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 8px 18px;
+/* ===== 日期范围选择 ===== */
+.date-range-picker {
+  margin-bottom: 10px;
 }
 
-.location-tag,
-.trip-days-badge,
-.candidate-summary,
-.hero-decor,
-.candidate-kicker {
+.date-range-picker :deep(.n-input) {
+  border-radius: 10px;
+}
+
+.trip-days-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-coral);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ===== 天气 ===== */
+.weather-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-warm-text-muted);
+  padding: 8px 0;
+}
+
+.weather-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-warm-border);
+  border-top-color: var(--color-coral);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+.weather-empty {
+  font-size: 12px;
+  color: var(--color-warm-text-muted);
+  padding: 6px 0;
+}
+
+.weather-section {
+  margin-top: 12px;
+  border-top: 1px solid var(--color-warm-border);
+  padding-top: 12px;
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.weather-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-warm-text);
+}
+
+.weather-city {
+  font-size: 11px;
+  color: var(--color-warm-text-muted);
+}
+
+.weather-days {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.weather-days::-webkit-scrollbar {
+  height: 3px;
+}
+
+.weather-days::-webkit-scrollbar-thumb {
+  background: var(--color-warm-border);
+  border-radius: 2px;
+}
+
+.weather-day-card {
+  flex-shrink: 0;
+  min-width: 60px;
+  background: #f8f6ff;
+  border: 1px solid #ede8ff;
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.weather-date {
+  font-size: 10px;
+  color: #888;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.weather-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.weather-temp {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-warm-text);
+}
+
+.weather-desc {
+  font-size: 10px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* ===== 喜好子标签 ===== */
+.pref-sub-label {
+  font-size: 11px;
+  color: var(--color-warm-text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Custom Input */
+.custom-input {
+  width: 100%;
+  min-height: 80px;
+  background: var(--color-sand-light);
+  border: 1.5px solid var(--color-warm-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--color-warm-text);
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  line-height: 1.65;
+}
+
+.custom-input:focus {
+  border-color: var(--color-coral);
+}
+
+.custom-input::placeholder {
+  color: var(--color-warm-text-muted);
+  font-size: 12px;
+}
+
+/* Generate Button */
+.generate-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--color-coral), var(--color-coral-dark));
   border: none;
-  border-radius: 999px;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
   font-weight: 600;
   font-size: 12px;
   color: var(--type-chip);
@@ -1074,100 +1017,7 @@ onUnmounted(() => {
 
 .add-location-btn {
   cursor: pointer;
-  transition: transform 0.2s ease;
-  border: none;
-  border-radius: 10px;
-  background: var(--accent-orange);
-  color: #fff;
-  padding: 0 14px;
-  height: 40px;
-  font-size: 13px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.generate-btn,
-.hero-primary,
-.hero-secondary,
-.chat-send-btn {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  border: none;
-  border-radius: 20px;
-}
-
-.add-location-btn:hover,
-.generate-btn:hover,
-.hero-primary:hover,
-.hero-secondary:hover,
-.chat-send-btn:hover {
-  transform: translateY(-1px);
-}
-
-.generate-btn,
-.hero-primary,
-.chat-send-btn {
-  background: var(--accent-orange);
-  color: #fff;
-}
-
-.hero-secondary {
-  background: var(--paper-2);
-  color: var(--type-chip);
-}
-
-.generate-btn {
-  width: 100%;
-  min-height: 56px;
-  padding: 0 20px;
-  border-radius: 999px;
-  font-size: 17px;
-  font-weight: 700;
-  margin-top: 6px;
-}
-
-.generate-btn:disabled,
-.chat-send-btn:disabled,
-.add-location-btn:disabled,
-.hero-primary:disabled,
-.hero-secondary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.generate-hint,
-.location-hint,
-.weather-empty,
-.weather-loading,
-.weather-city,
-:deep(.n-input__placeholder),
-:deep(.n-base-selection-placeholder) {
-  color: var(--type-muted);
-  font-size: 15px;
-}
-
-:deep(.n-input__input-el),
-:deep(.n-input__textarea-el),
-:deep(.n-base-selection-label) {
-  color: var(--type-body);
-}
-
-.weather-section {
-  background: rgba(255, 255, 255, 0.50);
-  border: none;
-  border-radius: 22px;
-  padding: 14px;
-}
-
-.weather-day-card {
-  background: rgba(255, 255, 255, 0.70);
-  border: none;
-  border-radius: 18px;
-  padding: 10px;
-}
-
-.right-panel {
+  font-family: inherit;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1193,34 +1043,28 @@ onUnmounted(() => {
 .step {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 16px;
-  color: var(--type-muted);
-  font-size: 16px;
-  font-weight: 600;
-  border: 2px solid transparent;
-}
-
-.hero-card,
-.guide-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  gap: 24px;
-  padding: 24px;
-  min-height: 520px;
-  background: rgba(255, 255, 255, 0.90);
-  border: none;
-  border-radius: var(--card-radius);
-  backdrop-filter: blur(12px);
-}
-
-.hero-copy,
-.guide-copy {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  gap: 8px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.generate-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-warm-text-muted);
+  margin-top: 8px;
 }
 
 .hero-title,
@@ -1235,308 +1079,216 @@ onUnmounted(() => {
   margin: 0;
 }
 
-.guide-title {
-  font-size: clamp(28px, 3vw, 36px);
-  line-height: 1.2;
-  margin: 12px 0 0;
-}
-
-.hero-sub,
-.guide-sub,
-.candidate-sub,
-.candidate-footer-copy {
-  color: var(--type-body);
-  font-size: 14px;
-  line-height: 1.85;
-}
-
-.hero-sub,
-.guide-sub {
-  font-size: 15px;
-  line-height: 1.9;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  margin-top: 18px;
-}
-
-.hero-actions {
+/* ===== RIGHT PANEL ===== */
+.right-panel {
+  flex: 1;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 24px 0 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-warm-bg);
+}
+
+/* Step Bar */
+.step-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--color-warm-border);
+  background: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--color-warm-border);
+  color: var(--color-warm-text-muted);
+  transition: all 0.3s;
+  font-weight: 500;
+  background: white;
+}
+
+.step.active {
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  background: rgba(255, 107, 107, 0.1);
+  font-weight: 700;
+}
+
+.step.done {
+  border-color: var(--color-ocean);
+  color: var(--color-ocean-dark);
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.step-num {
+  font-size: 11px;
+}
+
+.step-arrow {
+  font-size: 11px;
+  color: var(--color-warm-text-muted);
+}
+
+/* Right Scroll */
+.right-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* Empty State */
+.empty-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.empty-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-warm-text);
+  margin-bottom: 8px;
+}
+
+.empty-sub {
+  font-size: 14px;
+  color: var(--color-warm-text-muted);
+  margin-bottom: 28px;
+  line-height: 1.6;
 }
 
 .empty-examples {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
+}
+
+.example-chip {
+  padding: 8px 18px;
+  background: white;
+  border: 1.5px solid var(--color-warm-border);
+  border-radius: 24px;
+  font-size: 13px;
+  color: var(--color-warm-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.example-chip:hover {
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  background: rgba(255, 107, 107, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Error Banner */
+.error-banner {
   margin-top: 16px;
 }
 
-.hero-primary,
-.hero-secondary {
-  min-height: 48px;
-  padding: 0 20px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.guide-points {
-  display: grid;
-  gap: 12px;
-  margin-top: 22px;
-}
-
-.guide-point {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.50);
-  border: none;
-  color: var(--type-body);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.guide-point-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.70);
-  border: none;
-  flex-shrink: 0;
-}
-
-.hero-illustration,
-.guide-illustration {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0;
-  border-radius: 24px;
-  overflow: visible;
-  align-self: stretch;
-}
-
-.hero-art-frame,
-.guide-scene-card {
-  position: relative;
-  width: 100%;
-  flex: 1;
-  border-radius: 24px;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.hero-mascot,
-.guide-mascot {
-  width: 100%;
-  max-width: 440px;
-  object-fit: contain;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-.hero-decor {
-  position: absolute;
-  z-index: 2;
-  padding: 7px 14px;
-  background: rgba(255, 255, 255, 0.90);
-  border: none;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--type-chip);
-  white-space: nowrap;
-}
-
-.hero-decor-a { left: 10px; bottom: 18px; }
-.candidate-stage-anchor {
-  margin-bottom: 14px;
-  padding: 16px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-main);
-  background: var(--bg-main);
-}
-
-.candidate-stage {
-  padding: 24px;
-}
-
-.candidate-title {
-  margin: 0;
-  font-size: 30px;
-}
-
-.candidate-summary {
-  flex-shrink: 0;
-  padding: 8px 14px;
-  font-size: 13px;
-}
-
-.candidate-confirm-btn {
-  width: auto;
-  min-width: 260px;
-}
-
+/* ===== CHAT INPUT BAR ===== */
 .chat-input-bar {
-  margin-top: 18px;
-  padding: 20px 14px;
-  background: rgba(255, 255, 255, 0.88);
-  border: none;
-  border-radius: 20px;
-  backdrop-filter: blur(8px);
-  overflow: visible;
-}
-
-.chat-mascot {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  border-radius: 50%;
   flex-shrink: 0;
+  border-top: 1px solid var(--color-warm-border);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 12px 20px 16px;
 }
 
-.chat-input-row {
-  position: relative;
+.chat-input-inner {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.chat-mascot-inline {
-  position: absolute;
-  left: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 272px;
-  height: 272px;
-  object-fit: contain;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.chat-text-input {
+.chat-input-inner :deep(.n-input) {
   flex: 1;
-  background: var(--paper-2);
-  border: none;
-  border-radius: 18px;
-  color: var(--type-body);
-  font-size: 14px;
-  font-family: var(--font-ui-rounded);
-  box-shadow: none;
-  padding: 10px 52px 10px 14px;
-  outline: none;
-  resize: none;
-  line-height: 1.5;
-  min-height: 42px;
-  max-height: 80px;
-  overflow-y: auto;
-  margin-left: 48px;
-  margin-right: 155px;
-  margin-top: 62px;
 }
 
 .chat-send-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 700;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--color-coral), var(--color-coral-dark));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.35);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .chat-hints {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-:deep(.n-alert) {
-  border-radius: 18px;
+.hint-chip {
+  font-size: 12px;
+  padding: 5px 12px;
+  background: var(--color-sand-light);
+  border: 1px solid var(--color-warm-border);
+  border-radius: 20px;
+  color: var(--color-warm-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-:deep(.n-button) {
-  border-radius: 14px;
+.hint-chip:hover {
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  background: rgba(255, 107, 107, 0.1);
 }
 
-@media (max-width: 1180px) {
+/* Responsive */
+@media (max-width: 1024px) {
+  .left-panel {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
   .split-layout {
-    grid-template-columns: 1fr;
-    height: auto;
-    overflow-y: auto;
-  }
-
-  .home-view {
-    height: auto;
-    min-height: calc(100vh - 60px);
-  }
-
-  .left-panel,
-  .right-panel,
-  .left-scroll,
-  .right-scroll {
-    overflow: visible;
-  }
-
-  .hero-card,
-  .guide-card {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 720px) {
-  .split-layout {
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .left-scroll {
-    padding: 14px;
-  }
-
-  .brand-title {
-    font-size: 32px;
-  }
-
-  .hero-title {
-    font-size: 36px;
-  }
-
-  .style-tag-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .candidate-stage-head,
-  .candidate-footer,
-  .chat-input-inner {
     flex-direction: column;
-    align-items: stretch;
   }
 
-  .candidate-confirm-btn {
+  .left-panel {
     width: 100%;
-    min-width: 0;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--color-warm-border);
   }
 }
 </style>

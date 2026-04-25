@@ -8,6 +8,7 @@ from sqlalchemy import event, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from backend.config import get_settings
+from backend.models.database import Base
 
 _engine = None
 AsyncSessionFactory: async_sessionmaker[AsyncSession] | None = None
@@ -35,8 +36,14 @@ def _get_engine():
 
 
 async def init_db() -> None:
-    """Run Alembic migrations to create/update database schema."""
-    _get_engine()
+    """Run Alembic migrations, then ensure all tables exist via create_all().
+
+    The Alembic migration chain (9ccde6d944e6_initial) is empty — tables are
+    created by SQLAlchemy's Base.metadata.create_all() on first start.
+    """
+    engine = _get_engine()
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     alembic_cfg = AlembicConfig("alembic.ini")
     await asyncio.to_thread(command.upgrade, alembic_cfg, "head")
 

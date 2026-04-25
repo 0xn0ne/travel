@@ -1,5 +1,6 @@
 <template>
   <div class="stage-progress">
+    <!-- 5步进度指示器 -->
     <div class="steps-track">
       <div
         v-for="(step, idx) in steps"
@@ -11,18 +12,24 @@
           'step-pending': step.status === 'pending',
         }"
       >
+        <!-- 连接线（第一个之后） -->
         <div v-if="idx > 0" class="step-line" :class="{ 'line-done': step.status !== 'pending' }" />
+
+        <!-- 圆形图标 -->
         <div class="step-circle">
           <span v-if="step.status === 'done'" class="step-check">✓</span>
           <span v-else-if="step.status === 'active'" class="step-spin">✦</span>
           <span v-else class="step-num">{{ idx + 1 }}</span>
         </div>
+
+        <!-- 阶段名称 -->
         <div class="step-label">{{ step.label }}</div>
       </div>
     </div>
 
+    <!-- 详细进度消息 -->
     <Transition name="fade" mode="out-in">
-      <div v-if="currentMessage" :key="currentMessage" class="progress-detail">
+      <div class="progress-detail" :key="currentMessage" v-if="currentMessage">
         <div class="detail-icon" :class="detailIconClass">{{ detailIcon }}</div>
         <div class="detail-text">
           <span class="detail-main">{{ currentMessage }}</span>
@@ -55,7 +62,7 @@ const STAGE_LABELS: Record<string, string> = {
 const STAGE_ICONS: Record<string, string> = {
   intent: '🔍',
   prefilter: '📍',
-  generation: '🧭',
+  generation: '✈️',
   validation: '✅',
   complete: '🎉',
 }
@@ -70,8 +77,10 @@ const steps = computed(() => {
   })
 })
 
+// 从 message 中解析主消息和子消息
 const currentMessage = computed(() => {
   const msg = props.message || ''
+  // 如果有子消息格式 "主消息 | 子消息"
   if (msg.includes('|')) {
     return msg.split('|')[0].trim()
   }
@@ -100,20 +109,16 @@ const detailIconClass = computed(() => {
 
 <style scoped>
 .stage-progress {
-  padding: 10px 0 18px;
+  padding: 20px 0 16px;
 }
 
+/* ===== 5步进度条 ===== */
 .steps-track {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
   position: relative;
-  padding: 12px 18px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid #1f1f1f;
-  box-shadow: 0 14px 28px rgba(108, 124, 240, 0.08);
 }
 
 .step-item {
@@ -121,63 +126,62 @@ const detailIconClass = computed(() => {
   flex-direction: column;
   align-items: center;
   flex: 1;
-  max-width: 110px;
+  max-width: 90px;
   position: relative;
 }
 
 .step-line {
   position: absolute;
-  top: 18px;
+  top: 14px;
   right: 50%;
   width: 100%;
-  height: 4px;
-  background: #ddd9d2;
-  border-radius: 999px;
-  transition: background 0.3s ease;
+  height: 2px;
+  background: var(--color-warm-border);
+  transition: background 0.3s;
 }
 
 .step-line.line-done {
-  background: #8ed1c2;
+  background: var(--color-coral);
 }
 
 .step-circle {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 2px solid #8faecc;
-  background: #ffffff;
+  border: 2px solid var(--color-warm-border);
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  color: #889BB2;
-  transition: all 0.25s ease;
+  font-size: 12px;
+  color: var(--color-warm-text-muted);
+  transition: all 0.3s;
   z-index: 1;
   position: relative;
-  box-shadow: 0 8px 16px rgba(108, 124, 240, 0.08);
 }
 
 .step-done .step-circle {
-  background: #98afd0;
-  border-color: #8faecc;
+  background: var(--color-coral);
+  border-color: var(--color-coral);
   color: white;
-  box-shadow: 0 12px 20px rgba(108, 124, 240, 0.18);
 }
 
 .step-active .step-circle {
-  background: #f7c8a0;
-  color: #667B95;
-  box-shadow: 0 0 0 7px rgba(247, 200, 160, 0.22);
+  background: white;
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15);
 }
 
 .step-check {
-  font-size: 15px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .step-spin {
   display: inline-block;
   animation: spin 1s linear infinite;
+  color: var(--color-coral);
 }
 
 @keyframes spin {
@@ -185,82 +189,73 @@ const detailIconClass = computed(() => {
 }
 
 .step-num {
-  font-weight: 800;
+  font-weight: 600;
   font-size: 12px;
 }
 
 .step-label {
   font-size: 11px;
-  color: #90a5bc;
-  margin-top: 8px;
+  color: var(--color-warm-text-muted);
+  margin-top: 6px;
   text-align: center;
   white-space: nowrap;
-  transition: color 0.25s ease;
-  font-weight: 800;
+  transition: color 0.3s;
 }
 
 .step-active .step-label {
-  color: #7f99b6;
+  color: var(--color-coral);
+  font-weight: 600;
 }
 
 .step-done .step-label {
-  color: #8aa6be;
+  color: var(--color-ocean-dark);
 }
 
+/* ===== 详细消息 ===== */
 .progress-detail {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: linear-gradient(180deg, #ffffff 0%, #f7f4ef 100%);
-  border: 2px solid #1f1f1f;
-  border-radius: 24px;
-  box-shadow: 0 14px 28px rgba(108, 124, 240, 0.08);
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(255, 107, 107, 0.05);
+  border: 1px solid rgba(255, 107, 107, 0.1);
+  border-radius: 12px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .detail-icon {
+  font-size: 20px;
   flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 16px;
-  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 2px solid #1f1f1f;
 }
 
 .detail-text {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 0;
 }
 
 .detail-main {
   font-size: 14px;
-  font-weight: 900;
-  color: #7a94b1;
+  color: var(--color-warm-text);
+  font-weight: 500;
 }
 
 .detail-sub {
   font-size: 12px;
-  color: #9cb0c5;
+  color: var(--color-warm-text-muted);
 }
-
-.icon-done { background: #e9edff; }
-.icon-intent { background: #ffffff; }
-.icon-prefilter { background: #f7f4ef; }
-.icon-generation { background: #eef1ff; }
-.icon-validation { background: #eef8f5; }
 
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

@@ -70,6 +70,24 @@
         </button>
       </div>
 
+      <!-- 视图切换按钮 -->
+      <div class="view-toggle">
+        <n-button
+          :type="viewMode === 'diary' ? 'primary' : 'default'"
+          size="small"
+          @click="viewMode = 'diary'"
+        >
+          📖 手帐风格
+        </n-button>
+        <n-button
+          :type="viewMode === 'map' ? 'primary' : 'default'"
+          size="small"
+          @click="viewMode = 'map'"
+        >
+          🗺️ 手绘地图
+        </n-button>
+      </div>
+
       <div class="split-layout">
         <div class="split-left panel-card">
           <div class="timeline-toolbar">
@@ -92,16 +110,16 @@
             @update-day="handleUpdateDay"
           />
         </div>
-        <div class="split-right panel-card preview-card-shell">
+        <div class="split-right">
           <DiaryRoute
             v-if="viewMode === 'diary'"
             :days="displayDays"
             :title="(store.currentItinerary as any)?.title || '旅行手帐'"
             :date-range="formatDateRange()"
-            :people-count="peopleCount()"
+            :people-count="peopleCount"
             :total-distance="formatWalkingDistance()"
-            :weather="itineraryWeather()"
-            :taste-tags="itineraryTags()"
+            :weather="itineraryWeather"
+            :taste-tags="itineraryTags"
             :highlighted-id="highlightPoiId"
             @poi-click="handleDiaryPoiClick"
           />
@@ -188,6 +206,7 @@ import StageProgress from '../components/StageProgress.vue'
 import FeedbackWidget from '../components/FeedbackWidget.vue'
 import DiaryRoute from '../components/DiaryRoute.vue'
 import HandDrawnMap from '../components/HandDrawnMap.vue'
+import DayRouteSelector from '../components/DayRouteSelector.vue'
 import ShareButton from '../components/ShareButton.vue'
 import { useItineraryStore } from '../stores/itinerary'
 import type { POIVisitData, DayData } from '../types/itinerary'
@@ -202,7 +221,6 @@ const notFound = ref(false)
 const adjustText = ref('')
 const highlightPoiId = ref<string | number | null>(null)
 const viewMode = ref<'diary' | 'map'>('map')
-const timelineRef = ref<InstanceType<typeof import('../components/ItineraryTimeline.vue').default> | null>(null)
 
 let clearHighlightTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -268,6 +286,71 @@ function handleDiaryPoiClick(poi: POIVisitData) {
     scheduleClearHighlight()
     const el = document.querySelector(`[data-poi-id="${id}"]`) as HTMLElement
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+}
+
+function formatDateRange(): string {
+  const days = (store.currentItinerary as any)?.days as DayData[] || []
+  if (days.length === 0) return ''
+  return `${days.length}天${days.length - 1}晚`
+}
+
+function peopleCount(): string {
+  return '2人'
+}
+
+function formatWalkingDistance(): string {
+  const total = (store.currentItinerary as any)?.total_walking_minutes
+  if (!total) return ''
+  const km = (total * 0.75 / 1000).toFixed(1)
+  return `约${km}km`
+}
+
+function itineraryWeather(): string {
+  return ''
+}
+
+function itineraryTags(): string[] {
+  return []
+}
+
+function findDayNumber(poiName: string): number {
+  const days = (store.currentItinerary as any)?.days as DayData[] | undefined
+  if (!days) return 1
+  for (const day of days) {
+    if (day.pois?.some((p) => p.name === poiName)) {
+      return day.day_number
+    }
+  }
+  return 1
+}
+
+function handlePoiAction(type: string, poi: POIVisitData) {
+  const dayNum = findDayNumber(poi.name)
+  switch (type) {
+    case 'delete':
+      if (poi.poi_id) {
+        store.deletePoi(dayNum, poi.poi_id)
+      }
+      break
+    case 'insert_before':
+      adjustText.value = `请在第${dayNum}天${poi.name}前面插入一个新的体验`
+      nextTick(() => {
+        const el = document.querySelector('.chat-input-bar textarea') as HTMLElement
+        el?.focus()
+      })
+      break
+    case 'insert_after':
+      adjustText.value = `请在第${dayNum}天${poi.name}后面插入一个新的体验`
+      nextTick(() => {
+        const el = document.querySelector('.chat-input-bar textarea') as HTMLElement
+        el?.focus()
+      })
+      break
+    case 'replace':
+      store.adjust(getItineraryId(), `请替换第${dayNum}天的${poi.name}`)
+      nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }))
+      break
   }
 }
 
@@ -494,6 +577,13 @@ onUnmounted(() => {
 .toggle-btn:not(.active):hover {
   background: var(--paper-2);
   color: var(--type-title);
+}
+
+.view-toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
 }
 
 .split-layout {

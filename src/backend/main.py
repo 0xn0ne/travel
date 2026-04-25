@@ -12,6 +12,7 @@ from sqlalchemy import func, select
 from backend.api.routes import (
     adjust,
     auth,
+    chat,
     config,
     feedback,
     generate,
@@ -23,6 +24,7 @@ from backend.api.routes import (
     test_results,
     test_runner,
 )
+from backend.agent import init_agent_sdk
 from backend.config import get_settings
 from backend.db import init_db as _db_mod
 from backend.db.init_db import init_db
@@ -86,6 +88,7 @@ async def lifespan(app: FastAPI):
                 "Set JWT_SECRET_KEY in .env or set ENVIRONMENT=development for local dev."
             )
     await init_db()
+    init_agent_sdk()
     await _seed_if_empty()
     yield
 
@@ -110,6 +113,7 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(generate.router, prefix="/api", tags=["generate"])
+app.include_router(chat.router, prefix="/api", tags=["chat"])
 app.include_router(stream.router, prefix="/api", tags=["stream"])
 app.include_router(poi_candidates.router, prefix="/api", tags=["poi-candidates"])
 app.include_router(poi_nearby.router, prefix="/api", tags=["poi-nearby"])

@@ -8,6 +8,7 @@
   },
   "supported_interests": ["文艺", "自然", "拍照", "漫步", "茶", "情侣", "朋友", "历史建筑", "寺庙", "湖景", "品尝", "慵懒", "小众艺术"],
   "amap_city_code": "0571",
+  "adcode": "330100",
   "tier_a_count": 15,
   "poi_data_file": "data/pois/hangzhou.json"
 }

@@ -1,28 +1,9 @@
 /* Tailwind v4 CSS reset — put in a layer so Naive UI styles (outside layers) take priority */
-@font-face {
-  font-family: 'ZCoolHappy';
-  src: url('/站酷快乐体2016修订版.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer tailwind-base {
   @import "tailwindcss";
 }
 
 @layer base {
-  :root {
-    --font-ui-rounded: 'ZCoolHappy', sans-serif;
-    --font-ui-display: 'ZCoolHappy', sans-serif;
-  }
-
-  html,
-  body,
-  #app {
-    font-family: var(--font-ui-rounded);
-  }
-
   /* Restore Naive UI disabled/loading states that Tailwind reset overrides */
   .n-button.n-button--disabled,
   .n-button[disabled],

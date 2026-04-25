@@ -162,3 +162,8 @@ class FeedbackRequest(BaseModel):
     itinerary_id: str
     rating: Literal["准", "一般", "不准"]
     comment: str | None = None
+
+
+class ChatRequest(BaseModel):
+    message: str
+    session_id: str | None = None

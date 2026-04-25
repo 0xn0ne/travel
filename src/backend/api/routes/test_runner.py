@@ -3,8 +3,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.api.dependencies import get_chatgpt_client, get_db, get_llm_client
-from backend.llm.client import ChatGPTClient, DeepSeekClient
+from backend.api.dependencies import get_db, get_llm_client
+from backend.llm.client import LLMClient
 from backend.services.test_runner import TestRunnerService
 
 router = APIRouter()
@@ -13,10 +13,9 @@ router = APIRouter()
 @router.post("/test-runner/generate")
 async def trigger_generation(
     db: AsyncSession = Depends(get_db),
-    llm: DeepSeekClient = Depends(get_llm_client),
-    chatgpt: ChatGPTClient = Depends(get_chatgpt_client),
+    llm: LLMClient = Depends(get_llm_client),
 ):
-    runner = TestRunnerService(db, llm, chatgpt)
+    runner = TestRunnerService(db, llm)
     result = await runner.generate_all()
     return result
 

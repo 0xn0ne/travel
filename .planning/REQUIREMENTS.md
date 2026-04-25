@@ -1,98 +1,87 @@
-# Requirements: 拾途 (Shí Tú)
+# Requirements: 拾途 (Shí Tú) — v1.2
 
-**Defined:** 2026-04-16
+**Defined:** 2026-04-20
 **Core Value:** 帮你发现你会喜欢但自己找不到的地方，并且用对的方式推荐给你——品味数据 + SOUL 提示词的组合，让行程有"本地朋友推荐"的温度
-
-## v1.1 Requirements
-
-Requirements for Pipeline Quality + UI Redesign milestone. Each maps to roadmap phases.
-
-### Pipeline & Data
-
-- [x] **PIPE-01**: Stage 2 calls Amap `search_pois()` dynamically based on user intent (city + interests), merges results with curated DB POIs, deduplicates by amap_id
-- [ ] **PIPE-02**: AmapCache fully enabled — `get_amap_service()` accepts DB session dependency, all search_pois and get_walking_route results cached with TTL (30d routes, 7d POI)
-- [x] **PIPE-03**: User taste preferences (`taste_tags_default`, `budget_default`) injected into pipeline — read from User model in generate route, passed to intent extraction and POI filter stages
-- [ ] **PIPE-04**: Test Runner fixed — import paths use `from backend.config`, async engine uses correct `+aiosqlite` URL, `/test-runner/generate` produces A/B/C itineraries for all scenarios
-
-### Cities & Data
-
-- [x] **CITY-01**: Second city (Hangzhou) POI data curated — Tier A (12 entries), Tier B (6 entries), Tier C chains/budget (3 entries) with is_chain field
-- [x] **CITY-02**: City config model (`data/cities/{city}.json`) with name, center coordinates, bounds, default zoom, supported interests — pipeline reads config instead of hardcoding "上海"
-- [x] **CITY-03**: DB auto-seeds POIs + scenarios on startup if tables empty — glob auto-discovery, no manual script required for fresh deploy
-- [x] **CITY-04**: Tier C data included — chain restaurants, budget cafés (is_chain field, rating >3.0) to provide economy options
-
-### Auth & User
-
-- [ ] **AUTH-01**: Auth backend verified working — bcrypt replacement tested end-to-end, register creates user, login returns JWT, `/me` returns profile
-- [ ] **AUTH-02**: Frontend login/register modal with email + password form, JWT stored in localStorage, auto-attached to all API requests via interceptor
-- [ ] **AUTH-03**: Route guard redirects unauthenticated users to login for protected pages (itinerary list, settings)
-- [ ] **AUTH-04**: User settings page — display and edit `taste_tags_default` (tag selector) and `budget_default` (radio buttons for 3 options), PUT `/auth/profile` endpoint
-- [ ] **AUTH-05**: Itinerary list page — GET `/itineraries` by user_id, displays cards with title/city/date, click navigates to itinerary view
-
-### UI Redesign
-
-- [ ] **UI-01**: Full frontend redesign using ui-ux-pro-max — bright warm palette (sand/coral/ocean), exciting "旅途中" feel, card-based layout with depth and warmth
-- [ ] **UI-02**: POI detail card displays `highlight_note` (推荐理由), `vibe_description` (氛围描述), `tier` badge (★/○/·), `walk_to_next_minutes`, and opening hours
-- [ ] **UI-03**: Data provenance — each POI shows source attribution: "人工精选" for Tier A, "高德地图" for Amap-sourced, "AI推荐" for LLM-suggested; reference icon/badge
-- [ ] **UI-04**: Generation loading experience redesigned — journey-themed animation/progress, stage messages with travel imagery feel, not sterile progress bars
-- [ ] **UI-05**: Home page excites — hero area with emotional pull, example prompts as clickable journey cards, not plain tags
-
-### Map & Visualization
-
-- [ ] **MAP-01**: Amap JS map component integrated — displays POI markers with tier-colored pins (gold=A, silver=B, bronze=C), walking route lines between consecutive POIs
-- [ ] **MAP-02**: Map-timeline bidirectional sync — click POI in timeline highlights map marker and pans; click map marker expands timeline POI
-- [ ] **MAP-03**: Day routes color-coded on map (Day 1 blue, Day 2 green, Day 3 orange); map auto-zooms to fit selected day's POIs
-- [ ] **MAP-04**: Map responsive — split view on desktop (map left/right + timeline), tabbed/stacked on mobile
-
-### Sharing
-
-- [ ] **SHARE-01**: Itinerary sharing — "复制链接" button copies `/itinerary/{id}` URL, dynamic `og:title` and `og:description` meta tags set from itinerary title/summary
-- [ ] **SHARE-02**: Share button accessible from itinerary view header; success toast on copy
-
-### Infrastructure
-
-- [ ] **INFRA-01**: Alembic initialized with initial migration reflecting current models — future schema changes via `alembic revision --autogenerate`
-- [ ] **INFRA-02**: JWT production guard — backend refuses to start if `JWT_SECRET_KEY` not set and `ENVIRONMENT=production`
-- [ ] **INFRA-03**: seed_pois.py fixed — `lat`/`lng` kwargs changed to `latitude`/`longitude`; imports use `backend.` prefix
 
 ## v1.2 Requirements
 
-Deferred to next milestone. Tracked but not in current roadmap.
+Requirements for AI Agent Tool System milestone. Each maps to roadmap phases.
 
-### Testing & Quality
+### Agent Framework
 
-- **TEST-01**: Pytest suite with unit tests for pipeline stages, integration tests for API endpoints
-- **TEST-02**: Rate limiting middleware on `/api/generate` (10 req/min per IP)
-- **TEST-03**: Structured JSON logging with request correlation IDs
+- [x] **AGENT-01**: Agent loop implements tool-call cycle — send tools + messages to LLM, LLM decides whether to call tools, execute tool functions, append results, loop until LLM responds with final text or max iterations reached
+- [x] **AGENT-02**: Tool registry supports dynamic registration — tools register with name, description, Pydantic input schema; registry validates and exposes tools to agent loop
+- [ ] **AGENT-03**: Agent loop streams tool-call progress via SSE events — `agent_thinking` (LLM processing), `tool_executing` (tool name + args), `tool_completed` (result summary) — transparent to user, no tool mechanics in final response
+- [x] **AGENT-04**: Max iteration guard (8 rounds per message) — agent stops with graceful message if limit reached; tool errors are caught and returned as error context to LLM for recovery
 
-### Performance & Ops
+### General Tools
 
-- **PERF-01**: SQLite WAL mode enabled via engine pragmas
-- **PERF-02**: Composite index `(city, tier)` on `pois` table
-- **PERF-03**: HTTPS with Let's Encrypt in nginx
-- **PERF-04**: Security headers (CSP, HSTS, X-Frame-Options)
-- **PERF-05**: Docker healthcheck in docker-compose.yml
+- [ ] **TOOL-01**: Web search tool — agent can search the internet by keywords (e.g., "上海 清凉 避暑 咖啡馆") as fallback when POI DB search fails or returns insufficient results; returns top results with title + snippet + URL
+- [ ] **TOOL-02**: Web fetch tool — agent can read and extract text content from a given URL; used to get detailed info from search results (e.g., blog posts about a restaurant)
+- [ ] **TOOL-03**: File read/write tool — agent can read from and write to a designated directory (e.g., `data/agent_memory/`); used for checkpoint saves, long-term memory (user habits, preferences, trip notes); cannot access paths outside the designated directory
+- [ ] **TOOL-04**: Command execution tool (reserved) — interface defined and registered but **disabled by default**; can be enabled via config flag; when disabled, returns "command execution is not available" message
 
-### UX Enhancements
+### 拾途 Business Tools
 
-- **UX-01**: Dark mode toggle
-- **UX-02**: PWA support (service worker, manifest.json)
-- **UX-03**: POI photos from 高德/Unsplash
-- **UX-04**: Reconnection UI for interrupted generations
+- [ ] **BIZ-01**: POI search tool — agent searches POI database by city + keyword/category via existing AmapService and DB queries; returns name, rating, tier, coordinates, highlight_note
+- [ ] **BIZ-02**: Weather query tool — agent gets weather forecast for a city and date range via Amap weather API; returns temperature, conditions, suggestions
+- [ ] **BIZ-03**: User preferences tool (read-only) — agent reads current user's taste_tags, budget_default, and past itinerary history from User model
+- [ ] **BIZ-04**: Itinerary context tool — agent reads current itinerary state (POIs, day structure, city, dates) for context-aware tool calls during generation or adjustment
+
+### Skill System
+
+- [ ] **SKILL-01**: Skill = named composable tool pack — each skill defines: name, description, subset of registered tools, context prompt (system instructions), example queries; loaded from JSON/YAML config files in `data/skills/`
+- [ ] **SKILL-02**: Skill auto-activation — when user message or pipeline stage matches a skill's trigger conditions (keywords, city, topic), the skill is activated: its tools are enabled and context prompt is injected into the agent's system message
+- [ ] **SKILL-03**: Pre-built skills shipped with app — "行程规划" (POI search + weather + route + preferences + write checkpoint), "美食探索" (POI search + web search + preferences), "本地人推荐" (POI search + web search + web fetch); users cannot create custom skills via UI
+
+### Memory & Context
+
+- [ ] **MEM-01**: SQLite-based agent memory — new `agent_memories` table stores structured entries: user_id, key (e.g., "preference_coffee", "checkpoint_shanghai_day2"), value (JSON), created_at, updated_at
+- [ ] **MEM-02**: Agent reads relevant memories at conversation start — loads user preferences, recent checkpoints, trip notes; writes new memories during conversation when user shares preferences or reaches milestones
+- [ ] **MEM-03**: Memory is scoped per-user — agent only accesses memories of the authenticated user; unauthenticated sessions have no persistent memory
+
+### Pipeline Integration
+
+- [ ] **PIPE-01**: New Agent Stage added to existing pipeline — inserted between Stage 2 (pre-filter) and Stage 3 (LLM+SOUL); agent receives filtered POI candidates + user intent, uses tools to enrich data (web search fallback, weather check, nearby discovery), passes enriched context to Stage 3
+- [ ] **PIPE-02**: Agent Stage streams tool-call progress via existing SSE pipeline — reuses EventBus with new event types, frontend displays progress messages like "正在搜索附近好去处..."
+
+### Chat Integration
+
+- [ ] **CHAT-01**: Chat API endpoint — `POST /api/chat` accepts user message + optional session_id; agent processes message with tool calling, returns streaming response via SSE with final text answer
+- [ ] **CHAT-02**: Chat frontend UI — floating chat bubble or side panel in itinerary view; user types message, sees streaming AI response; tool calls are transparent (user only sees final answer)
+- [ ] **CHAT-03**: Session-scoped conversation — messages stored in `chat_messages` table (SQLite); agent receives last N messages as context; new session starts fresh unless user continues existing session
+
+## v1.3 Requirements
+
+Deferred to future milestone. Tracked but not in current roadmap.
+
+### Advanced Agent
+
+- **AGENT-05**: Multi-agent orchestration — specialized agents for different tasks (POI researcher, itinerary optimizer, local culture expert)
+- **AGENT-06**: Tool result caching (cross-session) — cache frequently queried POI/weather results in Redis
+
+### Advanced Tools
+
+- **TOOL-05**: Nearby discovery tool — find POIs around a given lat/lng within radius
+- **TOOL-06**: Taste-based POI scoring tool — score POIs by user taste alignment
+- **TOOL-07**: Itinerary adjustment tool — modify existing itinerary via agent (add/remove/reorder POIs)
+
+### Advanced Memory
+
+- **MEM-04**: Conversation summarization — long conversations auto-summarized to save context window
+- **MEM-05**: Cross-trip learning — agent learns from past trips to improve future recommendations
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| 支付/预订功能 | 非旅行规划核心 |
-| 多语言 | 目标用户为中国用户 |
-| App 端 | Web only，后续可迁移微信小程序 |
-| 多城市/跨城行程 | v1.1 只加第二个城市，跨城不在此范围 |
-| 实时价格比价 | 数据获取困难，非核心 |
-| D2/D4/D5/D6/D8 维度评分 | post-MVP 扩展 |
-| Fine-tuning 模型 | 品味来自数据 + SOUL 提示词 |
-| Offline mode | 需要网络连接 |
-| Real-time collaboration | 过度复杂，非核心 |
+| 用户自建工具 UI | 过度复杂，非核心 |
+| MCP 协议集成 | 标准尚未成熟，不依赖 |
+| Vector DB / RAG | MVP 不需要语义搜索，SQLite 结构化存储足够 |
+| LangChain / CrewAI / AutoGen | 过度抽象，手写 agent loop 更简单可控 |
+| 人机审批工具调用 | MVP 工具都是只读/安全的，不需要审批 |
+| 多语言支持 | 目标用户为中国用户 |
+| Agent 框架选择器 | 单一 hand-rolled 方案，不需要切换框架 |
 
 ## Traceability
 
@@ -100,39 +89,42 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 6 | Pending |
-| INFRA-02 | Phase 6 | Pending |
-| INFRA-03 | Phase 6 | Pending |
-| PIPE-02 | Phase 6 | Pending |
-| PIPE-04 | Phase 6 | Pending |
-| CITY-01 | Phase 7 | Complete |
-| CITY-02 | Phase 7 | Complete |
-| CITY-03 | Phase 7 | Complete |
-| CITY-04 | Phase 7 | Complete |
-| PIPE-01 | Phase 7 | Complete |
-| PIPE-03 | Phase 7 | Complete |
-| AUTH-01 | Phase 8 | Pending |
-| AUTH-02 | Phase 8 | Pending |
-| AUTH-03 | Phase 8 | Pending |
-| AUTH-04 | Phase 8 | Pending |
-| AUTH-05 | Phase 8 | Pending |
-| UI-01 | Phase 9 | Pending |
-| UI-02 | Phase 9 | Pending |
-| UI-03 | Phase 9 | Pending |
-| UI-04 | Phase 9 | Pending |
-| UI-05 | Phase 9 | Pending |
-| MAP-01 | Phase 10 | Pending |
-| MAP-02 | Phase 10 | Pending |
-| MAP-03 | Phase 10 | Pending |
-| MAP-04 | Phase 10 | Pending |
-| SHARE-01 | Phase 10 | Pending |
-| SHARE-02 | Phase 10 | Pending |
+| AGENT-01 | Phase 11 | Complete (11-02) |
+| AGENT-02 | Phase 11 | Complete (11-01) |
+| AGENT-03 | Phase 14 | Pending |
+| AGENT-04 | Phase 11 | Complete (11-02) |
+| TOOL-01 | Phase 12 | Pending |
+| TOOL-02 | Phase 12 | Pending |
+| TOOL-03 | Phase 12 | Pending |
+| TOOL-04 | Phase 12 | Pending |
+| BIZ-01 | Phase 12 | Pending |
+| BIZ-02 | Phase 12 | Pending |
+| BIZ-03 | Phase 12 | Pending |
+| BIZ-04 | Phase 12 | Pending |
+| SKILL-01 | Phase 13 | Pending |
+| SKILL-02 | Phase 13 | Pending |
+| SKILL-03 | Phase 13 | Pending |
+| MEM-01 | Phase 13 | Pending |
+| MEM-02 | Phase 13 | Pending |
+| MEM-03 | Phase 13 | Pending |
+| PIPE-01 | Phase 14 | Pending |
+| PIPE-02 | Phase 14 | Pending |
+| CHAT-01 | Phase 15 | Pending |
+| CHAT-02 | Phase 15 | Pending |
+| CHAT-03 | Phase 15 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 27 total
-- Mapped to phases: 27
+- v1.2 requirements: 23 total
+- Mapped to phases: 23
 - Unmapped: 0 ✓
 
+**Phase distribution:**
+- Phase 11 (Agent Framework Core): 3 requirements
+- Phase 12 (Business & General Tools): 8 requirements
+- Phase 13 (Memory & Skills): 6 requirements
+- Phase 14 (Pipeline Integration): 3 requirements
+- Phase 15 (Chat Integration): 3 requirements
+
 ---
-*Requirements defined: 2026-04-16*
-*Last updated: 2026-04-17 — Phase 7 complete, CITY-01/03/04 marked done, PIPE-03 user_prefs wired to stage1*
+*Requirements defined: 2026-04-20*
+*Last updated: 2026-04-20 — v1.2 roadmap created, 23/23 requirements mapped*
