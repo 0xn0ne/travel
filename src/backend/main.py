@@ -16,6 +16,8 @@ from backend.api.routes import (
     feedback,
     generate,
     itineraries,
+    poi_candidates,
+    poi_nearby,
     scenarios,
     stream,
     test_results,
@@ -109,6 +111,8 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(generate.router, prefix="/api", tags=["generate"])
 app.include_router(stream.router, prefix="/api", tags=["stream"])
+app.include_router(poi_candidates.router, prefix="/api", tags=["poi-candidates"])
+app.include_router(poi_nearby.router, prefix="/api", tags=["poi-nearby"])
 app.include_router(scenarios.router, prefix="/api", tags=["scenarios"])
 app.include_router(itineraries.router, prefix="/api", tags=["itineraries"])
 app.include_router(config.router, prefix="/api", tags=["config"])

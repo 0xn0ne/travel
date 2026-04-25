@@ -1,10 +1,12 @@
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
+  <n-config-provider :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
     <n-message-provider>
       <n-notification-provider>
         <AppHeader @open-login="authModal?.openLogin()" />
         <AuthModal ref="authModal" />
-        <router-view />
+        <div class="app-bg">
+          <router-view />
+        </div>
       </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
@@ -13,7 +15,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { NConfigProvider, NMessageProvider, NNotificationProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NNotificationProvider, zhCN, dateZhCN } from 'naive-ui'
 import AppHeader from '@/components/AppHeader.vue'
 import AuthModal from '@/components/AuthModal.vue'
 
@@ -22,79 +24,76 @@ const authModal = ref<InstanceType<typeof AuthModal> | null>(null)
 
 const themeOverrides = {
   common: {
-    primaryColor: 'var(--color-coral)',
-    primaryColorHover: 'var(--color-coral-light)',
-    primaryColorPressed: 'var(--color-coral-dark)',
-    primaryColorSuppl: 'var(--color-coral)',
-    successColor: 'var(--color-ocean)',
-    successColorHover: 'var(--color-ocean-light)',
-    successColorPressed: 'var(--color-ocean-dark)',
-    warningColor: 'var(--color-warm-amber)',
-    warningColorHover: '#FBBF24',
-    warningColorPressed: '#D97706',
-    errorColor: 'var(--color-coral)',
-    errorColorHover: 'var(--color-coral-light)',
-    errorColorPressed: 'var(--color-coral-dark)',
-    textColorBase: 'var(--color-warm-text)',
-    textColor1: 'var(--color-warm-text)',
-    textColor2: '#4A3F35',
-    textColor3: 'var(--color-warm-text-muted)',
-    bodyColor: 'var(--color-warm-bg)',
+    primaryColor: '#6C8CD5',
+    primaryColorHover: '#7B99DC',
+    primaryColorPressed: '#5D7EC9',
+    primaryColorSuppl: '#6C8CD5',
+    successColor: '#76C893',
+    successColorHover: '#8FD8A7',
+    successColorPressed: '#5FB17C',
+    warningColor: '#FFD8A8',
+    warningColorHover: '#FFE1B9',
+    warningColorPressed: '#F2C48D',
+    errorColor: '#F39AA8',
+    errorColorHover: '#F7B2BD',
+    errorColorPressed: '#E17F91',
+    textColorBase: '#2F4F6F',
+    textColor1: '#2F4F6F',
+    textColor2: '#5B6B7B',
+    textColor3: '#8EA2B5',
+    bodyColor: '#EAF3F8',
     cardColor: '#FFFFFF',
     modalColor: '#FFFFFF',
     popoverColor: '#FFFFFF',
-    tableColor: 'var(--color-warm-bg)',
-    inputColor: 'var(--color-warm-surface)',
-    actionColor: 'var(--color-sand)',
-    borderColor: 'var(--color-warm-border)',
-    dividerColor: 'var(--color-warm-border)',
-    borderRadius: '16px',
-    borderRadiusSmall: '8px',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
+    tableColor: '#F0F8FF',
+    inputColor: '#FFFFFF',
+    actionColor: '#F0F8FF',
+    borderColor: '#1D4271',
+    dividerColor: '#C5DEFF',
+    borderRadius: '22px',
+    borderRadiusSmall: '12px',
+    fontFamily: "'ZCoolHappy', sans-serif",
+    fontFamilyMono: "'ZCoolHappy', sans-serif",
   },
   Card: {
-    borderRadius: 'var(--radius-card)',
+    borderRadius: '22px',
     color: '#FFFFFF',
-    borderColor: 'var(--color-warm-border)',
-    boxShadow: 'var(--shadow-card)',
+    borderColor: '#1D4271',
+    boxShadow: 'none',
   },
   Button: {
-    borderRadiusMedium: '12px',
-    borderRadiusSmall: '8px',
+    borderRadiusMedium: '14px',
+    borderRadiusSmall: '10px',
   },
   Tag: {
-    borderRadius: '8px',
+    borderRadius: '999px',
   },
   Input: {
-    borderRadius: '12px',
-    borderFocus: `1px solid var(--color-coral)`,
-    borderHover: `1px solid var(--color-warm-border)`,
-    borderFocusWarning: `1px solid var(--color-warm-amber)`,
-    borderFocusError: `1px solid var(--color-coral-dark)`,
-    borderHoverWarning: `1px solid var(--color-warm-amber)`,
-    borderHoverError: `1px solid var(--color-coral-dark)`,
-    color: 'var(--color-warm-surface)',
+    borderRadius: '14px',
+    borderFocus: '2px solid #6C8CD5',
+    borderHover: '2px solid #1D4271',
+    color: '#FFFFFF',
   },
   Alert: {
     titleFontSize: '14px',
-    colorWarning: 'var(--color-warm-amber-light)',
-    colorError: '#FFF5F5',
-    colorInfo: 'var(--color-ocean-light)',
-    borderWarning: `1px solid var(--color-warm-amber)`,
-    borderError: `1px solid var(--color-coral)`,
-    iconColorWarning: 'var(--color-warm-amber)',
-    iconColorError: 'var(--color-coral)',
+    colorWarning: '#FFF8E8',
+    colorError: '#FDF0F3',
+    colorInfo: '#F0F8FF',
+    borderWarning: '2px solid #FFD166',
+    borderError: '2px solid #F39AA8',
+    iconColorWarning: '#D2A43C',
+    iconColorError: '#E17F91',
   },
   Empty: {
-    iconColor: 'var(--color-ocean)',
-    textColor: 'var(--color-warm-text-muted)',
+    iconColor: '#9D94FF',
+    textColor: '#6F86A6',
   },
   Spin: {
-    textColor: 'var(--color-coral)',
+    textColor: '#9D94FF',
   },
   Skeleton: {
-    color: 'var(--color-sand)',
-    colorEnd: 'var(--color-warm-gray)',
+    color: '#D6EAFF',
+    colorEnd: '#EAF4FF',
   },
 }
 
@@ -104,3 +103,11 @@ onMounted(() => {
   }
 })
 </script>
+
+<style>
+.app-bg {
+  min-height: calc(100vh - 64px);
+  background: #D5EBFA;
+  font-family: var(--font-ui-rounded);
+}
+</style>

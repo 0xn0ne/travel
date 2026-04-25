@@ -38,26 +38,52 @@ function handleAuth() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid var(--color-warm-border);
-  background: var(--color-warm-surface);
+  padding: 1rem 1.5rem 0.5rem;
+  background: #eef6ff;
 }
+
 .logo {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-coral);
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border: 1.5px solid #c7dbef;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 18px rgba(108, 140, 213, 0.08);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #2f4f6f;
   text-decoration: none;
+  font-family: var(--font-ui-display);
 }
+
 .header-nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
+
 .header-nav a {
-  color: var(--color-warm-text-muted);
+  color: #7f9bb6;
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: var(--font-ui-rounded);
+  transition: opacity 0.2s ease;
 }
+
 .header-nav a:hover {
-  color: var(--color-coral-dark);
+  opacity: 0.75;
+}
+
+.header-right :deep(.n-button) {
+  border: none;
+  border-radius: 999px;
+  background: #6c8cd5;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(108, 140, 213, 0.2);
+  font-weight: 700;
+  padding: 0 16px;
 }
 </style>

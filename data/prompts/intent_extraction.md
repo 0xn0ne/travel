@@ -19,7 +19,8 @@
   "rating_level": "一般/较好/极好",
   "interests": ["兴趣标签1", "兴趣标签2"],
   "special_requests": "特殊要求或null",
-  "time_constraints": "时间限制或null"
+  "time_constraints": "时间限制或null",
+  "weather_considered": true
 }
 ```
 
@@ -49,6 +50,7 @@
   - 偏好类：咖啡、茶、甜品、酒、轻食、重口味
 - **special_requests**: 用户提到的特殊需求，原文保留。如"带老人"、"不要步行太多"、"有小孩"等。没有则为null。
 - **time_constraints**: 时间相关约束，如"只有半天"、"晚上到"、"早上要走"等。没有则为null。
+- **weather_considered**: 布尔值。如果用户输入中包含天气预报信息（如"天气预报：晴天 25°"），且行程在近期（7天内），设为true，表示这条天气预报应该被纳入行程规划参考。如果行程较远或没有天气信息，设为false。
 
 ## Few-shot 示例
 

@@ -1,33 +1,46 @@
 <template>
-  <div
-    class="sticky bottom-0 w-full md:max-w-md border-t border-[var(--color-warm-border)] bg-[var(--color-warm-surface)]/90 backdrop-blur-sm p-4"
-  >
-    <template v-if="submitError">
-      <p class="text-center text-sm text-[var(--color-coral)]">提交失败，请重试</p>
-      <NButton size="small" @click="submitError = false" class="mt-2">重试</NButton>
-    </template>
-    <template v-else-if="submitted">
-      <p class="text-center text-sm text-[var(--color-warm-text-muted)]">感谢反馈！</p>
-    </template>
-    <template v-else-if="selectedRating">
-        <p class="mb-2 text-sm text-[var(--color-warm-text)]">推荐准不准？</p>
+  <div class="feedback-float" :class="{ expanded: expanded }">
+    <button v-if="!expanded" class="feedback-trigger" @click="expanded = true">
+      推荐反馈
+    </button>
+
+    <div v-else class="feedback-panel">
+      <button class="feedback-close" @click="expanded = false">×</button>
+
+      <template v-if="submitError">
+        <p class="feedback-title">提交失败，请重试</p>
+        <NButton size="small" @click="submitError = false">重试</NButton>
+      </template>
+
+      <template v-else-if="submitted">
+        <p class="feedback-title">感谢反馈！</p>
+        <div class="feedback-actions">
+          <NButton size="small" @click="expanded = false">关闭</NButton>
+        </div>
+      </template>
+
+      <template v-else-if="selectedRating">
+        <p class="feedback-title">推荐准不准？</p>
         <NInput
           v-model:value="comment"
           type="textarea"
           placeholder="想补充点什么？（可选）"
-          :rows="2"
-          class="mb-2"
+          :rows="3"
         />
-        <NButton type="primary" size="small" @click="handleSubmit">提交</NButton>
+        <div class="feedback-actions">
+          <NButton type="primary" size="small" @click="handleSubmit">提交</NButton>
+        </div>
       </template>
+
       <template v-else>
-        <p class="mb-2 text-sm text-[var(--color-warm-text)]">推荐准不准？</p>
-      <div class="flex gap-2">
-        <NButton size="small" @click="selectRating('准')">准</NButton>
-        <NButton size="small" @click="selectRating('一般')">一般</NButton>
-        <NButton size="small" @click="selectRating('不准')">不准</NButton>
-      </div>
-    </template>
+        <p class="feedback-title">推荐准不准？</p>
+        <div class="feedback-rating-list">
+          <button class="feedback-rating-btn" @click="selectRating('准')">准</button>
+          <button class="feedback-rating-btn" @click="selectRating('一般')">一般</button>
+          <button class="feedback-rating-btn" @click="selectRating('不准')">不准</button>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -42,6 +55,7 @@ const props = defineProps<{
 
 const store = useItineraryStore()
 
+const expanded = ref(false)
 const selectedRating = ref<string | null>(null)
 const comment = ref('')
 const submitted = ref(false)
@@ -61,3 +75,104 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.feedback-float {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 120;
+}
+
+.feedback-trigger {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid #DCE4F5;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 28px rgba(35, 38, 47, 0.12);
+  color: #5B8FD9;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding-block: 12px;
+}
+
+.feedback-panel {
+  position: relative;
+  width: 220px;
+  padding: 16px;
+  border: 1px solid #C5DEFF;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 20px 40px rgba(35, 38, 47, 0.14);
+  backdrop-filter: blur(10px);
+}
+
+.feedback-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #EDF4FC;
+  color: #7a718f;
+  cursor: pointer;
+}
+
+.feedback-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #363d4b;
+  margin: 0 0 12px;
+  padding-right: 24px;
+}
+
+.feedback-rating-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedback-rating-btn {
+  min-height: 36px;
+  border: 1px solid #C5DEFF;
+  border-radius: 12px;
+  background: #fff;
+  color: #61596f;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.feedback-rating-btn:hover {
+  background: #EDF4FC;
+  border-color: #cfc1ef;
+  color: #FF9F6B;
+}
+
+.feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .feedback-float {
+    right: 10px;
+    top: auto;
+    bottom: 108px;
+    transform: none;
+  }
+
+  .feedback-panel {
+    width: 200px;
+  }
+}
+</style>

@@ -55,6 +55,8 @@ def _build_user_preferences(intent: IntentOutput) -> str:
         parts.append(f"预算{intent.budget_level}")
     if intent.special_requests:
         parts.append(intent.special_requests)
+    if intent.weather_considered:
+        parts.append("【重要】行程在近期，已提供天气预报，请据此合理安排室内外活动")
     return "，".join(parts)
 
 

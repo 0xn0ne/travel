@@ -107,6 +107,10 @@ class PipelineCoordinator:
             )
         )
         raw_response, itinerary = await generate_itinerary(self.llm, intent, poi_candidates, user_input, group)
+
+        # Enrich POI coordinates from database
+        await self._enrich_poi_coordinates(itinerary)
+
         await self.event_bus.emit(
             PipelineEvent(
                 stage="generation",
@@ -162,6 +166,33 @@ class PipelineCoordinator:
         )
         return raw_response, itinerary
 
+    async def _enrich_poi_coordinates(self, itinerary: "Itinerary"):
+        """Fill in latitude/longitude for each POI from the database."""
+        from backend.models.database import POI
+
+        poi_ids = []
+        for day in itinerary.days:
+            for poi in day.pois:
+                if poi.poi_id:
+                    poi_ids.append(poi.poi_id)
+
+        if not poi_ids:
+            return
+
+        # Query all POI coordinates in one batch
+        result = await self.db.execute(
+            f"SELECT id, latitude, longitude FROM pois WHERE id IN ({','.join(['?'] * len(poi_ids))})",
+            poi_ids
+        )
+        rows = result.fetchall()
+        coord_map = {row[0]: (row[1], row[2]) for row in rows}
+
+        # Fill in coordinates
+        for day in itinerary.days:
+            for poi in day.pois:
+                if poi.poi_id and poi.poi_id in coord_map:
+                    poi.latitude, poi.longitude = coord_map[poi.poi_id]
+
     async def _save_to_db(self, raw_response: str, itinerary):
         """Save itinerary to DB before emitting done event."""
         import logging
@@ -170,6 +201,7 @@ class PipelineCoordinator:
 
         logger = logging.getLogger(__name__)
         city = self._intent.city if self._intent else "未知"
+        logger.info(f"[DEBUG] Saving itinerary {self.itinerary_id} to DB, city={city}")
         try:
             row = ItineraryRow(
                 id=self.itinerary_id,
@@ -183,9 +215,9 @@ class PipelineCoordinator:
             )
             self.db.add(row)
             await self.db.commit()
-            logger.info(f"Itinerary {self.itinerary_id} saved to DB")
+            logger.info(f"[DEBUG] Itinerary {self.itinerary_id} saved to DB successfully")
         except Exception as e:
-            logger.error(f"Failed to save itinerary {self.itinerary_id}: {e}")
+            logger.error(f"[DEBUG] Failed to save itinerary {self.itinerary_id}: {e}")
             raise
 
     async def adjust_pipeline(

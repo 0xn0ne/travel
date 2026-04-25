@@ -209,3 +209,4 @@ __marimo__/
 # other
 node_modules
 travel.db*
+.DS_Store
